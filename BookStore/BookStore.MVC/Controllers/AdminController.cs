@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BookStore.Entities;
+using System.IO;
 
 namespace BookStore.MVC.Controllers
 {
@@ -48,12 +49,22 @@ namespace BookStore.MVC.Controllers
         // POST: Admin/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,CountryPublishedId,AuthorsId")] Book book)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,CountryPublishedId,AuthorsId")] Book book,HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {
+                if (upload != null)
+                {
+                    string filename = Path.GetFileName(upload.FileName);
+                    string patch = Path.Combine(Server.MapPath("~/Images"), filename);
+                    upload.SaveAs(patch);
+
+                    book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = upload.FileName } };
+                }
+
                 db.Books.Add(book);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
