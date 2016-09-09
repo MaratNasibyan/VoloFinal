@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+  
 }
 
 <h2>Index</h2>
@@ -23,9 +24,7 @@
         <th>
             @Html.DisplayNameFor(model => model.PagesCount)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Picture)
-        </th>
+      
         <th>
             @Html.DisplayNameFor(model => model.Author.FullName)
         </th>
@@ -49,14 +48,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.PagesCount)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Picture)
-        </td>
+      
         <td>
             @Html.DisplayFor(modelItem => item.Author.FullName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CountryPublished.CountryName)
+        </td>
+        <td>
+            <img src="~/Images/@Url.Content()" style="height:200px;width:200px;" />     
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
