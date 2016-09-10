@@ -58,11 +58,22 @@ namespace BookStore.MVC.Controllers
             {
                 if (upload != null)
                 {
-                    string filename = Path.GetFileName(upload.FileName);
+                    var supportedTypes = new[] { "jpg", "jpeg", "png" };
+                    var fileExt = System.IO.Path.GetExtension(upload.FileName).Substring(1);
+
+                    if (!supportedTypes.Contains(fileExt))
+                    {
+                        return RedirectToAction("Index");
+                       // ModelState.AddModelError("photo", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");
+
+
+                    }
+
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
                     string patch = Path.Combine(Server.MapPath("~/Images"), filename);
                     upload.SaveAs(patch);
 
-                    book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = upload.FileName } };
+                    book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = filename } };
                 }
 
                 db.Books.Add(book);
@@ -97,10 +108,33 @@ namespace BookStore.MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,CountryPublishedId,AuthorsId")] Book book)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,CountryPublishedId,AuthorsId")] Book book,HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {
+                if(upload != null)
+                {
+                    var supportedTypes = new[] { "jpg", "jpeg", "png" };
+                    var fileExt = System.IO.Path.GetExtension(upload.FileName).Substring(1);
+
+                    if (!supportedTypes.Contains(fileExt))
+                    {
+                        return RedirectToAction("Index");
+                        // ModelState.AddModelError("photo", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");                        
+                    }
+
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
+                    string patch = Path.Combine(Server.MapPath("~/Images"), filename);
+                    upload.SaveAs(patch);
+                    ImagePatch patchimg = db.ImagePatchs.Where(n => n.BooksId == book.Id).SingleOrDefault();
+                    if(patchimg != null)
+                    {
+                        patchimg.ImageUrl = filename;
+                    }
+
+                    //book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = upload.FileName } };
+
+                }
                 db.Entry(book).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -131,7 +165,9 @@ namespace BookStore.MVC.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Book book = await db.Books.FindAsync(id);
+            ImagePatch patch = db.ImagePatchs.Where(n => n.BooksId == id).FirstOrDefault();
             db.Books.Remove(book);
+            db.ImagePatchs.Remove(patch);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
