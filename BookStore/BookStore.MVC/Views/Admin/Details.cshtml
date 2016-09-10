@@ -46,8 +46,14 @@
             @Html.DisplayNameFor(model => model.Picture)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Picture)
+        <dd>            
+                @{
+                    foreach (var v in Model.ImagePatchs)
+                    {                       
+                        <img src="~/Images/@v.ImageUrl" style="height:150px;width:120px;" />
+                    }                  
+                 }                   
+
         </dd>
 
         <dt>
