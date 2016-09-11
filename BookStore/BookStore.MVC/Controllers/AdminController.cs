@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using BookStore.Entities;
 using System.IO;
-
+using PagedList;
 namespace BookStore.MVC.Controllers
 {
     public class AdminController : Controller
@@ -17,10 +17,20 @@ namespace BookStore.MVC.Controllers
         private BookDatabaseEntities db = new BookDatabaseEntities();
 
         // GET: Admin
-        public async Task<ActionResult> Index()
+        public ActionResult Index(int? page)
         {
-            var books = db.Books.Include(b => b.Author).Include(b => b.CountryPublished);
-            return View(await books.ToListAsync());
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            var books = db.Books.Include(b => b.Author).Include(b => b.CountryPublished).ToList();
+
+            return View(books.ToPagedList(pageNumber,pageSize));
+          
+        }
+
+        public JsonResult GetRecords()
+        {
+            var books = db.Books.Include(b => b.Author).Include(b => b.CountryPublished).ToList();
+            return new JsonResult { Data = books, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         // GET: Admin/Details/5
