@@ -85,6 +85,7 @@ namespace BookStore.MVC.Controllers
 
                     book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = filename } };
                 }
+                    book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = "No.jpg" } };
 
                 db.Books.Add(book);
                 await db.SaveChangesAsync();

@@ -1,0 +1,108 @@
+﻿@model IEnumerable<BookStore.Entities.Book>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Books</h2>
+
+<p>
+ 
+</p>
+<style>
+    .port
+    {
+      
+    }
+    .portfolio-item:hover
+    {
+        border: 0.5px groove;
+    }
+    .p{
+        display:inline-block;
+        width:170px;
+        height:250px;
+        margin:15px;
+        text-align:center;
+        
+    }
+    .p:hover
+    {
+        border:1px solid;
+    }
+</style>
+    <div class="container">
+        <div class="row">
+@foreach (var item in Model)
+{
+    <div class="p">
+
+           @foreach (var v in item.ImagePatchs)
+            {
+            <a href="@Url.Action("Details","Books", new { id = item.Id })" class="port">
+
+                <img src="~/Images/@v.ImageUrl" class="img-responsive" style="height:60%;width:60%;" />
+
+            </a>
+            }
+        @item.Title;<br />
+        @item.Price;
+
+    </div>
+
+
+}
+        </div>
+    </div>
+   
+
+@*<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+      
+      
+        <th>
+            @Html.DisplayNameFor(model => model.Picture)
+          
+        </th>
+       
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @{  decimal totalPrice = item.Price;
+                totalPrice += item.CountryPublished.PhoneCode;
+            }
+            @Html.DisplayFor(modelItem => totalPrice) $
+          
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.Picture)
+            @{
+                foreach (var v in item.ImagePatchs)
+                {
+                    <img src="~/Images/@v.ImageUrl" style="height:100px;width:80px;" />
+                }
+
+            }
+        </td>
+      
+        <td>
+          @Html.ActionLink("Details", "Details", new { id=item.Id })       
+        </td>
+    </tr>
+}
+
+</table>*@
