@@ -20,20 +20,53 @@
     }
     .p{
         display:inline-block;
-        width:170px;
-        height:250px;
+        width:190px;
+        height:290px;
         margin:15px;
-        text-align:center;
+        text-align:center;      
         
     }
+   .p img
+   {
+     margin-top:7px;
+   }
+      .sp
+      {
+          padding:8px;
+          margin:10px;
+      }
     .p:hover
     {
         border:1px solid;
+        border-color:bisque;
+    }
+    .Price
+    {
+        margin-top:7px;
     }
 </style>
     <div class="container">
         <div class="row">
-@foreach (var item in Model)
+            
+        @foreach (var item in Model)
+        {
+            <a href="@Url.Action("Details","Books", new { id = item.Id })" class="port">
+
+                <div class="p">
+                    @foreach (var v in item.ImagePatchs)
+                    {
+                        <img src="~/Images/@v.ImageUrl" class="" style="height:60%;width:60%;" />
+                    }
+
+                    <p class="Price"> <strong style="color:black;">@item.Price.ToString() $</strong> </p>  
+
+                    <p class="Author" style="color:#cea582;font-size:smaller;">@item.Author.FullName</p>
+                   <p class="Title" style="color:sandybrown;">@item.Title</p> <br />
+                   
+                </div>
+            </a>            
+
+@*@foreach (var item in Model)
 {
     <div class="p">
 
@@ -48,7 +81,7 @@
         @item.Title;<br />
         @item.Price;
 
-    </div>
+    </div>*@
 
 
 }
