@@ -1,53 +1,126 @@
-﻿@model IEnumerable<BookStore.Entities.Book>
+﻿@model  IEnumerable<BookStore.Entities.Book>
+
+
+
+@*@using PagedList.Mvc;*@
 
 @{
     ViewBag.Title = "Index";
+
+    //var options = new AjaxOptions
+    //{
+    //    UpdateTargetId = "ProductList",
+    //    Url = Url.Action("Data1")
+    //};
 }
 
-<h2>Books</h2>
 
+<h2>Books</h2>
 <p>
- 
+    Find by name: <input id="SearchString" name="SearchString" type="text" value="" />
+    <input type="submit" value="Search" id="btnSearch" />
 </p>
-<style>
-    .port
-    {
-      
-    }
-    .portfolio-item:hover
-    {
-        border: 0.5px groove;
-    }
-    .p{
-        display:inline-block;
-        width:190px;
-        height:290px;
-        margin:15px;
-        text-align:center;      
-        
-    }
-   .p img
-   {
-     margin-top:7px;
-   }
-      .sp
-      {
-          padding:8px;
-          margin:10px;
-      }
-    .p:hover
-    {
-        border:1px solid;
-        border-color:bisque;
-    }
-    .Price
-    {
-        margin-top:7px;
-    }
-</style>
-    <div class="container">
-        <div class="row">
-            
+<div id="ProductList">
+   @Html.Partial("Data1", Model)
+</div>       
+
+
+@section scripts
+{
+ <script type="text/javascript">
+
+     window.addEventListener("popstate", function (e) {
+         $.ajax({
+             url: location.href,
+             success: function (result) {
+                 $('#ProductList').html(result);
+             }
+         });
+     });
+
+     function ChangeUrl(page, url) {
+         if (typeof (history.pushState) != "undefined") {
+             var obj = { Page: page, Url: url };
+             history.pushState(null, obj.Page, obj.Url);
+         } else {
+             alert("Browser does not support HTML5.");
+         }
+     }
+
+     function getUrlVars() {
+         var vars = [], hash;
+         var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+         for (var i = 0; i < hashes.length; i++) {
+             hash = hashes[i].split('=');
+             vars.push(hash[0]);
+             vars[hash[0]] = hash[1];
+         }
+         return vars;
+     }
+
+     function search() {
+         $.ajax({
+             url: "/Books/Index?searchString=" + $('#SearchString').val(),
+             ////type:"get",
+             success: function (result) {
+                 ChangeUrl("Index", "/Books/Index?searchString=" + $('#SearchString').val());
+                 $('#ProductList').html(result);
+             }
+         });
+     }
+
+
+     $(function () {
+         $("#btnSearch").click(function () {
+             search();
+         });
+
+         $("#SearchString").keypress(function (e) {
+             if (e.keyCode == 13) {
+                 search();
+             }
+         });
+
+    
+     $('body').on('click', '#ProductList .pagination a', function (event) {
+         event.preventDefault();
+         console.log('page');
+         var searchString = $('#SearchString').val();
+         if (searchString == undefined || searchString == '') {
+             searchString = '';
+         } else {
+             searchString = '&searchString=' + searchString;
+         }
+         var url = $(this).attr('href') + searchString;
+         console.log(url);
+         $.ajax({
+             url: url,
+             success: function (result) {
+                 ChangeUrl('Index', url);
+                 $('#ProductList').html(result);
+             }
+         });
+
+                      
+         
+        });
+     });
+    </script>
+
+ }
+
+            @*<br />
+
+
+         <p id="SearchP">
+            Search @Html.TextBox("Search")   
+            <input type="submit" value="Go" />
+        </p>*@
+     
+
+    @*<div class="container">
+        <div class="row">                 
+                  
         @foreach (var item in Model)
         {
             <a href="@Url.Action("Details","Books", new { id = item.Id })" class="port">
@@ -64,30 +137,103 @@
                    <p class="Title" style="color:sandybrown;">@item.Title</p> <br />
                    
                 </div>
-            </a>            
-
-@*@foreach (var item in Model)
-{
-    <div class="p">
-
-           @foreach (var v in item.ImagePatchs)
-            {
-            <a href="@Url.Action("Details","Books", new { id = item.Id })" class="port">
-
-                <img src="~/Images/@v.ImageUrl" class="img-responsive" style="height:60%;width:60%;" />
-
-            </a>
-            }
-        @item.Title;<br />
-        @item.Price;
-
+            </a>          
+            
+        }
+        </div>
     </div>*@
 
+   @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-}
-        </div>
-    </div>
-   
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page }))*@
+@*@section scripts
+{
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}*@
+
+<style>
+    #Search {
+        width: 1000px;
+        /*height:50px;*/
+        border-radius: 5px;
+    }
+
+    #SearchP {
+        width: 100%;
+        text-align: center;
+    }
+
+    .port {
+    }
+    /*.portfolio-item:hover
+    {
+        border: 0.5px groove;
+    }*/
+    .p {
+        display: inline-block;
+        width: 190px;
+        height: 290px;
+        margin: 15px;
+        text-align: center;
+    }
+
+        .p img {
+            margin-top: 7px;
+        }
+
+    .sp {
+        padding: 8px;
+        margin: 10px;
+    }
+
+    .p:hover {
+        border: 1px solid;
+        border-color: bisque;
+    }
+
+    .Price {
+        margin-top: 7px;
+    }
+</style>
+
+
+@*@section scripts{
+    <script>
+        $(function () {
+            $("#Go").click(function () {
+                GetData("zxc")});
+
+            {
+
+            }
+
+        function GetData(Search)
+        {
+            $.ajax({
+                url: "@Url.Action("Data", "Books")",
+                type: "Get",
+                data:"Search="+Search,
+                success:function(response)
+                {
+                    $("#tableAjax").text(response);
+                }
+
+            });
+        }
+
+        });
+
+    </script>
+     }
+*@
+
+
+
+
+
+
 
 @*<table class="table">
     <tr>

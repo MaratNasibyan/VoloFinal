@@ -1,0 +1,39 @@
+if (typeof window.jivo_magic_var == "undefined"){var jivo_magic_var = 123321;
+window.jivo_config={"widget_id":"6FIWphdQAt","site_id":349099,"widget_color":"#f28e4b","widget_font_color":"light","widget_padding":"100","widget_height":"33","widget_orientation":"bottom","font_size":"14","font_family":"Arial","font_type":"normal","locale":"ru_RU","show_rate_form":1,"hide_ad":0,"secure":0,"contacts_ask":0,"style_string":"jivo_shadow jivo_rounded_corners jivo_gradient jivo_3d_effect jivo_border jivo_3px_border","chat_mode":0?"online":"offline","options":0,"hide_offline":0,"vox_login":"jivosite@chat.jivosite.voximplant.com","avatar_url":"\/\/s3-eu-west-1.amazonaws.com\/jivo-userdata","online_widget_label":"\u0533\u0580\u0565\u0584 \u0574\u0565\u0566 \u0561\u057c\u0581\u0561\u0576\u0581","offline_widget_label":"\u0548\u0582\u0572\u0561\u0580\u056f\u0565\u0584 \u0574\u0565\u0566 \u0576\u0561\u0574\u0561\u056f","offline_form_text":"\u0533\u0580\u0565\u0584 \u0541\u0565\u0580 \u0576\u0561\u0574\u0561\u056f\u056b \u057f\u0565\u0584\u057d\u057f\u0568 \u0587 \u0574\u0565\u0576\u0584 \u0570\u0576\u0561\u0580\u0561\u057e\u0578\u0580\u056b\u0576\u057d \u0561\u0580\u0561\u0563 \u057a\u0561\u057f\u0561\u057d\u056d\u0561\u0576\u0565\u0576\u0584 \u0541\u0565\u0566\u0589","base_url":"\/\/code.jivosite.com","static_host":"cdn.jivosite.com","comet":{"host":"node23.jivosite.com"},"contacts_settings":{"name":{"show":true,"required":false},"phone":{"show":true,"required":false},"email":{"show":true,"required":true}}};
+(function(){
+var RETRIES_LIMIT = 3, retriesCount = 0, timerId;
+var isMobile = /iPhone|iPad|iPod|Android|Windows Phone/i.test(navigator.userAgent);
+var timeoutTime = isMobile? 8000 : 6000;
+var onerrorCb = function(type) {
+    clearTimeout(timerId);
+    if (++retriesCount >= RETRIES_LIMIT) {return;}
+    try {
+        localStorage.setItem("jv_store_cdn_resolve_time", (new Date().getTime() + 120000).toString());
+        localStorage.setItem("jv_store_cdn_unavailable", type);
+    } catch (e) {}
+    jivoLoad();
+};
+var getUrl = function() {
+    var timestamp = null;
+    try {
+        timestamp = parseInt(localStorage.getItem("jv_store_cdn_resolve_time"), 10);
+    } catch (e) {}
+    var cdnUnavailable = timestamp && timestamp >= (new Date()).getTime();
+    return (cdnUnavailable? window.jivo_config.base_url : "//cdn.jivosite.com") + "/js/iframe_loader.js?rand=1473418613";
+};
+function jivoLoad() {
+    var sc = document.getElementsByTagName("script");
+    var iA = sc[0];
+    var se = document.createElement("script");
+    se.type = "text/javascript"; se.async = true; se.charset="UTF-8";
+    se.onerror = function(){ onerrorCb("error")};
+    iA.parentNode.insertBefore(se, iA).src = getUrl();
+    timerId = setTimeout(function () {
+        if (typeof window.jivo_init === "undefined") {
+            iA.parentNode.removeChild(se);
+            onerrorCb("timeout");
+        }
+    }, timeoutTime);
+}
+jivoLoad();
+})();};
