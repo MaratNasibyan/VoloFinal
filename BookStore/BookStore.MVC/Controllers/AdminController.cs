@@ -10,6 +10,8 @@ using System.Web.Mvc;
 using BookStore.Entities;
 using System.IO;
 using PagedList;
+using BookStore.MVC.Models;
+
 namespace BookStore.MVC.Controllers
 {
     public class AdminController : Controller
@@ -74,8 +76,7 @@ namespace BookStore.MVC.Controllers
                     if (!supportedTypes.Contains(fileExt))
                     {
                         return RedirectToAction("Index");
-                       // ModelState.AddModelError("photo", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");
-
+                        // ModelState.AddModelError("photo", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");
 
                     }
 
@@ -85,10 +86,14 @@ namespace BookStore.MVC.Controllers
 
                     book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = filename } };
                 }
+                else
+                {
                     book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = "No.jpg" } };
+                }
 
-                db.Books.Add(book);
-                await db.SaveChangesAsync();
+                    db.Books.Add(book);
+                    await db.SaveChangesAsync();
+
                 return RedirectToAction("Index");
             }
 

@@ -4,17 +4,16 @@
 
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Index";
-   
-   
+    ViewBag.Title = "Index";      
 }
+
 <link href="~/Content/PagedList.css" rel="stylesheet" />
-  <h2>Index</h2>
+  <h2>Book</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")                   
+    @Html.ActionLink("Create Book", "Create")  | @Html.ActionLink("Create Author", "Index", "Authors")  |  @Html.ActionLink("Create Country","Index", "CountryPublisheds")
 </p>
-
+<p></p>
     <table class="table">
         <tr>
             <th>

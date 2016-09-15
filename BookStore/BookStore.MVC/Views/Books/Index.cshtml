@@ -1,7 +1,6 @@
 ﻿@model  IEnumerable<BookStore.Entities.Book>
 
 
-
 @*@using PagedList.Mvc;*@
 
 @{
@@ -16,10 +15,13 @@
 
 
 <h2>Books</h2>
-<p>
-    Find by name: <input id="SearchString" name="SearchString" type="text" value="" />
-    <input type="submit" value="Search" id="btnSearch" />
-</p>
+<div>
+    
+        Search by name: <input id="SearchString" name="SearchString" type="text" value=""  />
+        <input type="submit" value="Search" id="btnSearch"  />
+   
+</div>
+
 <div id="ProductList">
    @Html.Partial("Data1", Model)
 </div>       
@@ -27,8 +29,11 @@
 
 @section scripts
 {
- <script type="text/javascript">
+   
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 
+ <script type="text/javascript">
+     
      window.addEventListener("popstate", function (e) {
          $.ajax({
              url: location.href,
@@ -41,7 +46,7 @@
      function ChangeUrl(page, url) {
          if (typeof (history.pushState) != "undefined") {
              var obj = { Page: page, Url: url };
-             history.pushState(null, obj.Page, obj.Url);
+             history.pushState(obj.Page, obj.Url);
          } else {
              alert("Browser does not support HTML5.");
          }
@@ -72,8 +77,16 @@
 
      $(function () {
          $("#btnSearch").click(function () {
-             search();
-         });
+             var v = $("#SearchString").val;
+             if (v != null) {
+                 search();
+             }
+             else
+             {
+                 alert("error");
+             }
+             
+          });
 
          $("#SearchString").keypress(function (e) {
              if (e.keyCode == 13) {
@@ -96,13 +109,12 @@
          $.ajax({
              url: url,
              success: function (result) {
-                 ChangeUrl('Index', url);
+                 ChangeUrl("Index", url);
                  $('#ProductList').html(result);
              }
          });
 
-                      
-         
+                               
         });
      });
     </script>

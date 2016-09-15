@@ -11,7 +11,9 @@
                 <img src="~/Images/@v.ImageUrl" class="" style="height:60%;width:60%;" />
             }
 
-            <p class="Price"> <strong style="color:black;">@item.Price.ToString() $</strong> </p>
+             @{ decimal total = @item.Price + @item.CountryPublished.PhoneCode;}
+
+            <p class="Price"> <strong style="color:black;"> @total $</strong> </p>
 
             <p class="Author" style="color:#cea582;font-size:smaller;">@item.Author.FullName</p>
             <p class="Title" style="color:sandybrown;">@item.Title</p> <br />
@@ -20,6 +22,8 @@
     </a>
 }
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
 <style>
     #Search {
         width: 50%;

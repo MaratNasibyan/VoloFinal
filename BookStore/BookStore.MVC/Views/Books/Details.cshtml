@@ -18,13 +18,20 @@
             @Html.DisplayFor(model => model.Title)
         </dd>
 
+        @{  decimal totalPrice = Model.Price;
+            totalPrice += Model.CountryPublished.PhoneCode;
+        }
         <dt>
-            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayNameFor(model =>totalPrice)
         </dt>
+         <dd>
+             @Html.DisplayFor(model=>totalPrice)
+         </dd>
+      
 
-        <dd>
+        @*<dd>
             @Html.DisplayFor(model => model.Price)
-        </dd>
+        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.Description)
@@ -53,7 +60,7 @@
                 {
                     <img src="~/Images/@v.ImageUrl" style="height:150px;width:120px;" />
                 }
-            }
+             }
             
         </dd>
 
