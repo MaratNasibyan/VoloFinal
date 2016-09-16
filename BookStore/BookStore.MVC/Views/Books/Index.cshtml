@@ -1,27 +1,48 @@
 ﻿@model  IEnumerable<BookStore.Entities.Book>
 
-
-@*@using PagedList.Mvc;*@
-
 @{
     ViewBag.Title = "Index";
 
-    //var options = new AjaxOptions
-    //{
-    //    UpdateTargetId = "ProductList",
-    //    Url = Url.Action("Data1")
-    //};
 }
-
-
+<script src="~/Scripts/jquery-1.10.2.js"></script>
 <h2>Books</h2>
-<div>
-    
-        Search by name: <input id="SearchString" name="SearchString" type="text" value=""  />
-        <input type="submit" value="Search" id="btnSearch"  />
-   
-</div>
 
+    @*<div class="container">
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+                <div class="input-group">
+                    <div class="input-group-btn search-panel" id="pp">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span id="search_concept">Filter by</span> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="Name">Book name</a></li>
+                            <li><a href="Author">Author</a></li>
+                            <li><a href="Country">Country</a></li>
+                        </ul>
+                    </div>
+
+                    <input type="text" class="form-control" name="x" placeholder="Search book..." id="SearchString">
+                    <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="btnSearch"><span class="glyphicon glyphicon-search"></span></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+
+<br />
+<br />
+
+<div>  Search by name: <input id="SearchString" name="SearchString" type="text" value="" />
+ 
+    <input type="submit" value="Search" id="btnSearch" />
+  
+
+</div>
+      
 <div id="ProductList">
    @Html.Partial("Data1", Model)
 </div>       
@@ -29,11 +50,14 @@
 
 @section scripts
 {
-   
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 
  <script type="text/javascript">
-     
+        
+ 
+
      window.addEventListener("popstate", function (e) {
          $.ajax({
              url: location.href,
@@ -46,7 +70,7 @@
      function ChangeUrl(page, url) {
          if (typeof (history.pushState) != "undefined") {
              var obj = { Page: page, Url: url };
-             history.pushState(obj.Page, obj.Url);
+             history.pushState('Index',obj.Page, obj.Url);
          } else {
              alert("Browser does not support HTML5.");
          }
@@ -68,7 +92,7 @@
              url: "/Books/Index?searchString=" + $('#SearchString').val(),
              ////type:"get",
              success: function (result) {
-                 ChangeUrl("Index", "/Books/Index?searchString=" + $('#SearchString').val());
+                 ChangeUrl("Index", "/Books/Index?searchString=" + $('#SearchString').val()) ;
                  $('#ProductList').html(result);
              }
          });
@@ -86,7 +110,7 @@
                  alert("error");
              }
              
-          });
+         });
 
          $("#SearchString").keypress(function (e) {
              if (e.keyCode == 13) {
@@ -95,29 +119,33 @@
          });
 
     
-     $('body').on('click', '#ProductList .pagination a', function (event) {
-         event.preventDefault();
-         console.log('page');
-         var searchString = $('#SearchString').val();
-         if (searchString == undefined || searchString == '') {
-             searchString = '';
-         } else {
-             searchString = '&searchString=' + searchString;
-         }
-         var url = $(this).attr('href') + searchString;
-         console.log(url);
-         $.ajax({
-             url: url,
-             success: function (result) {
-                 ChangeUrl("Index", url);
-                 $('#ProductList').html(result);
+         $('body').on('click', '#ProductList .pagination a', function (event) {
+             event.preventDefault();
+             console.log('page');
+             var searchString = $('#SearchString').val();
+             if (searchString == undefined || searchString == '') {
+                 searchString = '';
+             } else {
+                 searchString = '&searchString=' + searchString;
              }
-         });
+             var url = $(this).attr('href') + searchString;
+             console.log(url);
+             $.ajax({
+                 url: url,
+                 success: function (result) {
+                     ChangeUrl("Index", url);
+                     $('#ProductList').html(result);
+                 }
+             });
 
                                
-        });
-     });
-    </script>
+         });
+
+                       
+
+         });
+
+      </script>
 
  }
 
@@ -127,7 +155,7 @@
          <p id="SearchP">
             Search @Html.TextBox("Search")   
             <input type="submit" value="Go" />
-        </p>*@
+        </p>
      
 
     @*<div class="container">

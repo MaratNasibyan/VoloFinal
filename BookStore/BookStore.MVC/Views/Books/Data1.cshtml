@@ -13,7 +13,7 @@
 
              @{ decimal total = @item.Price + @item.CountryPublished.PhoneCode;}
 
-            <p class="Price"> <strong style="color:black;"> @total $</strong> </p>
+            <p class="Price"> <strong style="color:black;"> @total.ToString("G29") $</strong> </p>
 
             <p class="Author" style="color:#cea582;font-size:smaller;">@item.Author.FullName</p>
             <p class="Title" style="color:sandybrown;">@item.Title</p> <br />

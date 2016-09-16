@@ -9,79 +9,83 @@
 <div>
     <h4>Book</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+    
+        <dl class="dl-horizontal">
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        @{  decimal totalPrice = Model.Price;
-            totalPrice += Model.CountryPublished.PhoneCode;
-        }
-        <dt>
-            @Html.DisplayNameFor(model =>totalPrice)
-        </dt>
-         <dd>
-             @Html.DisplayFor(model=>totalPrice)
-         </dd>
-      
-
-        @*<dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>*@
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PagesCount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PagesCount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Picture)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Picture)
-            @{
-                foreach (var v in Model.ImagePatchs)
-                {
-                    <img src="~/Images/@v.ImageUrl" style="height:150px;width:120px;" />
+            <dd>
+                @Html.DisplayFor(model => model.Picture)
+                @{
+                    foreach (var v in Model.ImagePatchs)
+                    {
+                        <img src="~/Images/@v.ImageUrl" style="height:300px;width:180px;" />
+                    }
                 }
-             }
-            
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Author.FullName)
-        </dt>
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Author.FullName)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CountryPublished.CountryName)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.CountryPublished.CountryName)
-        </dd>
+            @{  
+                decimal Price = Model.Price;
+                Price += Model.CountryPublished.PhoneCode;
+                var p = Price.ToString("G29");
+            }
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd>
+                 @Html.DisplayFor(model => p) $ 
+            </dd>
 
-    </dl>
-</div>
+
+            @*<dd>
+                    @Html.DisplayFor(model => model.Price)
+                </dd>*@
+
+          
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PagesCount)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PagesCount)
+            </dd>
+
+
+            <dt>
+                Author @Html.DisplayNameFor(model => model.Author.FullName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Author.FullName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CountryPublished.CountryName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CountryPublished.CountryName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+        </dl>
+    </div>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")

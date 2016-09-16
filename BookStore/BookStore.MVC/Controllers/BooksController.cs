@@ -18,7 +18,7 @@ namespace BookStore.MVC.Controllers
         // GET: Books
       
               
-        public ActionResult Index(string searchString,int page = 1)
+        public ActionResult Index(string searchString,  int page = 1)
         {
             int pageSize = 5;
             //int pageNumber = 1;
@@ -30,6 +30,16 @@ namespace BookStore.MVC.Controllers
             {
                 books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n=>n.Title.StartsWith((searchString)))).ToList();
             }
+            //switch (sortOption)
+            //{
+
+            //    case "Name": books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Title.StartsWith((searchString)))).ToList(); break;
+            //    case "Author": books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Author.FullName.StartsWith((searchString)))).ToList(); break;
+            //    case "Country": books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.CountryPublished.CountryName.StartsWith((searchString)))).ToList(); break;
+            //    default: books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Title.StartsWith((searchString)))).ToList(); break;
+            //}
+
+
             return Request.IsAjaxRequest() ? (ActionResult)PartialView("Data1", books.ToPagedList(page, pageSize)) :
                 View(books.ToPagedList(page, pageSize));
 
