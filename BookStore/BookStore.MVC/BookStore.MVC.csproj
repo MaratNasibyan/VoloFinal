@@ -323,6 +323,7 @@
     <Content Include="Views\Attributes\Details.cshtml" />
     <Content Include="Views\Attributes\Edit.cshtml" />
     <Content Include="Views\Attributes\Index.cshtml" />
+    <Content Include="Views\Books\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BookStore.Entities\BookStore.Entities.csproj">

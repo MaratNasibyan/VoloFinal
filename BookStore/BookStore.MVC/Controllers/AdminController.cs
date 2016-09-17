@@ -128,7 +128,9 @@ namespace BookStore.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(upload != null)
+
+                //book = await db.Books.FindAsync(book.Id);                                
+                if (upload != null)
                 {
                     var supportedTypes = new[] { "jpg", "jpeg", "png" };
                     var fileExt = System.IO.Path.GetExtension(upload.FileName).Substring(1);
@@ -146,6 +148,14 @@ namespace BookStore.MVC.Controllers
                     if(patchimg != null)
                     {
                         patchimg.ImageUrl = filename;
+
+                        //ImagePatch oldpatch = db.ImagePatchs.Where(n => n.BooksId == book.Id).FirstOrDefault();
+                        //string patch1 = Path.Combine(Server.MapPath("~/Images"), oldpatch.ImageUrl);
+
+                        //if (System.IO.File.Exists(patch1))
+                        //{
+                        //    System.IO.File.Delete(patch1);
+                        //}
                     }
 
                     //book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = upload.FileName } };
@@ -168,6 +178,8 @@ namespace BookStore.MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Book book = await db.Books.FindAsync(id);
+          
+            
             if (book == null)
             {
                 return HttpNotFound();
@@ -182,6 +194,12 @@ namespace BookStore.MVC.Controllers
         {
             Book book = await db.Books.FindAsync(id);
             ImagePatch patch = db.ImagePatchs.Where(n => n.BooksId == id).FirstOrDefault();
+            string patch1 = Path.Combine(Server.MapPath("~/Images"), patch.ImageUrl);
+
+            if (System.IO.File.Exists(patch1))
+            {
+                System.IO.File.Delete(patch1);
+            }
             db.Books.Remove(book);
             db.ImagePatchs.Remove(patch);
             await db.SaveChangesAsync();
