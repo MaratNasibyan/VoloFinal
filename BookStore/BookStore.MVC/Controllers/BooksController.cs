@@ -34,22 +34,11 @@ namespace BookStore.MVC.Controllers
                 }         
             }
        
-            return Request.IsAjaxRequest() ? (ActionResult)PartialView("Data1", books.ToPagedList(page, pageSize)) :
+            return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial", books.ToPagedList(page, pageSize)) :
                 View(books.ToPagedList(page, pageSize));
         
         }
     
-
-        //public ActionResult Data(string Search)
-        //{
-        //    var books = db.Books.Include(b => b.Author).Include(b => b.CountryPublished).ToList();
-        //    if (Search != null)
-        //    {
-        //        books.Where(n => n.Title.StartsWith(Search)).ToList();
-        //    }
-
-        //    return PartialView("Data",books);
-        //}
 
 
         // GET: Books/Details/5

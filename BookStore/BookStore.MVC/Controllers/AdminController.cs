@@ -18,22 +18,27 @@ namespace BookStore.MVC.Controllers
     {
         private BookDatabaseEntities db = new BookDatabaseEntities();
 
-        // GET: Admin
-        public ActionResult Index(int? page)
+       // GET: Admin
+        public ActionResult Index(string searchString, int page = 1)
         {
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            var books = db.Books.Include(b => b.Author).Include(b => b.CountryPublished).ToList();
+            int pageSize = 5;
 
-            return View(books.ToPagedList(pageNumber,pageSize));
-          
+            var books = db.Books.ToList();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Title.StartsWith(searchString) || n.Author.FullName.StartsWith(searchString))).ToList();
+                if (books == null)
+                {
+                    return RedirectToAction("View");
+                }
+            }
+
+            return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial", books.ToPagedList(page, pageSize)) :
+               View(books.ToPagedList(page, pageSize));
+
         }
 
-        public JsonResult GetRecords()
-        {
-            var books = db.Books.Include(b => b.Author).Include(b => b.CountryPublished).ToList();
-            return new JsonResult { Data = books, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
 
         // GET: Admin/Details/5
         public async Task<ActionResult> Details(int? id)
@@ -128,7 +133,6 @@ namespace BookStore.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 //book = await db.Books.FindAsync(book.Id);                                
                 if (upload != null)
                 {

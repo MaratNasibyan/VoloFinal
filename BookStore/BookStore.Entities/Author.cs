@@ -6,7 +6,7 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+using System.ComponentModel.DataAnnotations;
 namespace BookStore.Entities
 {
     using System;
@@ -21,7 +21,10 @@ namespace BookStore.Entities
         }
     
         public int Id { get; set; }
+        [Required(ErrorMessage = "FullName is required")]
         public string FullName { get; set; }
+
+        [Required(ErrorMessage = "DateBirth is required")]
         public Nullable<System.DateTime> DateBirth { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -237,6 +237,7 @@
     <Content Include="HTML\HtmlPage1.html" />
     <Content Include="HTML\JavaScript.js" />
     <Content Include="HTML\StyleSheet1.css" />
+    <Content Include="Scripts\AdminSearch.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
@@ -244,6 +245,7 @@
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\BookSearch.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -306,8 +308,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Books\Details.cshtml" />
     <Content Include="Views\Books\Index.cshtml" />
-    <Content Include="Views\Books\Data.cshtml" />
-    <Content Include="Views\Books\Data1.cshtml" />
+    <Content Include="Views\Books\IndexPartial.cshtml" />
     <Content Include="Views\Authors\Create.cshtml" />
     <Content Include="Views\Authors\Delete.cshtml" />
     <Content Include="Views\Authors\Details.cshtml" />
@@ -324,6 +325,8 @@
     <Content Include="Views\Attributes\Edit.cshtml" />
     <Content Include="Views\Attributes\Index.cshtml" />
     <Content Include="Views\Books\View.cshtml" />
+    <Content Include="Views\Admin\IndexPartial.cshtml" />
+    <Content Include="Views\Admin\Data.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BookStore.Entities\BookStore.Entities.csproj">
