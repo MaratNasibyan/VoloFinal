@@ -133,9 +133,11 @@ namespace BookStore.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                //book = await db.Books.FindAsync(book.Id);                                
+                //book = await db.Books.FindAsync(book.Id); 
+                //ImagePatch oldpatch = db.ImagePatchs.Where(n => n.BooksId == book.Id).FirstOrDefault();
                 if (upload != null)
                 {
+
                     var supportedTypes = new[] { "jpg", "jpeg", "png" };
                     var fileExt = System.IO.Path.GetExtension(upload.FileName).Substring(1);
 
@@ -153,7 +155,7 @@ namespace BookStore.MVC.Controllers
                     {
                         patchimg.ImageUrl = filename;
 
-                        //ImagePatch oldpatch = db.ImagePatchs.Where(n => n.BooksId == book.Id).FirstOrDefault();
+                       
                         //string patch1 = Path.Combine(Server.MapPath("~/Images"), oldpatch.ImageUrl);
 
                         //if (System.IO.File.Exists(patch1))

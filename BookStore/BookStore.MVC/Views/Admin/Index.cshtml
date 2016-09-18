@@ -5,7 +5,7 @@
 
 }
 
-<h2>Book</h2>
+<h2>Admin Panel</h2>
 
 <p>
     @Html.ActionLink("Create Book", "Create")  | @Html.ActionLink("Create Author", "Index", "Authors")  |  @Html.ActionLink("Create Country", "Index", "CountryPublisheds")
@@ -19,6 +19,8 @@
     <input type="submit" value="Search" id="btnSearch" />
 </div>
 
+<br />
+<br />
 
 <div id="ProductList">
     @Html.Partial("IndexPartial", Model)
