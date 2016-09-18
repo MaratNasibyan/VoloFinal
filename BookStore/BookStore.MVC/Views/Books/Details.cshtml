@@ -33,7 +33,7 @@
             @{  
                 decimal Price = Model.Price;
                 Price += Model.CountryPublished.PhoneCode;
-                var p = Price.ToString("G29");
+                var p = Price.ToString();
             }
             <dt>
                 @Html.DisplayNameFor(model => model.Price)
@@ -69,11 +69,12 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Description)     
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Description)
+              @*@Html.DisplayFor(model => model.Description)*@
+              @Html.TextAreaFor(model => model.Description)  
             </dd>
 
         </dl>
@@ -83,3 +84,14 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<style>
+
+    #Description  {
+    width:150%;
+    height:120px;
+    color:black;
+    border:none;
+    overflow:hidden;
+}
+     
+</style>

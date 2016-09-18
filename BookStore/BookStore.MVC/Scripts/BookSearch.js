@@ -29,7 +29,7 @@ function getUrlVars() {
 
 function search() {
     $.ajax({
-        url: "/Books/Index?searchString=" + $('#SearchString').val(),
+        url:"/Books/Index?searchString=" + $('#SearchString').val(),
         ////type:"get",
         success: function (result) {
             ChangeUrl("Index", "/Books/Index?searchString=" + $('#SearchString').val());
@@ -41,7 +41,8 @@ function search() {
 
 $(function () {
     $("#btnSearch").click(function () {
-        var v = $("#SearchString").val;
+        var v = $("#SearchString").val();
+        alert(v);
         if (v != null) {
             search();
         }
