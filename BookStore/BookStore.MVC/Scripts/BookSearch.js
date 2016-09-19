@@ -4,8 +4,11 @@
         success: function (result) {
             $('#ProductList').html(result);
         }
+        
     });
 });
+
+
 
 function ChangeUrl(page, url) {
     if (typeof (history.pushState) != "undefined") {
@@ -15,7 +18,7 @@ function ChangeUrl(page, url) {
         alert("Browser does not support HTML5.");
     }
 }
-
+   
 function getUrlVars() {
     var vars = [], hash;
     var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
@@ -41,8 +44,7 @@ function search() {
 
 $(function () {
     $("#btnSearch").click(function () {
-        var v = $("#SearchString").val();
-        alert(v);
+        var v = $("#SearchString").text();   
         if (v != null) {
             search();
         }

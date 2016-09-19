@@ -28,10 +28,11 @@ namespace BookStore.MVC.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n=>n.Title.StartsWith(searchString) || n.Author.FullName.StartsWith(searchString))).ToList();       
-                if(books == null)
+                if(books.Count == 0)
                 {
-                    return RedirectToAction("View");
-                }         
+                    return PartialView("ViewPartial",searchString);
+                }
+               
             }
        
             return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial", books.ToPagedList(page, pageSize)) :

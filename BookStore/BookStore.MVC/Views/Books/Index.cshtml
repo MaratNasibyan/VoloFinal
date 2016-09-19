@@ -5,21 +5,23 @@
 
 }
 
-<h2>Books</h2>
+<h2>BooksList</h2>
  
 <br />
 <br />
 
 
-<div>  Search by name: 
+<div class="text-center">  Search by name: 
     <input id="SearchString" name="SearchString" type="text" value="" /> 
-    <input type="submit" value="Search" id="btnS[earch" /> 
+    <input type="submit" value="Search" id="btnSearch" /> 
 </div>
-     
+
+<br />
+<br />
+
 <div id="ProductList">
    @Html.Partial("IndexPartial", Model)
 </div>       
- 
 
 @section scripts
  {
@@ -28,8 +30,9 @@
  }
 
  <style>
-input[type=text] 
-{
-    width: 100%;
-}
+    input[type=text] 
+    {
+        width: 100%;
+    }
+    
 </style>

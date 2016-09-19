@@ -230,6 +230,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Images\backimg.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -237,6 +238,8 @@
     <Content Include="HTML\HtmlPage1.html" />
     <Content Include="HTML\JavaScript.js" />
     <Content Include="HTML\StyleSheet1.css" />
+    <Content Include="Images\thumb-1920-451041.jpg" />
+    <Content Include="Images\thumb-1920-476792.jpg" />
     <Content Include="Scripts\AdminSearch.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
@@ -324,8 +327,9 @@
     <Content Include="Views\Attributes\Details.cshtml" />
     <Content Include="Views\Attributes\Edit.cshtml" />
     <Content Include="Views\Attributes\Index.cshtml" />
-    <Content Include="Views\Books\View.cshtml" />
+    <Content Include="Views\Books\ViewPartial.cshtml" />
     <Content Include="Views\Admin\IndexPartial.cshtml" />
+    <Content Include="Views\Admin\IndexNotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BookStore.Entities\BookStore.Entities.csproj">
@@ -341,9 +345,7 @@
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Images\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

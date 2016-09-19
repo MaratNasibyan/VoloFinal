@@ -41,6 +41,7 @@
                             <td>
                                 @{  decimal totalPrice = item.Price;
                                     totalPrice += item.CountryPublished.PhoneCode;
+                                    Math.Round(totalPrice, 2, MidpointRounding.AwayFromZero);
                                 }
                                 @Html.DisplayFor(modelItem => totalPrice) $
 
