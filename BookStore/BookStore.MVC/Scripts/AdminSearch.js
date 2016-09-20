@@ -11,6 +11,7 @@ function ChangeUrl(page, url) {
     if (typeof (history.pushState) != "undefined") {
         var obj = { Page: page, Url: url };
         history.pushState(null, obj.Page, obj.Url);
+        window.location.reload();
     } else {
         alert("Browser does not support HTML5.");
     }
@@ -41,7 +42,7 @@ function search() {
 
 $(function () {
     $("#btnSearch").click(function () {
-        var v = $("#SearchString").val;
+        var v = $("#SearchString").val();
         if (v != null) {
             search();
         }
@@ -79,7 +80,6 @@ $(function () {
 
 
     });
-
-
+    
 
 });
