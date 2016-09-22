@@ -12,8 +12,12 @@ using System.IO;
 using PagedList;
 using BookStore.MVC.Models;
 
+using BookStore.Entities.ViewModel;
+using BookStore.Entities.Service;
+
 namespace BookStore.MVC.Controllers
 {
+    [HandleError]
     public class AdminController : Controller
     {
         private BookDatabaseEntities db = new BookDatabaseEntities();
@@ -33,10 +37,15 @@ namespace BookStore.MVC.Controllers
                 //    return PartialView("IndexNotFound");
                 //}
              
+            
             }
+            BooksListModel model = new BooksListModel
+            {
+                BooksList = BookRelase.GetBookResult(books)
+            };
 
-            return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial", books.ToPagedList(page, pageSize)) :
-               View(books.ToPagedList(page, pageSize));
+            return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial",model.BooksList.ToPagedList(page, pageSize)) :
+               View(model.BooksList.ToPagedList(page, pageSize));
 
         }
 
@@ -94,6 +103,8 @@ namespace BookStore.MVC.Controllers
                 }
                 else
                 {
+                    //string filenamenoimage = Path.Combine(Server.MapPath("~/Images/No.jpg"));
+                    //System.IO.File.Copy()
                     book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = "No.jpg" } };
                 }
 
@@ -203,9 +214,12 @@ namespace BookStore.MVC.Controllers
             ImagePatch patch = db.ImagePatchs.Where(n => n.BooksId == id).FirstOrDefault();
             string patch1 = Path.Combine(Server.MapPath("~/Images"), patch.ImageUrl);
 
-            if (System.IO.File.Exists(patch1))
+            if (patch1 != null && patch.ImageUrl != "No.jpg")
             {
-                System.IO.File.Delete(patch1);
+                if (System.IO.File.Exists(patch1))
+                {
+                    System.IO.File.Delete(patch1);
+                }
             }
             db.Books.Remove(book);
             db.ImagePatchs.Remove(patch);

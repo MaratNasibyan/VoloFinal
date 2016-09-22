@@ -1,0 +1,71 @@
+﻿@model IEnumerable<BookStore.Entities.Book>
+
+@*@using PagedList.Mvc
+    @model PagedList.IPagedList<BookStore.Entities.Book>*@
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Index";
+
+    var options = new AjaxOptions()
+    {
+        UpdateTargetId = "tabledata",
+        Url = Url.Action("OrdersData")
+    };
+}
+
+<h2>Index</h2>
+
+ <p>
+   @Html.ActionLink("Create New", "Create")
+ </p>
+
+@using (Ajax.BeginForm(options))
+{
+@*<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PagesCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Picture)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CountryPublished.CountryName)
+        </th>
+        <th></th>
+    </tr>
+
+    
+    
+</table>*@
+    @Html.TextBox("id")
+    <input type="submit" value="searh" />
+<div id="tabledata">
+    @*@Html.Action("OrdersData", new { id = Model })*@
+    @Html.Partial("OrdersData", Model);
+</div>
+
+}
+
+@section scripts
+{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+}
+
+@*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.PageNumbersOnly))*@

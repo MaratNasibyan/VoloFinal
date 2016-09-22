@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BookStore.Entities.Book>
+﻿@model IEnumerable<BookStore.Entities.ViewModel.BookViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -24,7 +24,7 @@
 <br />
 
 <div id="ProductList">
-    @Html.Partial("IndexPartial", Model)
+    @Html.Partial("IndexPartial",Model)
 </div>
 
 

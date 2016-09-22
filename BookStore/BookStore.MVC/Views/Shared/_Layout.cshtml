@@ -26,6 +26,7 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Cotalog", "Index", "Books")</li>
+                 @*@if (User.Identity.IsAuthenticated)*@
                     <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")

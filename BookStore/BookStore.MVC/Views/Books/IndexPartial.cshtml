@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<BookStore.Entities.Book>
+﻿@model PagedList.IPagedList<BookStore.Entities.ViewModel.BookViewModel>
 @using PagedList.Mvc
 
 @foreach (var item in Model)
@@ -18,7 +18,6 @@
 
                 <p class="Author" style="color:#cea582;font-size:smaller;">@item.Author.FullName</p>
                 <p class="Title" style="color:sandybrown;">@item.Title</p> <br />
-
             </div>
         </a>
     </div>

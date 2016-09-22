@@ -24,6 +24,9 @@ namespace BookStore.Entities
 
         [Required(ErrorMessage = "CountryName is required")]
         public string CountryName { get; set; }
+
+
+        [Required(ErrorMessage = "Iso is required")]
         public string IsoCode { get; set; }
         [Required(ErrorMessage = "PhoneCode is required")]
         public int PhoneCode { get; set; }

@@ -78,7 +78,7 @@
 
             <dd>
               @*@Html.DisplayFor(model => model.Description)*@
-              @Html.TextAreaFor(model => model.Description)  
+              @Html.TextAreaFor(model => model.Description,new {@readonly=true })  
             </dd>
 
         </dl>

@@ -121,7 +121,8 @@
       <DependentUpon>BookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\BookService.cs" />
+    <Compile Include="ViewModel\BookRelase.cs" />
+    <Compile Include="ViewModel\BooksListModel.cs" />
     <Compile Include="ViewModel\BookViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

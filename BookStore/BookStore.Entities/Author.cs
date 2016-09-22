@@ -24,7 +24,9 @@ namespace BookStore.Entities
         [Required(ErrorMessage = "FullName is required")]
         public string FullName { get; set; }
 
-        [Required(ErrorMessage = "DateBirth is required")]
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}",ApplyFormatInEditMode =true)]
         public Nullable<System.DateTime> DateBirth { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

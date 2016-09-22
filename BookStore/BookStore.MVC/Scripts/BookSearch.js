@@ -1,11 +1,14 @@
 ﻿window.addEventListener("popstate", function (e) {
     $.ajax({
-        url: location.reload(true),    
+        url: location.href,    
         success: function (result) {
-            $('#ProductList').html(result);
+            $('#ProductList').html(result);            
         }
     });
+   
 });
+
+
 //window.onpopstate = f;
 //function f()
 //{
@@ -17,15 +20,18 @@
 //    });
 //}
 
-    function LoadWindow() {
-        window.location.reload();
-    }
+
+
+    //function LoadWindow() {
+    //    window.location.reload();
+    //}
 
     function ChangeUrl(page, url) {
         if (typeof (history.pushState) != "undefined") {
             var obj = { Page: page, Url: url };
+            
             history.pushState(null, obj.Page, obj.Url);
-            window.location.reload();
+         
         } else {
             alert("Browser does not support HTML5.");
         }
@@ -47,10 +53,12 @@
             url: "/Books/Index?searchString=" + $('#SearchString').val(),
             ////type:"get",
             success: function (result) {
+              
                 ChangeUrl("Index", "/Books/Index?searchString=" + $('#SearchString').val());
                 $('#ProductList').html(result);
             }
         });
+        //window.location.reload(true);
     }
 
 
@@ -90,7 +98,6 @@
                     $('#ProductList').html(result);
                 }
             });
-
-
+            
         });
     });

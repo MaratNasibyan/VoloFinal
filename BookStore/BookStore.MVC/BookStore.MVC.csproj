@@ -207,8 +207,10 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AttributesController.cs" />
     <Compile Include="Controllers\AuthorsController.cs" />
+    <Compile Include="Controllers\Books1Controller.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\CountryPublishedsController.cs" />
+    <Compile Include="Controllers\ExampleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -235,9 +237,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="HTML\HtmlPage1.html" />
-    <Content Include="HTML\JavaScript.js" />
-    <Content Include="HTML\StyleSheet1.css" />
+    <Content Include="Images\No.jpg" />
     <Content Include="Images\thumb-1920-451041.jpg" />
     <Content Include="Images\thumb-1920-476792.jpg" />
     <Content Include="Scripts\AdminSearch.js" />
@@ -330,6 +330,17 @@
     <Content Include="Views\Books\ViewPartial.cshtml" />
     <Content Include="Views\Admin\IndexPartial.cshtml" />
     <Content Include="Views\Admin\IndexNotFound.cshtml" />
+    <Content Include="Views\Example\Create.cshtml" />
+    <Content Include="Views\Example\Delete.cshtml" />
+    <Content Include="Views\Example\Details.cshtml" />
+    <Content Include="Views\Example\Edit.cshtml" />
+    <Content Include="Views\Example\Index.cshtml" />
+    <Content Include="Views\Example\OrdersData.cshtml" />
+    <Content Include="Views\Books1\Create.cshtml" />
+    <Content Include="Views\Books1\Delete.cshtml" />
+    <Content Include="Views\Books1\Details.cshtml" />
+    <Content Include="Views\Books1\Edit.cshtml" />
+    <Content Include="Views\Books1\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BookStore.Entities\BookStore.Entities.csproj">

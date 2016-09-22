@@ -9,6 +9,9 @@ using System.Web;
 using System.Web.Mvc;
 using BookStore.Entities;
 using PagedList;
+using BookStore.Entities.ViewModel;
+using BookStore.Entities.Service;
+
 namespace BookStore.MVC.Controllers
 {
     public class BooksController : Controller
@@ -30,13 +33,18 @@ namespace BookStore.MVC.Controllers
                 books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n=>n.Title.StartsWith(searchString) || n.Author.FullName.StartsWith(searchString))).ToList();       
                 if(books.Count == 0)
                 {
-                    return PartialView("ViewPartial",searchString);
+                    return PartialView("ViewPartial");
                 }
                
             }
-       
-            return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial", books.ToPagedList(page, pageSize)) :
-                View(books.ToPagedList(page, pageSize));
+
+            BooksListModel model = new BooksListModel
+            {
+                BooksList = BookRelase.GetBookResult(books)
+            };
+
+            return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial", model.BooksList.ToPagedList(page, pageSize)) :
+                View(model.BooksList.ToPagedList(page, pageSize));
         
         }
     
