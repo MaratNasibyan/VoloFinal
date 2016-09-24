@@ -66,7 +66,7 @@ $(function () {
         } else {
             searchString = '&searchString=' + searchString;
         }
-        var sort = $('#ProductList  #table  a').text();
+        //var sort = $('#ProductList  #table  a').text();
         //var sortUrl = '&sortOption=' + sort;
         var currentsort = getUrlVars()['sortOption'];
         var url = $(this).attr('href') + searchString;
@@ -81,7 +81,7 @@ $(function () {
         
     });
 
-    $('body').on('click',  '#ProductList table #Price,#Title ', function (event) {
+    $('body').on('click',  '#ProductList table #Price ', function (event) {
 
         event.preventDefault();
 
@@ -99,9 +99,9 @@ $(function () {
         switch(currentSortOption)
         {
             case "Price_ASC": sort = "sortOption=Price_DESC"; break;
-            case "Price_DESC": sort = "sortOption=Price_DESC"; break;
+            case "Price_DESC": sort = "sortOption=Price_ASC"; break;
             case "Title_ASC": sort="sortOption=Title_DESC"; break;
-            case "Title_DESC": sort = "sortOption=Price_DESC"; break;
+            case "Title_DESC": sort = "sortOption=Price_ASC"; break;
             default: sort = ""; break;
         }
               
