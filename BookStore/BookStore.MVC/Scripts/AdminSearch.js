@@ -81,7 +81,7 @@ $(function () {
         
     });
 
-    $('body').on('click',  '#ProductList table #Price ', function (event) {
+    $('body').on('click',  '#ProductList table #Price', function (event) {
 
         event.preventDefault();
 

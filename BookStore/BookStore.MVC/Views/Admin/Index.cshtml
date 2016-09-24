@@ -54,27 +54,3 @@
 
 
 
-
-
-            @*<script>
-                    var app = angular.module('myApp', []);
-                    app.controller('myCtrl', function ($scope, BooksService) {
-
-                        getTabledata();
-                        function getTabledata() {
-                            BooksService.getData().then(function (d) {
-                                $scope.search = {};
-                                $scope.searchBy = '$';
-
-                                $scope.BooksList = d.data;
-
-                            })
-                        }
-                    });
-
-                    app.service("BooksService", function ($http) {
-                        this.getData = function () {
-                            return $http.get("/Admin/GetRecords");
-                        }
-                    });
-                </script>*@
