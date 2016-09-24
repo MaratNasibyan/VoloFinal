@@ -23,26 +23,34 @@ namespace BookStore.MVC.Controllers
         private BookDatabaseEntities db = new BookDatabaseEntities();
 
        // GET: Admin
-        public ActionResult Index(string searchString, int page = 1)
+        public ActionResult Index(string searchString, string sortOption, int page = 1)
         {
-            int pageSize = 5;
-            
+            int pageSize = 5;            
             var books = db.Books.ToList();
-            var st = "asd";
             if (!string.IsNullOrEmpty(searchString))
             {
                 books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Title.StartsWith(searchString) || n.Author.FullName.StartsWith(searchString))).ToList();
-                //if (books.Count == 0)
+                //if (!books.Any())
                 //{
-                //    return PartialView("IndexNotFound");
+                //    return Content("This book is not found");
                 //}
-             
-            
+
             }
             BooksListModel model = new BooksListModel
             {
                 BooksList = BookRelase.GetBookResult(books)
             };
+                       
+            switch(sortOption)
+            {
+                case "Title_ASC": model.BooksList = model.BooksList.OrderBy(n => n.Title).ToList(); break;
+                case "Title_DESC":model.BooksList = model.BooksList.OrderByDescending(n => n.Title).ToList();break;
+                
+                case "Price_ASC": model.BooksList= model.BooksList.OrderBy(n => n.Price).ToList();break;
+                case "Price_DESC": model.BooksList = model.BooksList.OrderByDescending(n => n.Price).ToList(); break;
+                default:model.BooksList = model.BooksList.OrderBy(n => n.Id).ToList();break;
+            }
+          
 
             return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial",model.BooksList.ToPagedList(page, pageSize)) :
                View(model.BooksList.ToPagedList(page, pageSize));
@@ -53,14 +61,24 @@ namespace BookStore.MVC.Controllers
         // GET: Admin/Details/5
         public async Task<ActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Book book = await db.Books.FindAsync(id);
-            if (book == null)
+
+            try
             {
-                return HttpNotFound();
+                if (id == null)
+                {
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return PartialView("IndexNotFound", id.ToString());
+                }
+                if (book == null)
+                {
+                    //return HttpNotFound();
+                    return PartialView("IndexNotFound", id.ToString());
+                }
+            }
+            catch
+            {
+                return Content("Error");
             }
             return View(book);
         }
@@ -124,12 +142,14 @@ namespace BookStore.MVC.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return PartialView("IndexNotFound", id.ToString());
             }
             Book book = await db.Books.FindAsync(id);
             if (book == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound();
+                return PartialView("IndexNotFound", id.ToString());
             }
             ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName", book.AuthorsId);
             ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName", book.CountryPublishedId);
@@ -193,14 +213,17 @@ namespace BookStore.MVC.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return PartialView("IndexNotFound", id.ToString());
+
             }
             Book book = await db.Books.FindAsync(id);
           
             
             if (book == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound();
+                return PartialView("IndexNotFound", id.ToString());
             }
             return View(book);
         }

@@ -341,6 +341,9 @@
     <Content Include="Views\Books1\Details.cshtml" />
     <Content Include="Views\Books1\Edit.cshtml" />
     <Content Include="Views\Books1\Index.cshtml" />
+    <Content Include="Views\Books1\ErrorPartial.cshtml" />
+    <Content Include="Views\Authors\PartialNotFoundView.cshtml" />
+    <Content Include="Views\CountryPublisheds\PartialNotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BookStore.Entities\BookStore.Entities.csproj">

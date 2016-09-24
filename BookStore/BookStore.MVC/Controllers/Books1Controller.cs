@@ -38,7 +38,7 @@ namespace BookStore.MVC.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return PartialView("ErrorPartial");
             }
             Book book = db.Books.Find(id);
             if (book == null)
@@ -115,12 +115,13 @@ namespace BookStore.MVC.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return PartialView("ErrorPartial")/*new HttpStatusCodeResult(HttpStatusCode.BadRequest)*/;
             }
             Book book = db.Books.Find(id);
             if (book == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound();
+                return PartialView("ErrorPartial");
             }
             return View(book);
         }

@@ -23,7 +23,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Price)
+            @{ decimal price = Model.Price;  var p = price.ToString("0.##"); }
+            @Html.DisplayFor(model => price)
         </dd>
 
         <dt>

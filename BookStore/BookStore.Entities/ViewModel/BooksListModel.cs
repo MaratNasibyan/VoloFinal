@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Entities.ViewModel
 {
-    public   class BooksListModel
+    public  class BooksListModel
     {
         public  List<BookViewModel> BooksList { get; set; }
     }
