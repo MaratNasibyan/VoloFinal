@@ -33,7 +33,7 @@ namespace BookStore.MVC.Controllers
                 books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n=>n.Title.StartsWith(searchString) || n.Author.FullName.StartsWith(searchString))).ToList();       
                 if(books.Count == 0)
                 {
-                    return PartialView("ViewPartial");
+                    return PartialView("ViewPartial",searchString);
                 }
                
             }
@@ -55,12 +55,16 @@ namespace BookStore.MVC.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return View(new HttpStatusCodeResult(HttpStatusCode.BadRequest));
+                return PartialView("ViewPartial", id.ToString());
             }
+
             Book book = await db.Books.FindAsync(id);
             if (book == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound();
+                return PartialView("ViewPartial", id.ToString());
+
             }
             return View(book);
         }        

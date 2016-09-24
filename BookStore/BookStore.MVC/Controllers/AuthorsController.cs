@@ -26,12 +26,15 @@ namespace BookStore.MVC.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return PartialView("PartialNotFoundView", id.ToString());
             }
             Author author = await db.Authors.FindAsync(id);
             if (author == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound();
+                return PartialView("PartialNotFoundView", id.ToString());
+
             }
             return View(author);
         }
@@ -64,12 +67,15 @@ namespace BookStore.MVC.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return PartialView("PartialNotFoundView", id.ToString());
             }
             Author author = await db.Authors.FindAsync(id);
             if (author == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound();
+                return PartialView("PartialNotFoundView", id.ToString());
+
             }
             return View(author);
         }
@@ -95,12 +101,15 @@ namespace BookStore.MVC.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return PartialView("PartialNotFoundView", id.ToString());
+                
             }
             Author author = await db.Authors.FindAsync(id);
             if (author == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound();
+                return PartialView("PartialNotFoundView", id.ToString());
             }
             return View(author);
         }

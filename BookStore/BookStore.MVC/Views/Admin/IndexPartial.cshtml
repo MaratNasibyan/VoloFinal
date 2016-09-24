@@ -6,16 +6,16 @@
     <thead>
         <tr>
             <th>
-                Title
-
+                Id
             </th>
             <th>
-                Price
-
+                Title
+            </th>
+            <th>
+           @*   @Html.ActionLink("Price","Index")*@<a href="" id="Price">Price</a>
             </th>
             <th>
                 PageCount
-
             </th>
 
             <th>
@@ -35,15 +35,18 @@
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem=>item.Id)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Title)
 
                 </td>
                 <td>
-                    @{  decimal totalPrice = item.Price;
-                        totalPrice += item.CountryPublished.PhoneCode;
-
-                    }
-                    @Html.DisplayFor(modelItem => totalPrice) $
+                    @{ 
+                        decimal totalPrice = item.Price + item.CountryPublished.PhoneCode;
+                        var price = totalPrice.ToString("0.##");
+                     }
+                  $ @Html.DisplayFor(modelItem => price) 
 
                 </td>
                 <td>
@@ -73,7 +76,7 @@
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 </td>
             </tr>
-                        }
+     }
     </tbody>
 </table>
 

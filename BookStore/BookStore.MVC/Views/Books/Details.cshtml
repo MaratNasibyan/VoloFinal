@@ -35,15 +35,15 @@
             </dd>
 
             @{  
-                decimal Price = Model.Price;
-                Price += Model.CountryPublished.PhoneCode;
-                var p = Price.ToString();
+                decimal Price = Model.Price + Model.CountryPublished.PhoneCode;
+                
+                var p = Price.ToString("0.##");
             }
             <dt>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => Price)
             </dt>
             <dd>
-                 @Html.DisplayFor(model => p) $ 
+                $ @Html.DisplayFor(model => p)  
             </dd>
                      
 

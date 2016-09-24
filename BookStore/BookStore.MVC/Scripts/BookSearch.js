@@ -2,29 +2,13 @@
     $.ajax({
         url: location.href,    
         success: function (result) {
-            $('#ProductList').html(result);            
+            $('#ProductList').html(result);
+          
         }
     });
    
-});
+ });
 
-
-//window.onpopstate = f;
-//function f()
-//{
-//    $.ajax({
-//        url: location.reload(true),
-//        success: function (result) {
-//            $('#ProductList').html(result);
-//        }
-//    });
-//}
-
-
-
-    //function LoadWindow() {
-    //    window.location.reload();
-    //}
 
     function ChangeUrl(page, url) {
         if (typeof (history.pushState) != "undefined") {

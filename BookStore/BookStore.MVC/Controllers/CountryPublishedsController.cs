@@ -26,12 +26,15 @@ namespace BookStore.MVC.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return PartialView("PartialNotFound", id.ToString());
             }
             CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
             if (countryPublished == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound();
+                return PartialView("PartialNotFound", id.ToString());
+
             }
             return View(countryPublished);
         }
@@ -64,12 +67,16 @@ namespace BookStore.MVC.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return PartialView("PartialNotFound", id.ToString());
+
             }
             CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
             if (countryPublished == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound();
+                return PartialView("PartialNotFound", id.ToString());
+
             }
             return View(countryPublished);
         }
@@ -95,12 +102,16 @@ namespace BookStore.MVC.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return PartialView("PartialNotFound", id.ToString());
+
             }
             CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
             if (countryPublished == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound();
+                return PartialView("PartialNotFound", id.ToString());
+
             }
             return View(countryPublished);
         }
