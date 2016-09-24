@@ -285,6 +285,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="404.html" />
     <Content Include="App_Data\BookDatabase.mdf" />
     <Content Include="App_Data\BookDatabase_log.ldf">
       <DependentUpon>BookDatabase.mdf</DependentUpon>
@@ -300,6 +301,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\ImgError\404_page_17.bmp" />
     <Content Include="Images\ImgSlide\book_PNG2115.png" />
     <Content Include="Images\ImgSlide\book_PNG2116.png" />
     <Content Include="Images\ImgSlide\book_PNG2121.png" />
@@ -432,7 +434,9 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ErrorPage\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
