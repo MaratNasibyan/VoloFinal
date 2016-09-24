@@ -28,7 +28,7 @@ namespace BookStore.MVC.Controllers
             int pageSize = 5;
             
             var books = db.Books.ToList();
-
+            var st = "asd";
             if (!string.IsNullOrEmpty(searchString))
             {
                 books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Title.StartsWith(searchString) || n.Author.FullName.StartsWith(searchString))).ToList();

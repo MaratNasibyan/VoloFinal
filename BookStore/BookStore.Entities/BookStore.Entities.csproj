@@ -126,13 +126,6 @@
     <Compile Include="ViewModel\BookViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BookDatabase.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="BookDatabase_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>BookDatabase.mdf</DependentUpon>
-    </Content>
     <Content Include="BookModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BookModel.edmx</DependentUpon>
