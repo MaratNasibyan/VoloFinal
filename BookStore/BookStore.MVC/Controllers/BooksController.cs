@@ -24,10 +24,9 @@ namespace BookStore.MVC.Controllers
         public ActionResult Index(string searchString,  int page = 1)
         {
             int pageSize = 5;
-            //int pageNumber = 1;
-
+           
             var books = db.Books.ToList();
-            
+
             if (!string.IsNullOrEmpty(searchString))
             {
                 books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n=>n.Title.StartsWith(searchString) || n.Author.FullName.StartsWith(searchString))).ToList();       
@@ -35,8 +34,7 @@ namespace BookStore.MVC.Controllers
                 {
                     return PartialView("ViewPartial",searchString);
                 }
-               
-            }
+             }
 
             BooksListModel model = new BooksListModel
             {

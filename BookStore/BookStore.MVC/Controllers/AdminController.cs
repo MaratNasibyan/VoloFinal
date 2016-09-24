@@ -51,7 +51,6 @@ namespace BookStore.MVC.Controllers
                 default:model.BooksList = model.BooksList.OrderBy(n => n.Id).ToList();break;
             }
           
-
             return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial",model.BooksList.ToPagedList(page, pageSize)) :
                View(model.BooksList.ToPagedList(page, pageSize));
 
