@@ -14,7 +14,7 @@ namespace BookStore.Entities.ViewModel
         public decimal Price { get; set; }
         public string Description { get; set; }
         public int PagesCount { get; set; }
-      
+        
 
         public CountryPublished  CountryPublished { get; set; }
         public Author Author  { get; set; }

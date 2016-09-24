@@ -69,7 +69,7 @@ $(function () {
         var sort = $('#ProductList  #table  a').text();
         //var sortUrl = '&sortOption=' + sort;
         var currentsort = getUrlVars()['sortOption'];
-        var url = $(this).attr('href') + searchString+'&sortOption=Price_ASC';
+        var url = $(this).attr('href') + searchString;
         console.log(url);
         $.ajax({
             url: url,
@@ -81,7 +81,7 @@ $(function () {
         
     });
 
-    $('body').on('click',  '#ProductList table #Price ', function (event) {
+    $('body').on('click',  '#ProductList table #Price,#Title ', function (event) {
 
         event.preventDefault();
 
@@ -92,22 +92,37 @@ $(function () {
             searchString = '&searchString=' + searchString;
         }
         var columnToSort = $(this).text();
-      
+        var currentSortOption = getUrlVars()['sortOption'];
+        console.log(currentSortOption);
         var sort;
       
+        switch(currentSortOption)
+        {
+            case "Price_ASC": sort = "sortOption=Price_DESC"; break;
+            case "Price_DESC": sort = "sortOption=Price_DESC"; break;
+            case "Title_ASC": sort="sortOption=Title_DESC"; break;
+            case "Title_DESC": sort = "sortOption=Price_DESC"; break;
+            default: sort = ""; break;
+        }
+              
+
         switch (columnToSort) {
-            case 'Title':               
-                    sort = 'sortOption=Title_ASC';                
+            case 'Price':
+                if (currentSortOption != 'Price_ASC' && currentSortOption != 'Price_DESC') {
+                    sort = 'sortOption=Price_ASC';
+                }               
                 break;
-            case 'Price':               
-                    sort = 'sortOption=Price_ASC';                
-                break;            
+            case 'Title':
+                if(currentSortOption != 'Title_ASC' && currentSortOption != 'Title_DESC')
+                    sort = 'sortOption=Title_ASC';                
+                break;                       
             default:
                 sort = '';
                 break;
 
         }
        
+
         if (sort != '' & searchString != '') {
             sort = '&' + sort;
         }

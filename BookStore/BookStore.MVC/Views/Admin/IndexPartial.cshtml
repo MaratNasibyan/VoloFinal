@@ -4,15 +4,13 @@
 
 <table>
     <thead>
-        <tr>
-            <th>
-                Id
+        <tr>           
+            <th>               
+                <a href="" id="Titlee">Title</a>
             </th>
             <th>
-                Title
-            </th>
-            <th>
-           @*   @Html.ActionLink("Price","Index")*@<a href="" id="Price">Price</a>
+              @*@Html.ActionLink("Price","Index")*@
+                <a href="" id="Price">Price</a>
             </th>
             <th>
                 PageCount
@@ -33,10 +31,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem=>item.Id)
-                </td>
+            <tr>                
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)
 
