@@ -69,21 +69,27 @@ $(function () {
         //var sort = $('#ProductList  #table  a').text();
         //var sortUrl = '&sortOption=' + sort;
         var currentSortOption;
-        if (currentSortOption == "") {
-            currentSortOption = "Price_ASC";
-        }
-        else
-        {
+        //if (currentSortOption == "") {
+        //    currentSortOption = "Price_ASC";
+        //}
+        //else
+        //{
              currentSortOption = getUrlVars()['sortOption'];
 
-        }
+        //}
 
         var sort;
         switch (currentSortOption) {
             case "Price_ASC": sort = "sortOption=Price_ASC"; break;
             case "Price_DESC": sort = "sortOption=Price_DESC"; break;
-            case "Title_ASC": sort = "sortOption=Title_DESC"; break;
-            case "Title_DESC": sort = "sortOption=Price_ASC"; break;
+            case "Title_ASC": sort = "sortOption=Title_ASC"; break;
+            case "Title_DESC": sort = "sortOption=Title_DESCSC"; break;
+            case "Author_ASC": sort = "sortOption=Author_ASC"; break;
+            case "Author_DESC": sort = "sortOption=Author_DESC"; break;
+            case "PageCount_ASC": sort = "sortOption=PageCount_ASC"; break;
+            case "PageCount_DESC": sort = "sortOption=PageCount_DESC"; break;
+            case "Country_ASC": sort = "sortOption=Country_ASC"; break;
+            case "Country_DESC": sort = "sortOption=Country_DESC"; break;
             default: sort = ""; break;
         }
                 
@@ -99,7 +105,7 @@ $(function () {
         });        
     });
 
-    $('body').on('click',  '#ProductList table #Price', function (event) {
+    $('body').on('click',  '#ProductList table .Price', function (event) {
 
         event.preventDefault();
 
@@ -119,7 +125,13 @@ $(function () {
             case "Price_ASC": sort = "sortOption=Price_DESC"; break;
             case "Price_DESC": sort = "sortOption=Price_ASC"; break;
             case "Title_ASC": sort="sortOption=Title_DESC"; break;
-            case "Title_DESC": sort = "sortOption=Price_ASC"; break;
+            case "Title_DESC": sort = "sortOption=Title_ASC"; break;
+            case "Author_ASC": sort = "sortOption=Author_DESC"; break;
+            case "Author_DESC": sort = "sortOption=Author_ASC"; break;
+            case "PageCount_ASC": sort = "sortOption=PageCount_DESC"; break;
+            case "PageCount_DESC": sort = "sortOption=PageCount_ASC"; break;
+            case "Country_ASC": sort = "sortOption=Country_DESC"; break;
+            case "Country_DESC": sort = "sortOption=Country_ASC"; break;
             default: sort = ""; break;
         }
               
@@ -133,11 +145,21 @@ $(function () {
             case 'Title':
                 if(currentSortOption != 'Title_ASC' && currentSortOption != 'Title_DESC')
                     sort = 'sortOption=Title_ASC';                
-                break;                       
+                break;
+            case 'Author':
+                if (currentSortOption != 'Author_ASC' && currentSortOption != 'Author_DESC')
+                    sort = 'sortOption=Author_ASC';
+                break;
+            case 'PageCount':
+                if (currentSortOption != 'PageCount_ASC' && currentSortOption != 'PageCount_DESC')
+                    sort = 'sortOption=PageCount_ASC';
+                break;
+            case 'Country': if (currentSortOption != 'Country_ASC' && currentSortOption != 'Country_DESC')
+                sort = 'sortOption=Country_ASC';
+                break;
             default:
                 sort = '';
                 break;
-
         }
        
 

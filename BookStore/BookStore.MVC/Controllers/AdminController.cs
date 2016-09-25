@@ -44,10 +44,15 @@ namespace BookStore.MVC.Controllers
             switch(sortOption)
             {
                 case "Title_ASC": model.BooksList = model.BooksList.OrderBy(n => n.Title).ToList(); break;
-                case "Title_DESC":model.BooksList = model.BooksList.OrderByDescending(n => n.Title).ToList();break;
-                
+                case "Title_DESC":model.BooksList = model.BooksList.OrderByDescending(n => n.Title).ToList();break;                
                 case "Price_ASC": model.BooksList= model.BooksList.OrderBy(n => n.Price).ToList();break;
                 case "Price_DESC": model.BooksList = model.BooksList.OrderByDescending(n => n.Price).ToList(); break;
+                case "Author_ASC":model.BooksList = model.BooksList.OrderBy(n => n.Author.FullName).ToList();break;
+                case "Author_DESC":model.BooksList = model.BooksList.OrderByDescending(n => n.Author.FullName).ToList();break;
+                case "PageCount_ASC":model.BooksList = model.BooksList.OrderBy(n => n.PagesCount).ToList();break;
+                case "PageCount_DESC":model.BooksList = model.BooksList.OrderByDescending(n => n.PagesCount).ToList();break;
+                case "Country_ASC":model.BooksList = model.BooksList.OrderBy(n => n.CountryPublished.CountryName).ToList();break;
+                case "Country_DESC":model.BooksList = model.BooksList.OrderByDescending(n => n.CountryPublished.CountryName).ToList();break;
                 default:model.BooksList = model.BooksList.OrderBy(n => n.Id).ToList();break;
             }
           
