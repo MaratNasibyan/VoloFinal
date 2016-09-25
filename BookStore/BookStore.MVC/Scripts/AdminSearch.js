@@ -68,8 +68,27 @@ $(function () {
         }
         //var sort = $('#ProductList  #table  a').text();
         //var sortUrl = '&sortOption=' + sort;
-        var currentsort = getUrlVars()['sortOption'];
-        var url = $(this).attr('href') + searchString;
+        var currentSortOption;
+        if (currentSortOption == "") {
+            currentSortOption = "Price_ASC";
+        }
+        else
+        {
+             currentSortOption = getUrlVars()['sortOption'];
+
+        }
+
+        var sort;
+        switch (currentSortOption) {
+            case "Price_ASC": sort = "sortOption=Price_ASC"; break;
+            case "Price_DESC": sort = "sortOption=Price_DESC"; break;
+            case "Title_ASC": sort = "sortOption=Title_DESC"; break;
+            case "Title_DESC": sort = "sortOption=Price_ASC"; break;
+            default: sort = ""; break;
+        }
+                
+
+        var url = $(this).attr('href') + searchString + '&'+sort;
         console.log(url);
         $.ajax({
             url: url,
@@ -77,8 +96,7 @@ $(function () {
                 ChangeUrl("Index", url);
                 $('#ProductList').html(result);
             }
-        });
-        
+        });        
     });
 
     $('body').on('click',  '#ProductList table #Price', function (event) {
