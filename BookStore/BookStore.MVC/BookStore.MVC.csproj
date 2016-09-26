@@ -302,10 +302,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\ImgBest2016\23174274.jpg" />
+    <Content Include="Images\ImgBest2016\25494343.jpg" />
+    <Content Include="Images\ImgBest2016\29056083.jpg" />
     <Content Include="Images\ImgError\404_page_17.bmp" />
-    <Content Include="Images\ImgSlide\book_PNG2115.png" />
-    <Content Include="Images\ImgSlide\book_PNG2116.png" />
-    <Content Include="Images\ImgSlide\book_PNG2121.png" />
+    <Content Include="Images\ImgSlide\Minsizebook_PNG2115.png" />
+    <Content Include="Images\ImgSlide\MinSizebook_PNG2116.png" />
+    <Content Include="Images\ImgSlide\MinSizebook_PNG2121.png" />
     <Content Include="Images\No.jpg" />
     <Content Include="Images\thumb-1920-451041.jpg" />
     <Content Include="Images\thumb-1920-476792.jpg" />
@@ -422,6 +425,7 @@
     <Content Include="Views\Authors\PartialNotFoundView.cshtml" />
     <Content Include="Views\CountryPublisheds\PartialNotFound.cshtml" />
     <Content Include="Views\Shared\Error404.cshtml" />
+    <Content Include="Views\Books1\Modal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BookStore.Entities\BookStore.Entities.csproj">

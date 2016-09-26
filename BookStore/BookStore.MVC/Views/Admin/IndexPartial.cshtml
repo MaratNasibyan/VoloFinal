@@ -1,7 +1,6 @@
 ﻿@using PagedList.Mvc
 @model PagedList.IPagedList<BookStore.Entities.ViewModel.BookViewModel>
 
-
 <table>
     <thead>
         <tr>           
@@ -59,7 +58,6 @@
                         {
                             <img src="~/Images/@v.ImageUrl" style="height:100px;width:80px;" />
                         }
-
                     }
                 </td>
                 <td>
@@ -80,10 +78,13 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 
 <style>
-    thead {
+    thead  {
         background-color: #f5f5f5;
     }
-
+    thead th
+    {
+        color:dodgerblue;
+    }
     td, th {
         text-align: center;
         border-bottom: 1px solid #ddd;

@@ -92,9 +92,9 @@ $(function () {
             case "Country_DESC": sort = "sortOption=Country_DESC"; break;
             default: sort = ""; break;
         }
-                
 
-        var url = $(this).attr('href') + searchString + '&'+sort;
+        var url = $(this).attr('href') + searchString + '&' + sort;
+             
         console.log(url);
         $.ajax({
             url: url,
