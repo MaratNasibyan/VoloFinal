@@ -306,9 +306,13 @@
     <Content Include="Images\ImgBest2016\25494343.jpg" />
     <Content Include="Images\ImgBest2016\29056083.jpg" />
     <Content Include="Images\ImgError\404_page_17.bmp" />
+    <Content Include="Images\ImgSlide\1.jpg" />
+    <Content Include="Images\ImgSlide\2.jpg" />
+    <Content Include="Images\ImgSlide\3.jpg" />
     <Content Include="Images\ImgSlide\Minsizebook_PNG2115.png" />
     <Content Include="Images\ImgSlide\MinSizebook_PNG2116.png" />
     <Content Include="Images\ImgSlide\MinSizebook_PNG2121.png" />
+    <Content Include="Images\ImgSlide\programming-with-c-3-edition-9780070145900.jpg" />
     <Content Include="Images\No.jpg" />
     <Content Include="Images\thumb-1920-451041.jpg" />
     <Content Include="Images\thumb-1920-476792.jpg" />

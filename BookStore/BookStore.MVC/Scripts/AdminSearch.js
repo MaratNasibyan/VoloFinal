@@ -95,7 +95,7 @@ $(function () {
 
         var url = $(this).attr('href') + searchString + '&' + sort;
              
-        console.log(url);
+        //console.log(url);
         $.ajax({
             url: url,
             success: function (result) {

@@ -74,7 +74,7 @@
                 searchString = '&searchString=' + searchString;
             }
             var url = $(this).attr('href') + searchString;
-            console.log(url);
+            //console.log(url);
             $.ajax({
                 url: url,
                 success: function (result) {
