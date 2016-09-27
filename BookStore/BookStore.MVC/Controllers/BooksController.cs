@@ -29,7 +29,7 @@ namespace BookStore.MVC.Controllers
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n=>n.Title.StartsWith(searchString) || n.Author.FullName.StartsWith(searchString))).ToList();       
+                books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n=>n.Title.Contains(searchString) || n.Author.FullName.Contains(searchString))).ToList();       
                 if(books.Count == 0)
                 {
                     return PartialView("ViewPartial",searchString);
