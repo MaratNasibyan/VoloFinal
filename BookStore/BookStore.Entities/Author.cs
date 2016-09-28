@@ -24,11 +24,13 @@ namespace BookStore.Entities
         [Required(ErrorMessage = "FullName is required")]
         public string FullName { get; set; }
 
-        //[Required]
-        //[DataType(DataType.Date)]
-        //[DisplayFormat(DataFormatString = "{02:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> DateBirth { get; set; }
-    
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        //public Nullable<System.DateTime> DateBirth { get; set; }
+        public DateTime? DateBirth { get; set; }
+
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Book> Books { get; set; }
     }

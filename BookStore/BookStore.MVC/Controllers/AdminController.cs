@@ -18,6 +18,7 @@ using BookStore.Entities.Service;
 namespace BookStore.MVC.Controllers
 {
     [HandleError]
+    [Authorize]
     public class AdminController : Controller
     {
         private BookDatabaseEntities db = new BookDatabaseEntities();
@@ -55,7 +56,9 @@ namespace BookStore.MVC.Controllers
                 case "Country_DESC":model.BooksList = model.BooksList.OrderByDescending(n => n.CountryPublished.CountryName).ToList();break;
                 default:model.BooksList = model.BooksList.OrderBy(n => n.Id).ToList();break;
             }
-          
+            
+
+
             return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial",model.BooksList.ToPagedList(page, pageSize)) :
                View(model.BooksList.ToPagedList(page, pageSize));
 
@@ -63,6 +66,7 @@ namespace BookStore.MVC.Controllers
 
 
         // GET: Admin/Details/5
+        [Authorize]
         public async Task<ActionResult> Details(int? id)
         {
             Book book = await db.Books.FindAsync(id);
@@ -88,6 +92,7 @@ namespace BookStore.MVC.Controllers
         }
 
         // GET: Admin/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName");
@@ -101,6 +106,7 @@ namespace BookStore.MVC.Controllers
       
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<ActionResult> Create([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,CountryPublishedId,AuthorsId")] Book book,HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
@@ -142,6 +148,7 @@ namespace BookStore.MVC.Controllers
         }
 
         // GET: Admin/Edit/5
+        [Authorize]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -165,6 +172,7 @@ namespace BookStore.MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,CountryPublishedId,AuthorsId")] Book book,HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
@@ -213,6 +221,7 @@ namespace BookStore.MVC.Controllers
         }
 
         // GET: Admin/Delete/5
+        [Authorize]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -235,6 +244,7 @@ namespace BookStore.MVC.Controllers
         // POST: Admin/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Book book = await db.Books.FindAsync(id);

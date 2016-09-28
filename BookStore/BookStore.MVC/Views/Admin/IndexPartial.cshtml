@@ -36,9 +36,9 @@
                 <td>
                     @{ 
                         decimal totalPrice = item.Price + item.CountryPublished.PhoneCode;
-                        var price = totalPrice.ToString("0.##");
+                        var price = totalPrice.ToString("C2");
                      }
-                  $ @Html.DisplayFor(modelItem => price)
+                    @Html.DisplayFor(modelItem => price)
 
                 </td>
                 <td>
