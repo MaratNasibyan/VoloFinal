@@ -31,10 +31,11 @@ namespace BookStore.MVC.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Title.Contains(searchString) || n.Author.FullName.Contains(searchString))).ToList();
-                //if (!books.Any())
-                //{
-                //    return Content("This book is not found");
-                //}
+                if (!books.Any())
+                {
+                    //return Content("This book is not found <a href='~Admin/Index'>Go</a> ");
+                    return PartialView("BookNot",searchString);
+                }
 
             }
             BooksListModel model = new BooksListModel

@@ -3,13 +3,21 @@
 
 @{
     ViewBag.Title = "Index";
-
 }
 
  <h2 style="color:#867fb1">BooksList</h2>
 <br />
 <br />
+<link href="~/Content/Site.css" rel="stylesheet" />
+@*<div class="button_box2">
+    <form class="form-wrapper-2 cf">
+        <input type="text" name="searchString" id="SearchString" placeholder="Search by Book or Author..." required>
+        <button type="submit" id="btnSearch"><i class="glyphicon glyphicon-search"></i></button>
+    </form>
+</div>*@
 
+
+  
 
 <div class="text-center"> 
     <span style="color:#867fb1" >Search by name: </span>
@@ -19,7 +27,8 @@
 
 <br />
 <br />
-
+<br />
+<br />
 <div id="ProductList">
    @Html.Partial("IndexPartial",Model)
 </div>       
@@ -30,10 +39,9 @@
     <link href="~/Content/PagedList.css" rel="stylesheet" />      
     <script src="~/Scripts/BookSearch.js"></script>     
  }
-
- <style>
-    input[type=text] 
+<style>
+    #SearchString
     {
-        width: 100%;
-    }    
+        width:100%;
+    }
 </style>

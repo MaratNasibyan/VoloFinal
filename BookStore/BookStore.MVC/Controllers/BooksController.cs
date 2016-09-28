@@ -30,7 +30,7 @@ namespace BookStore.MVC.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n=>n.Title.Contains(searchString) || n.Author.FullName.Contains(searchString))).ToList();       
-                if(books.Count == 0)
+                if(!books.Any())
                 {
                     return PartialView("ViewPartial",searchString);
                 }
@@ -40,6 +40,7 @@ namespace BookStore.MVC.Controllers
             {
                 BooksList = BookRelase.GetBookResult(books)
             };
+            
 
             return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial", model.BooksList.ToPagedList(page, pageSize)) :
                 View(model.BooksList.ToPagedList(page, pageSize));
