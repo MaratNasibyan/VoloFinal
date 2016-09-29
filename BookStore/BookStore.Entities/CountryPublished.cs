@@ -11,7 +11,7 @@ namespace BookStore.Entities
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    
     public partial class CountryPublished
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,14 +21,8 @@ namespace BookStore.Entities
         }
     
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "CountryName is required")]
         public string CountryName { get; set; }
-
-
-        [Required(ErrorMessage = "Iso is required")]
         public string IsoCode { get; set; }
-        [Required(ErrorMessage = "PhoneCode is required")]
         public int PhoneCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

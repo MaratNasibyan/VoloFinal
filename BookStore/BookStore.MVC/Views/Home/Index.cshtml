@@ -1,23 +1,22 @@
-﻿@{
+﻿@model IEnumerable<BookStore.Entities.ViewModel.BookViewModel>
+
+@{
     ViewBag.Title = "Home Page";
 }
-<style>
-
- 
+<style>     
   .carousel-inner > .item > img,
   .carousel-inner > .item > a > img {
       width: 70%;
       margin:0 auto;
-  }
-        
-
+  }      
 </style>
+
 <div class="jumbotron">
         @*<h1>ASP.NET</h1>
         <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
         <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
 
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -49,10 +48,11 @@
             <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
-    </div>
+</div>
     
-    </div>
-    <div class="row">
+</div>
+@*///////////////////////////////////////////////////////End Slider///////////////////////////////////*@
+    @*<div class="row">
         <h3 class="text-center"> Top 3 best books of 2016 year</h3>
         <div class="col-md-4 text-center">
             <h4 class="text-center">Harry Potter and the Cursed Child</h4>
@@ -80,13 +80,89 @@
                 The crown calls her an impossibility, a fake, but as she makes her escape from Maven, the prince—the friend—who betrayed her, Mare uncovers something startling: she is not the only one of her kind...</p>
             <p><a class="btn btn-default" href="http://redqueen.wikia.com/wiki/Glass_Sword">Read more &raquo;</a></p>
         </div>
-    </div>
+    </div>*@
+
+
+
+@foreach (var item in Model)
+{
+   
+        <div id="l">
+            <a href="@Url.Action("Details","Books", new { id = item.Id })" class="port">
+
+                <div class="p">
+                    @foreach (var v in item.ImagePatchs)
+                {
+                        <img src="~/Images/@v.ImageUrl" class="" style="height:60%;width:60%;" />
+                    }
+
+                    @{ decimal total = @item.Price + @item.CountryPublished.PhoneCode; }
+
+                    <p class="Price"> <strong style="color:black;"> @total.ToString("C2") </strong> </p>
+
+                    <p class="Author" style="color:#cea582;font-size:smaller;">@item.Author.FullName</p>
+                    <p class="Title" style="color:sandybrown;">@item.Title</p> <br />
+                </div>
+            </a>
+        </div>
+   
+        }
 
 <br />
 <br />
 <style>
+   
     .carousel-inner img
     {
         height:350px; width:700px;
     }
+    
+      #Search {
+        width: 50%;
+        border-radius: 5px;
+    }
+    #l
+    {
+        display:inline-block;
+     
+    }
+    #SearchP {
+        width: 100%;
+        text-align: center;
+    }
+      
+    .p {
+        display: inline-block;
+        width: 190px;
+        height: 290px;
+        margin: 15px;
+        text-align: center;
+       }
+    /*#l
+    {
+        width:190px;
+        height:290px;
+    }*/
+        .p img {
+            margin-top: 7px;
+        }
+
+    .sp {
+        padding: 8px;
+        margin: 10px;
+    }
+
+    .p:hover {
+        border: 1px solid;
+        border-color: bisque;
+    }
+
+    .Price {
+        margin-top: 7px;
+    }
+
+
+
+
+
 </style>

@@ -126,6 +126,7 @@ namespace BookStore.MVC.Controllers
 
                     string filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
                     string patch = Path.Combine(Server.MapPath("~/Images"), filename);
+                    
                     upload.SaveAs(patch);
 
                     book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = filename } };
@@ -150,6 +151,7 @@ namespace BookStore.MVC.Controllers
 
         // GET: Admin/Edit/5
         [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)

@@ -9,7 +9,6 @@
    
  });
 
-
     function ChangeUrl(page, url) {
         if (typeof (history.pushState) != "undefined") {
             var obj = { Page: page, Url: url };
@@ -38,7 +37,7 @@
             ////type:"get",
             success: function (result) {
               
-                ChangeUrl("Index", "/Books/Index?searchString=" + $('#SearchString').val());
+                ChangeUrl("Index","/Books/Index?searchString=" + $('#SearchString').val());
                 $('#ProductList').html(result);
             }
         });

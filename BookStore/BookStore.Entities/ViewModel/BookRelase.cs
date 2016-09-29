@@ -27,8 +27,8 @@ namespace BookStore.Entities.Service
                     Price = item.Price,
                     Author = item.Author,
                     CountryPublished = item.CountryPublished,
-                    ImagePatchs = item.ImagePatchs.ToList()
-                   
+                    ImagePatchs = item.ImagePatchs.ToList()                    
+                                                        
                 });
             }
            return result;

@@ -11,7 +11,7 @@ namespace BookStore.Entities
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    
     public partial class Book
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,10 +22,7 @@ namespace BookStore.Entities
         }
     
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "Title is required")]
         public string Title { get; set; }
-        [Required(ErrorMessage = "Priceis required")]
         public decimal Price { get; set; }
         public string Description { get; set; }
         public Nullable<int> PagesCount { get; set; }
@@ -35,9 +32,7 @@ namespace BookStore.Entities
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AttributeBook> AttributeBooks { get; set; }
-        //[Required(ErrorMessage = "Author is required")]
         public virtual Author Author { get; set; }
-        //[Required(ErrorMessage = "Country is required")]
         public virtual CountryPublished CountryPublished { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImagePatch> ImagePatchs { get; set; }
