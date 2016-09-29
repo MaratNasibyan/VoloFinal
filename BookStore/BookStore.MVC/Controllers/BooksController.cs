@@ -40,7 +40,11 @@ namespace BookStore.MVC.Controllers
             {
                 BooksList = BookRelase.GetBookResult(books)
             };
-            
+
+            if (page > model.BooksList.ToPagedList(page, pageSize).PageCount)
+            {
+                page = 1;
+            }
 
             return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial", model.BooksList.ToPagedList(page, pageSize)) :
                 View(model.BooksList.ToPagedList(page, pageSize));

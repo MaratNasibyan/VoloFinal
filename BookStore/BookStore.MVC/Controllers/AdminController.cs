@@ -14,6 +14,7 @@ using BookStore.MVC.Models;
 
 using BookStore.Entities.ViewModel;
 using BookStore.Entities.Service;
+using System.Web.Helpers;
 
 namespace BookStore.MVC.Controllers
 {
@@ -24,9 +25,11 @@ namespace BookStore.MVC.Controllers
         private BookDatabaseEntities db = new BookDatabaseEntities();
 
        // GET: Admin
-        public ActionResult Index(string searchString, string sortOption, int page = 1)
+        public ActionResult Index(string searchString, string sortOption, int page=1)
         {
-            int pageSize = 5;            
+            
+            int pageSize = 5;
+            
             var books = db.Books.ToList();
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -56,16 +59,17 @@ namespace BookStore.MVC.Controllers
                 case "Country_ASC":model.BooksList = model.BooksList.OrderBy(n => n.CountryPublished.CountryName).ToList();break;
                 case "Country_DESC":model.BooksList = model.BooksList.OrderByDescending(n => n.CountryPublished.CountryName).ToList();break;
                 default:model.BooksList = model.BooksList.OrderBy(n => n.Id).ToList();break;
+            }                      
+            if(page > model.BooksList.ToPagedList(page,pageSize).PageCount)
+            {
+                page = 1;
             }
-            
 
-
-            return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial",model.BooksList.ToPagedList(page, pageSize)) :
+               return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial",model.BooksList.ToPagedList(page,pageSize)) :
                View(model.BooksList.ToPagedList(page, pageSize));
-
+            
         }
-
-
+        
         // GET: Admin/Details/5
         [Authorize]
         public async Task<ActionResult> Details(int? id)
@@ -110,10 +114,19 @@ namespace BookStore.MVC.Controllers
         [Authorize]
         public async Task<ActionResult> Create([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,CountryPublishedId,AuthorsId")] Book book,HttpPostedFileBase upload)
         {
+            //WebImage img = new WebImage(upload.InputStream);
+            //if (img.Width > 400)
+            //{ img.Resize(100, 150); }
+
+            //img.Save(path);
+            //book.ImagePath = fileName;
+
+
             if (ModelState.IsValid)
             {
                 if (upload != null)
-                {
+                {                 
+                    
                     var supportedTypes = new[] { "jpg", "jpeg", "png" };
                     var fileExt = System.IO.Path.GetExtension(upload.FileName).Substring(1);
 
@@ -123,7 +136,6 @@ namespace BookStore.MVC.Controllers
                         // ModelState.AddModelError("photo", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");
 
                     }
-
                     string filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
                     string patch = Path.Combine(Server.MapPath("~/Images"), filename);
                     
@@ -201,7 +213,6 @@ namespace BookStore.MVC.Controllers
                     if(patchimg != null)
                     {
                         patchimg.ImageUrl = filename;
-
 
                         string patch1 = Path.Combine(Server.MapPath("~/Images"), pat);
 

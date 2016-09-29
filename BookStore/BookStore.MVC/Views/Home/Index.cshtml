@@ -83,18 +83,17 @@
     </div>*@
 
 
-
+<h3 id="best" class="text-center">The best book of bookstore</h3>
 @foreach (var item in Model)
-{
-   
+{   
         <div id="l">
             <a href="@Url.Action("Details","Books", new { id = item.Id })" class="port">
 
                 <div class="p">
-                    @foreach (var v in item.ImagePatchs)
+                @foreach (var v in item.ImagePatchs)
                 {
                         <img src="~/Images/@v.ImageUrl" class="" style="height:60%;width:60%;" />
-                    }
+                }
 
                     @{ decimal total = @item.Price + @item.CountryPublished.PhoneCode; }
 
@@ -111,7 +110,17 @@
 <br />
 <br />
 <style>
-   
+   #best
+     {
+	margin: 1em 0 0.5em 0;
+	color: sandybrown;
+	font-size: 18px;
+	line-height: 20px;
+	font-weight: normal;
+	font-family: 'Orienta', sans-serif;
+}
+
+
     .carousel-inner img
     {
         height:350px; width:700px;
@@ -124,6 +133,7 @@
     #l
     {
         display:inline-block;
+        margin-left:3px;
      
     }
     #SearchP {

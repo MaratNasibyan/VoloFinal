@@ -267,10 +267,8 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AttributesController.cs" />
     <Compile Include="Controllers\AuthorsController.cs" />
-    <Compile Include="Controllers\Books1Controller.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\CountryPublishedsController.cs" />
-    <Compile Include="Controllers\ExampleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -280,7 +278,6 @@
     <Compile Include="Models\AuthorViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -406,22 +403,9 @@
     <Content Include="Views\Books\ViewPartial.cshtml" />
     <Content Include="Views\Admin\IndexPartial.cshtml" />
     <Content Include="Views\Admin\IndexNotFound.cshtml" />
-    <Content Include="Views\Example\Create.cshtml" />
-    <Content Include="Views\Example\Delete.cshtml" />
-    <Content Include="Views\Example\Details.cshtml" />
-    <Content Include="Views\Example\Edit.cshtml" />
-    <Content Include="Views\Example\Index.cshtml" />
-    <Content Include="Views\Example\OrdersData.cshtml" />
-    <Content Include="Views\Books1\Create.cshtml" />
-    <Content Include="Views\Books1\Delete.cshtml" />
-    <Content Include="Views\Books1\Details.cshtml" />
-    <Content Include="Views\Books1\Edit.cshtml" />
-    <Content Include="Views\Books1\Index.cshtml" />
-    <Content Include="Views\Books1\ErrorPartial.cshtml" />
     <Content Include="Views\Authors\PartialNotFoundView.cshtml" />
     <Content Include="Views\CountryPublisheds\PartialNotFound.cshtml" />
     <Content Include="Views\Shared\Error404.cshtml" />
-    <Content Include="Views\Books1\Modal.cshtml" />
     <Content Include="Views\Admin\BookNot.cshtml" />
   </ItemGroup>
   <ItemGroup>
