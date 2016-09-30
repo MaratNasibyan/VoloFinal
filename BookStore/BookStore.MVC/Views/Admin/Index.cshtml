@@ -14,21 +14,16 @@
 
 <br />
 
-<div>
-    Search by name:
-    <input id="SearchString" name="searchString" type="text" value="" />
-    <input type="submit" value="Search" id="btnSearch" />   
+<div style="text-align:left; width:100%;">  
+    <input id="SearchString" name="searchString" type="text" value="" placeholder="Search title or author"  />
+    <button type="button" class="btn btn-info" value="Search" id="btnSearch"  >
+        <span class="glyphicon glyphicon-search"></span> Search
+    </button>
+    @*<input type="submit" value="Search" id="btnSearch" placeholder="Search title or author" />*@   
 </div>
 
-@*<form class="navbar-form navbar-left">
-    <div class="form-group">
-        <input type="text" class="form-control" placeholder="Search" style="width:400px" id="SearchString" name="searchString">
-    </div>
-    <input type="submit" class="btn btn-default" id="btnSearch" value="gggg">
-</form>*@
 
-<br />
-<br />
+
 <br />
 <div id="ProductList" class="table-responsive">
     @Html.Partial("IndexPartial",Model)
@@ -42,17 +37,22 @@
 }
 
 
-
-
-
 <style>
- 
+    input[type=text] {
+        width: 100%;
+        padding: 4px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+    /*border-radius: 6px;*/    
 </style>
 
 
 
 
-
+@*<customErrors mode="On">
+    <error statusCode="404" redirect="404.html" />
+</customErrors>*@
 
 
 

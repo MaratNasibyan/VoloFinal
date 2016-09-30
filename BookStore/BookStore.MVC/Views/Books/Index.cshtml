@@ -6,25 +6,23 @@
 }
 
  <h2 style="color:#867fb1">BooksList</h2>
-<br />
-<br />
 <link href="~/Content/Site.css" rel="stylesheet" />
-@*<div class="button_box2">
-    <form class="form-wrapper-2 cf">
-        <input type="text" name="searchString" id="SearchString" placeholder="Search by Book or Author..." required>
-        <button type="submit" id="btnSearch"><i class="glyphicon glyphicon-search"></i></button>
-    </form>
-</div>*@
 
   
-
-<div class="text-center"> 
-    <span style="color:#867fb1" >Search by name: </span>
-    <input id="SearchString" name="SearchString"  type="text"  value="" /> 
-    <input type="submit"  value="Search" id="btnSearch" /> 
+@*<div class="text-center">   
+    <input id="SearchString" name="SearchString"  type="text"  value="" placeholder="Search title or author" /> 
+    <input type="submit"  value="Search" id="btnSearch" class="btn btn-default"  /> 
+</div>*@
+<div class="text-center">
+    <img src="~/Images/Imgsearch/search.png" />
 </div>
-
-<br />
+<div style="text-align:center; width:100%;">
+    <input id="SearchString" name="searchString" type="text" value="" placeholder="Search title or author" />
+    <button type="button" class="btn btn-info" value="Search" id="btnSearch">
+        <span class="glyphicon glyphicon-search"></span> Search
+    </button>
+    @*<input type="submit" value="Search" id="btnSearch" placeholder="Search title or author" />*@
+</div>
 <br />
 <div id="ProductList">
    @Html.Partial("IndexPartial",Model)
@@ -37,8 +35,13 @@
     <script src="~/Scripts/BookSearch.js"></script>     
  }
 <style>
-    #SearchString
-    {
-        width:100%;
-    }
+  input[type=text] {
+    width: 100%;
+    padding: 4px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    max-width:500px;
+    border-radius: 5px;
+}
+ 
 </style>

@@ -23,7 +23,7 @@ namespace BookStore.MVC.Controllers
               
         public ActionResult Index(string searchString,  int page = 1)
         {
-            int pageSize = 5;
+            int pageSize = 10;
            
             var books = db.Books.ToList();
 

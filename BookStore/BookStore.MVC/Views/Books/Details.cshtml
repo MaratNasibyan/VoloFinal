@@ -4,10 +4,10 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+@*<h2>Details</h2>*@
 
 <div>
-    <h4>Book</h4>
+    @*<h4>Book</h4>*@
     <hr />    
     <p>
         @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
@@ -35,15 +35,14 @@
             </dd>
 
             @{  
-                decimal Price = Model.Price + Model.CountryPublished.PhoneCode;
-                
-                var p = Price.ToString("0.##");
+                decimal Price = Model.Price + Model.CountryPublished.PhoneCode;                
+                var p = Price.ToString("C2");
             }
             <dt>
                 @Html.DisplayNameFor(model => Price)
             </dt>
             <dd>
-                $ @Html.DisplayFor(model => p)  
+                 @Html.DisplayFor(model => p)  
             </dd>
                      
 

@@ -18,7 +18,7 @@ using System.Web.Helpers;
 
 namespace BookStore.MVC.Controllers
 {
-    [HandleError]
+  
     [Authorize]
     public class AdminController : Controller
     {
@@ -27,44 +27,45 @@ namespace BookStore.MVC.Controllers
        // GET: Admin
         public ActionResult Index(string searchString, string sortOption, int page=1)
         {
-            
-            int pageSize = 5;
-            
-            var books = db.Books.ToList();
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Title.Contains(searchString) || n.Author.FullName.Contains(searchString))).ToList();
-                if (!books.Any())
+           
+                int pageSize = 5;
+
+                var books = db.Books.ToList();
+                if (!string.IsNullOrEmpty(searchString))
                 {
-                    //return Content("This book is not found <a href='~Admin/Index'>Go</a> ");
-                    return PartialView("BookNot",searchString);
+                    books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Title.Contains(searchString) || n.Author.FullName.Contains(searchString))).ToList();
+                    if (!books.Any())
+                    {
+                        //return Content("This book is not found <a href='~Admin/Index'>Go</a> ");
+                        return PartialView("BookNot", searchString);
+                    }
+
                 }
+                BooksListModel model = new BooksListModel
+                {
+                    BooksList = BookRelase.GetBookResult(books)
+                };
 
-            }
-            BooksListModel model = new BooksListModel
-            {
-                BooksList = BookRelase.GetBookResult(books)
-            };
-                       
-            switch(sortOption)
-            {
-                case "Title_ASC": model.BooksList = model.BooksList.OrderBy(n => n.Title).ToList(); break;
-                case "Title_DESC":model.BooksList = model.BooksList.OrderByDescending(n => n.Title).ToList();break;                
-                case "Price_ASC": model.BooksList= model.BooksList.OrderBy(n => n.Price).ToList();break;
-                case "Price_DESC": model.BooksList = model.BooksList.OrderByDescending(n => n.Price).ToList(); break;
-                case "Author_ASC":model.BooksList = model.BooksList.OrderBy(n => n.Author.FullName).ToList();break;
-                case "Author_DESC":model.BooksList = model.BooksList.OrderByDescending(n => n.Author.FullName).ToList();break;
-                case "PageCount_ASC":model.BooksList = model.BooksList.OrderBy(n => n.PagesCount).ToList();break;
-                case "PageCount_DESC":model.BooksList = model.BooksList.OrderByDescending(n => n.PagesCount).ToList();break;
-                case "Country_ASC":model.BooksList = model.BooksList.OrderBy(n => n.CountryPublished.CountryName).ToList();break;
-                case "Country_DESC":model.BooksList = model.BooksList.OrderByDescending(n => n.CountryPublished.CountryName).ToList();break;
-                default:model.BooksList = model.BooksList.OrderBy(n => n.Id).ToList();break;
-            }                      
-            if(page > model.BooksList.ToPagedList(page,pageSize).PageCount)
-            {
-                page = 1;
-            }
-
+                switch (sortOption)
+                {
+                    case "Title_ASC": model.BooksList = model.BooksList.OrderBy(n => n.Title).ToList(); break;
+                    case "Title_DESC": model.BooksList = model.BooksList.OrderByDescending(n => n.Title).ToList(); break;
+                    case "Price_ASC": model.BooksList = model.BooksList.OrderBy(n => n.Price).ToList(); break;
+                    case "Price_DESC": model.BooksList = model.BooksList.OrderByDescending(n => n.Price).ToList(); break;
+                    case "Author_ASC": model.BooksList = model.BooksList.OrderBy(n => n.Author.FullName).ToList(); break;
+                    case "Author_DESC": model.BooksList = model.BooksList.OrderByDescending(n => n.Author.FullName).ToList(); break;
+                    case "PageCount_ASC": model.BooksList = model.BooksList.OrderBy(n => n.PagesCount).ToList(); break;
+                    case "PageCount_DESC": model.BooksList = model.BooksList.OrderByDescending(n => n.PagesCount).ToList(); break;
+                    case "Country_ASC": model.BooksList = model.BooksList.OrderBy(n => n.CountryPublished.CountryName).ToList(); break;
+                    case "Country_DESC": model.BooksList = model.BooksList.OrderByDescending(n => n.CountryPublished.CountryName).ToList(); break;
+                    default: model.BooksList = model.BooksList.OrderBy(n => n.Id).ToList(); break;
+                }
+                if (page > model.BooksList.ToPagedList(page, pageSize).PageCount)
+                {
+                    page = 1;
+                }
+            
+           
                return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial",model.BooksList.ToPagedList(page,pageSize)) :
                View(model.BooksList.ToPagedList(page, pageSize));
             
@@ -163,7 +164,7 @@ namespace BookStore.MVC.Controllers
 
         // GET: Admin/Edit/5
         [Authorize]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
