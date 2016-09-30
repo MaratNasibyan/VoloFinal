@@ -25,13 +25,34 @@ namespace BookStore.Entities.Service
                     PagesCount = Convert.ToInt32(item.PagesCount),
                     Description = item.Description,
                     Price = item.Price,
+                    CountryPublishedId = item.CountryPublishedId,
+                    AuthorsId = item.AuthorsId,
                     Author = item.Author,
                     CountryPublished = item.CountryPublished,
-                    ImagePatchs = item.ImagePatchs.ToList()                    
+                    ImagePatchs = item.ImagePatchs.ToList()                   
                                                         
                 });
             }
            return result;
+        }
+
+        public static Book CreateBook(BookViewModel model)
+        {
+            Book book = new Book
+            {
+                Id = model.Id,
+                Title = model.Title,
+                PagesCount = model.PagesCount,
+                Description = model.Description,
+                Price = model.Price,
+                ImagePatchs = model.ImagePatchs.ToList(),
+                AuthorsId = model.AuthorsId,
+                CountryPublishedId = model.CountryPublishedId,
+                Picture = model.Picture,
+                Author = model.Author,
+                CountryPublished = model.CountryPublished            
+            };
+            return book;
         }
 
     }

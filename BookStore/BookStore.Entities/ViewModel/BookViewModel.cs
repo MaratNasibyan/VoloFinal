@@ -15,6 +15,10 @@ namespace BookStore.Entities.ViewModel
         public string Description { get; set; }
         public int PagesCount { get; set; }
         public DateTime DateCreated { get; set; }
+        public byte[] Picture { get; set; }
+
+        public int CountryPublishedId { get; set; }
+        public int AuthorsId { get; set; }
 
         public CountryPublished  CountryPublished { get; set; }
         public Author Author  { get; set; }

@@ -59,7 +59,7 @@ $(function () {
 
     $('body').on('click', '#ProductList .pagination a', function (event) {
         event.preventDefault();
-        console.log('page');
+        //console.log('page');
         var searchString = $('#SearchString').val();
         if (searchString == undefined || searchString == '') {
             searchString = '';

@@ -27,7 +27,8 @@ namespace BookStore.MVC.Controllers
        // GET: Admin
         public ActionResult Index(string searchString, string sortOption, int page=1)
         {
-           
+            try
+            {
                 int pageSize = 5;
 
                 var books = db.Books.ToList();
@@ -64,10 +65,15 @@ namespace BookStore.MVC.Controllers
                 {
                     page = 1;
                 }
-            
-           
-               return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial",model.BooksList.ToPagedList(page,pageSize)) :
-               View(model.BooksList.ToPagedList(page, pageSize));
+
+
+                return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial", model.BooksList.ToPagedList(page, pageSize)) :
+                View(model.BooksList.ToPagedList(page, pageSize));
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
             
         }
         
@@ -76,7 +82,6 @@ namespace BookStore.MVC.Controllers
         public async Task<ActionResult> Details(int? id)
         {
             Book book = await db.Books.FindAsync(id);
-
             try
             {
                 if (id == null)
@@ -122,44 +127,49 @@ namespace BookStore.MVC.Controllers
             //img.Save(path);
             //book.ImagePath = fileName;
 
-
-            if (ModelState.IsValid)
+            try
             {
-                if (upload != null)
-                {                 
-                    
-                    var supportedTypes = new[] { "jpg", "jpeg", "png" };
-                    var fileExt = System.IO.Path.GetExtension(upload.FileName).Substring(1);
-
-                    if (!supportedTypes.Contains(fileExt))
-                    {
-                        return RedirectToAction("Index");
-                        // ModelState.AddModelError("photo", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");
-
-                    }
-                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
-                    string patch = Path.Combine(Server.MapPath("~/Images"), filename);
-                    
-                    upload.SaveAs(patch);
-
-                    book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = filename } };
-                }
-                else
+                if (ModelState.IsValid)
                 {
-                    //string filenamenoimage = Path.Combine(Server.MapPath("~/Images/No.jpg"));
-                    //System.IO.File.Copy()
-                    book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = "No.jpg" } };
-                }
+                    if (upload != null)
+                    {
+                        var supportedTypes = new[] { "jpg", "jpeg", "png" };
+                        var fileExt = System.IO.Path.GetExtension(upload.FileName).Substring(1);
 
+                        if (!supportedTypes.Contains(fileExt))
+                        {
+                            return RedirectToAction("Index");
+                            // ModelState.AddModelError("photo", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");
+
+                        }
+                        string filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
+                        string patch = Path.Combine(Server.MapPath("~/Images"), filename);
+
+                        upload.SaveAs(patch);
+
+                        book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = filename } };
+                    }
+                    else
+                    {
+                        //string filenamenoimage = Path.Combine(Server.MapPath("~/Images/No.jpg"));
+                        //System.IO.File.Copy()
+                        book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = "No.jpg" } };
+                    }
+                    //Book v = BookRelase.CreateBook(book);
                     db.Books.Add(book);
                     await db.SaveChangesAsync();
 
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName", book.AuthorsId);
+                ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName", book.CountryPublishedId);
+                return View(book);
+            }
+            catch
+            {
                 return RedirectToAction("Index");
             }
-
-            ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName", book.AuthorsId);
-            ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName", book.CountryPublishedId);
-            return View(book);
         }
 
         // GET: Admin/Edit/5
@@ -167,20 +177,27 @@ namespace BookStore.MVC.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                return PartialView("IndexNotFound", id.ToString());
+                if (id == null)
+                {
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return PartialView("IndexNotFound", id.ToString());
+                }
+                Book book = await db.Books.FindAsync(id);
+                if (book == null)
+                {
+                    //return HttpNotFound();
+                    return PartialView("IndexNotFound", id.ToString());
+                }
+                ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName", book.AuthorsId);
+                ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName", book.CountryPublishedId);
+                return View(book);
             }
-            Book book = await db.Books.FindAsync(id);
-            if (book == null)
+            catch
             {
-                //return HttpNotFound();
-                return PartialView("IndexNotFound", id.ToString());
+                return RedirectToAction("Index");
             }
-            ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName", book.AuthorsId);
-            ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName", book.CountryPublishedId);
-            return View(book);
         }
 
         // POST: Admin/Edit/5
@@ -191,69 +208,83 @@ namespace BookStore.MVC.Controllers
         [Authorize]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,CountryPublishedId,AuthorsId")] Book book,HttpPostedFileBase upload)
         {
-            if (ModelState.IsValid)
+            try
             {
-                //book = await db.Books.FindAsync(book.Id); 
-                ImagePatch oldpatch = db.ImagePatchs.Where(n => n.BooksId == book.Id).FirstOrDefault();
-                string pat = oldpatch.ImageUrl;
-                if (upload != null)
+                if (ModelState.IsValid)
                 {
-                    var supportedTypes = new[] { "jpg", "jpeg", "png" };
-                    var fileExt = System.IO.Path.GetExtension(upload.FileName).Substring(1);
-
-                    if (!supportedTypes.Contains(fileExt))
+                    //book = await db.Books.FindAsync(book.Id); 
+                    ImagePatch oldpatch = db.ImagePatchs.Where(n => n.BooksId == book.Id).FirstOrDefault();
+                    string pat = oldpatch.ImageUrl;
+                    if (upload != null)
                     {
-                        return RedirectToAction("Index");
-                        // ModelState.AddModelError("photo", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");                        
-                    }
+                        var supportedTypes = new[] { "jpg", "jpeg", "png" };
+                        var fileExt = System.IO.Path.GetExtension(upload.FileName).Substring(1);
 
-                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
-                    string patch = Path.Combine(Server.MapPath("~/Images"), filename);
-                    upload.SaveAs(patch);
-                    ImagePatch patchimg = db.ImagePatchs.Where(n => n.BooksId == book.Id).SingleOrDefault();
-                    if(patchimg != null)
-                    {
-                        patchimg.ImageUrl = filename;
-
-                        string patch1 = Path.Combine(Server.MapPath("~/Images"), pat);
-
-                        if (System.IO.File.Exists(patch1))
+                        if (!supportedTypes.Contains(fileExt))
                         {
-                            System.IO.File.Delete(patch1);
+                            return RedirectToAction("Index");
+                            // ModelState.AddModelError("photo", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");                        
                         }
+
+                        string filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
+                        string patch = Path.Combine(Server.MapPath("~/Images"), filename);
+                        upload.SaveAs(patch);
+                        ImagePatch patchimg = db.ImagePatchs.Where(n => n.BooksId == book.Id).SingleOrDefault();
+                        if (patchimg != null)
+                        {
+                            patchimg.ImageUrl = filename;
+
+                            string patch1 = Path.Combine(Server.MapPath("~/Images"), pat);
+
+                            if (System.IO.File.Exists(patch1))
+                            {
+                                System.IO.File.Delete(patch1);
+                            }
+                        }
+
+                        //book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = upload.FileName } };
+
                     }
-
-                    //book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = upload.FileName } };
-
+                    db.Entry(book).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
                 }
-                db.Entry(book).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName", book.AuthorsId);
+                ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName", book.CountryPublishedId);
+                return View(book);
+            }
+            catch
+            {
                 return RedirectToAction("Index");
             }
-            ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName", book.AuthorsId);
-            ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName", book.CountryPublishedId);
-            return View(book);
         }
 
         // GET: Admin/Delete/5
         [Authorize]
         public async Task<ActionResult> Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                return PartialView("IndexNotFound", id.ToString());
+                if (id == null)
+                {
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return PartialView("IndexNotFound", id.ToString());
 
+                }
+                Book book = await db.Books.FindAsync(id);
+
+
+                if (book == null)
+                {
+                    //return HttpNotFound();
+                    return PartialView("IndexNotFound", id.ToString());
+                }
+                return View(book);
             }
-            Book book = await db.Books.FindAsync(id);
-          
-            
-            if (book == null)
+            catch
             {
-                //return HttpNotFound();
-                return PartialView("IndexNotFound", id.ToString());
+                return RedirectToAction("Index");
             }
-            return View(book);
         }
 
         // POST: Admin/Delete/5
@@ -262,21 +293,28 @@ namespace BookStore.MVC.Controllers
         [Authorize]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Book book = await db.Books.FindAsync(id);
-            ImagePatch patch = db.ImagePatchs.Where(n => n.BooksId == id).FirstOrDefault();
-            string patch1 = Path.Combine(Server.MapPath("~/Images"), patch.ImageUrl);
-
-            if (patch1 != null && patch.ImageUrl != "No.jpg")
+            try
             {
-                if (System.IO.File.Exists(patch1))
+                Book book = await db.Books.FindAsync(id);
+                ImagePatch patch = db.ImagePatchs.Where(n => n.BooksId == id).FirstOrDefault();
+                string patch1 = Path.Combine(Server.MapPath("~/Images"), patch.ImageUrl);
+
+                if (patch1 != null && patch.ImageUrl != "No.jpg")
                 {
-                    System.IO.File.Delete(patch1);
+                    if (System.IO.File.Exists(patch1))
+                    {
+                        System.IO.File.Delete(patch1);
+                    }
                 }
+                db.Books.Remove(book);
+                db.ImagePatchs.Remove(patch);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
             }
-            db.Books.Remove(book);
-            db.ImagePatchs.Remove(patch);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            catch
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

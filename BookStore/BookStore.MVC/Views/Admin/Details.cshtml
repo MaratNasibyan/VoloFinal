@@ -37,7 +37,7 @@
         </dt>
 
         <dd>
-            @{ decimal price = Model.Price;  var p = price.ToString("0.##"); }
+            @{ decimal price = Model.Price;  var p = price.ToString("C2"); }
            $ @Html.DisplayFor(model => price)
         </dd>
 
