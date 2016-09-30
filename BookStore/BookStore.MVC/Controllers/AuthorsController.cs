@@ -18,25 +18,39 @@ namespace BookStore.MVC.Controllers
         // GET: Authors
         public async Task<ActionResult> Index()
         {
-            return View(await db.Authors.ToListAsync());
+            try
+            {
+                return View(await db.Authors.ToListAsync());
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Authors/Details/5
         public async Task<ActionResult> Details(int? id)
         {
-            if (id == null)
+            try
             {
-                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                return PartialView("PartialNotFoundView", id.ToString());
-            }
-            Author author = await db.Authors.FindAsync(id);
-            if (author == null)
-            {
-                //return HttpNotFound();
-                return PartialView("PartialNotFoundView", id.ToString());
+                if (id == null)
+                {
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return PartialView("PartialNotFoundView", id.ToString());
+                }
+                Author author = await db.Authors.FindAsync(id);
+                if (author == null)
+                {
+                    //return HttpNotFound();
+                    return PartialView("PartialNotFoundView", id.ToString());
 
+                }
+                return View(author);
             }
-            return View(author);
+            catch
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Authors/Create
@@ -52,32 +66,46 @@ namespace BookStore.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,FullName,DateBirth")] Author author)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Authors.Add(author);
-                await db.SaveChangesAsync();
+                if (ModelState.IsValid)
+                {
+                    db.Authors.Add(author);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+
+                return View(author);
+            }
+            catch
+            {
                 return RedirectToAction("Index");
             }
-
-            return View(author);
         }
 
         // GET: Authors/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                return PartialView("PartialNotFoundView", id.ToString());
-            }
-            Author author = await db.Authors.FindAsync(id);
-            if (author == null)
-            {
-                //return HttpNotFound();
-                return PartialView("PartialNotFoundView", id.ToString());
+                if (id == null)
+                {
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return PartialView("PartialNotFoundView", id.ToString());
+                }
+                Author author = await db.Authors.FindAsync(id);
+                if (author == null)
+                {
+                    //return HttpNotFound();
+                    return PartialView("PartialNotFoundView", id.ToString());
 
+                }
+                return View(author);
             }
-            return View(author);
+            catch
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: Authors/Edit/5
@@ -87,31 +115,45 @@ namespace BookStore.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,FullName,DateBirth")] Author author)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(author).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                if (ModelState.IsValid)
+                {
+                    db.Entry(author).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+                return View(author);
+            }
+            catch
+            {
                 return RedirectToAction("Index");
             }
-            return View(author);
         }
 
         // GET: Authors/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                return PartialView("PartialNotFoundView", id.ToString());
-                
+                if (id == null)
+                {
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return PartialView("PartialNotFoundView", id.ToString());
+
+                }
+                Author author = await db.Authors.FindAsync(id);
+                if (author == null)
+                {
+                    //return HttpNotFound();
+                    return PartialView("PartialNotFoundView", id.ToString());
+                }
+                return View(author);
             }
-            Author author = await db.Authors.FindAsync(id);
-            if (author == null)
+            catch
             {
-                //return HttpNotFound();
-                return PartialView("PartialNotFoundView", id.ToString());
+                return RedirectToAction("Index");
             }
-            return View(author);
         }
 
         // POST: Authors/Delete/5
@@ -119,10 +161,17 @@ namespace BookStore.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Author author = await db.Authors.FindAsync(id);
-            db.Authors.Remove(author);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            try
+            {
+                Author author = await db.Authors.FindAsync(id);
+                db.Authors.Remove(author);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

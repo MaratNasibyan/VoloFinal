@@ -18,25 +18,39 @@ namespace BookStore.MVC.Controllers
         // GET: CountryPublisheds
         public async Task<ActionResult> Index()
         {
-            return View(await db.CountryPublisheds.ToListAsync());
+            try
+            {
+                return View(await db.CountryPublisheds.ToListAsync());
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: CountryPublisheds/Details/5
         public async Task<ActionResult> Details(int? id)
         {
-            if (id == null)
+            try
             {
-                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                return PartialView("PartialNotFound", id.ToString());
-            }
-            CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
-            if (countryPublished == null)
-            {
-                //return HttpNotFound();
-                return PartialView("PartialNotFound", id.ToString());
+                if (id == null)
+                {
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return PartialView("PartialNotFound", id.ToString());
+                }
+                CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
+                if (countryPublished == null)
+                {
+                    //return HttpNotFound();
+                    return PartialView("PartialNotFound", id.ToString());
 
+                }
+                return View(countryPublished);
             }
-            return View(countryPublished);
+            catch
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: CountryPublisheds/Create
@@ -52,33 +66,47 @@ namespace BookStore.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,CountryName,IsoCode,PhoneCode")] CountryPublished countryPublished)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.CountryPublisheds.Add(countryPublished);
-                await db.SaveChangesAsync();
+                if (ModelState.IsValid)
+                {
+                    db.CountryPublisheds.Add(countryPublished);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+
+                return View(countryPublished);
+            }
+            catch
+            {
                 return RedirectToAction("Index");
             }
-
-            return View(countryPublished);
         }
 
         // GET: CountryPublisheds/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                return PartialView("PartialNotFound", id.ToString());
+                if (id == null)
+                {
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return PartialView("PartialNotFound", id.ToString());
 
+                }
+                CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
+                if (countryPublished == null)
+                {
+                    //return HttpNotFound();
+                    return PartialView("PartialNotFound", id.ToString());
+
+                }
+                return View(countryPublished);
             }
-            CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
-            if (countryPublished == null)
+            catch
             {
-                //return HttpNotFound();
-                return PartialView("PartialNotFound", id.ToString());
-
+                return RedirectToAction("Index");
             }
-            return View(countryPublished);
         }
 
         // POST: CountryPublisheds/Edit/5
@@ -88,32 +116,46 @@ namespace BookStore.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,CountryName,IsoCode,PhoneCode")] CountryPublished countryPublished)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(countryPublished).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                if (ModelState.IsValid)
+                {
+                    db.Entry(countryPublished).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+                return View(countryPublished);
+            }
+            catch
+            {
                 return RedirectToAction("Index");
             }
-            return View(countryPublished);
         }
 
         // GET: CountryPublisheds/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                return PartialView("PartialNotFound", id.ToString());
+                if (id == null)
+                {
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return PartialView("PartialNotFound", id.ToString());
 
+                }
+                CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
+                if (countryPublished == null)
+                {
+                    //return HttpNotFound();
+                    return PartialView("PartialNotFound", id.ToString());
+
+                }
+                return View(countryPublished);
             }
-            CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
-            if (countryPublished == null)
+            catch
             {
-                //return HttpNotFound();
-                return PartialView("PartialNotFound", id.ToString());
-
+                return RedirectToAction("Index");
             }
-            return View(countryPublished);
         }
 
         // POST: CountryPublisheds/Delete/5
@@ -121,10 +163,17 @@ namespace BookStore.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
-            db.CountryPublisheds.Remove(countryPublished);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            try
+            {
+                CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
+                db.CountryPublisheds.Remove(countryPublished);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

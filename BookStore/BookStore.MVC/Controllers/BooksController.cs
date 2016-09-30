@@ -23,32 +23,34 @@ namespace BookStore.MVC.Controllers
               
         public ActionResult Index(string searchString,  int page = 1)
         {
-            int pageSize = 10;
-           
-            var books = db.Books.ToList();
-
-            if (!string.IsNullOrEmpty(searchString))
+            try
             {
-                books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n=>n.Title.Contains(searchString) || n.Author.FullName.Contains(searchString))).ToList();       
-                if(!books.Any())
+                var books = db.Books.ToList();
+                int pageSize = 10;
+                if (!string.IsNullOrEmpty(searchString))
                 {
-                    return PartialView("ViewPartial",searchString);
+                    books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Title.Contains(searchString) || n.Author.FullName.Contains(searchString))).ToList();
+                    if (!books.Any())
+                    {
+                        return PartialView("ViewPartial", searchString);
+                    }
                 }
-             }
+                BooksListModel model = new BooksListModel
+                {
+                    BooksList = BookRelase.GetBookResult(books)
+                };
 
-            BooksListModel model = new BooksListModel
-            {
-                BooksList = BookRelase.GetBookResult(books)
-            };
-
-            if (page > model.BooksList.ToPagedList(page, pageSize).PageCount)
-            {
-                page = 1;
+                if (page > model.BooksList.ToPagedList(page, pageSize).PageCount)
+                {
+                    page = 1;
+                }                
+                return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial", model.BooksList.ToPagedList(page, pageSize)) :
+                    View(model.BooksList.ToPagedList(page, pageSize));
             }
-
-            return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial", model.BooksList.ToPagedList(page, pageSize)) :
-                View(model.BooksList.ToPagedList(page, pageSize));
-        
+            catch
+            {
+               return RedirectToAction("Index");
+            }
         }
     
 
@@ -56,20 +58,27 @@ namespace BookStore.MVC.Controllers
         // GET: Books/Details/5
         public async Task<ActionResult> Details(int? id)
         {
-            if (id == null)
+            try
             {
-                //return View(new HttpStatusCodeResult(HttpStatusCode.BadRequest));
-                return PartialView("ViewPartial", id.ToString());
-            }
+                if (id == null)
+                {
+                    //return View(new HttpStatusCodeResult(HttpStatusCode.BadRequest));
+                    return PartialView("ViewPartial", id.ToString());
+                }
 
-            Book book = await db.Books.FindAsync(id);
-            if (book == null)
+                Book book = await db.Books.FindAsync(id);
+                if (book == null)
+                {
+                    //return HttpNotFound();
+                    return PartialView("ViewPartial", id.ToString());
+
+                }
+                return View(book);
+            }
+            catch
             {
-                //return HttpNotFound();
-                return PartialView("ViewPartial", id.ToString());
-
+                return RedirectToAction("Index");
             }
-            return View(book);
         }        
               
               
