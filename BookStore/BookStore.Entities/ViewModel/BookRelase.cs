@@ -13,8 +13,7 @@ namespace BookStore.Entities.Service
     {
         
         public static List<BookViewModel> GetBookResult(IEnumerable<Book> books)
-        {
-            //List<Book> books  = db.Books.Include(b=>b.Author).Include(b => b.CountryPublished).ToList();
+        {    
             var result = new List<BookViewModel>();
             foreach (var item in books)
             {

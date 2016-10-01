@@ -4,20 +4,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace BookStore.Entities.ViewModel
 {
     public class BookViewModel
     {
         public int Id { get; set; }
+        [Required(ErrorMessage = "The field Title must be filled")]
+        [StringLength(50)]
+        [DisplayName("Title")]
         public string Title { get; set; }
+
+        [Required(ErrorMessage = "The price Title must be filled")]
+        [DisplayName("Price")]
         public decimal Price { get; set; }
+
         public string Description { get; set; }
+        [DisplayName("Pages")]
         public int PagesCount { get; set; }
         public DateTime DateCreated { get; set; }
         public byte[] Picture { get; set; }
 
+        [DisplayName("Country")]
+        [Required(ErrorMessage = "The field Country must be filled")]
         public int CountryPublishedId { get; set; }
+
+        [Required(ErrorMessage = "The field Author must be filled")]
+        [DisplayName("Author")]
         public int AuthorsId { get; set; }
 
         public CountryPublished  CountryPublished { get; set; }

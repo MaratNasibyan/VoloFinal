@@ -196,24 +196,7 @@ namespace BookStore.MVC.Controllers
                 return RedirectToAction("Index");
             }
         }
-        public static Book EditBook(BookViewModel model)
-        {
-            Book book = new Book
-            {
-                Id = model.Id,
-                Title = model.Title,
-                PagesCount = model.PagesCount,
-                Description = model.Description,
-                Price = model.Price,
-                ImagePatchs = model.ImagePatchs.ToList(),
-                AuthorsId = model.AuthorsId,
-                CountryPublishedId = model.CountryPublishedId,
-                Picture = model.Picture,
-                Author = model.Author,
-                CountryPublished = model.CountryPublished
-            };
-            return book;
-        }
+      
         // POST: Admin/Edit/5      
         [Authorize]
         [ValidateAntiForgeryToken]
