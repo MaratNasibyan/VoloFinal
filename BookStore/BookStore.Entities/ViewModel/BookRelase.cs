@@ -63,16 +63,14 @@ namespace BookStore.Entities.Service
                 Title = model.Title,
                 PagesCount = model.PagesCount,
                 Description = model.Description,
-                Price = model.Price,
-                ImagePatchs = model.ImagePatchs.ToList(),
+                Price = model.Price,   
                 AuthorsId = model.AuthorsId,
                 CountryPublishedId = model.CountryPublishedId,
-                Picture = model.Picture,
-                Author = model.Author,
-                CountryPublished = model.CountryPublished
+                Picture = model.Picture,           
             };
             return book;
         }
+
         public static BookViewModel EditBook(Book item)
         {
             var model = new BookViewModel
@@ -89,7 +87,6 @@ namespace BookStore.Entities.Service
                 ImagePatchs = item.ImagePatchs.ToList()
             };
             return model;
-
         }
 
         public static BookViewModel DetailsBook(Book item)

@@ -87,7 +87,7 @@ namespace BookStore.MVC.Controllers
                     //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     return PartialView("IndexNotFound", id.ToString());
                 }
-                book = await db.Books.FindAsync(id);
+                 book = await db.Books.FindAsync(id);
                  model = BookRelase.DetailsBook(book);
                 if (book == null)
                 {
@@ -142,9 +142,7 @@ namespace BookStore.MVC.Controllers
                         if (img.Width > 270)
                             img.Resize(260, 400);
                         img.Save(patch);
-
-
-
+                        
                         model.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = filename } };
                     }
                     else
@@ -182,7 +180,7 @@ namespace BookStore.MVC.Controllers
                     return PartialView("IndexNotFound", id.ToString());
                 }
                 Book book = await db.Books.FindAsync(id);
-                //var model = BookRelase.EditBook(book);
+                var modelBook = BookRelase.EditBook(book);
                 if (book == null)
                 {
                     
@@ -191,19 +189,36 @@ namespace BookStore.MVC.Controllers
                 }
                 ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName", book.AuthorsId);
                 ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName", book.CountryPublishedId);
-                return View(book);
+                return View(modelBook);
             }
             catch
             {
                 return RedirectToAction("Index");
             }
         }
-
+        public static Book EditBook(BookViewModel model)
+        {
+            Book book = new Book
+            {
+                Id = model.Id,
+                Title = model.Title,
+                PagesCount = model.PagesCount,
+                Description = model.Description,
+                Price = model.Price,
+                ImagePatchs = model.ImagePatchs.ToList(),
+                AuthorsId = model.AuthorsId,
+                CountryPublishedId = model.CountryPublishedId,
+                Picture = model.Picture,
+                Author = model.Author,
+                CountryPublished = model.CountryPublished
+            };
+            return book;
+        }
         // POST: Admin/Edit/5      
         [Authorize]
         [ValidateAntiForgeryToken]
         [HttpPost]       
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,CountryPublishedId,AuthorsId")] Book model,HttpPostedFileBase upload)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,CountryPublishedId,AuthorsId")] BookViewModel model,HttpPostedFileBase upload)
         {
             try
             {
@@ -244,8 +259,10 @@ namespace BookStore.MVC.Controllers
                         }              
 
                     }
-                    //var book = BookRelase.EditBook(model);
-                    db.Entry(model).State = EntityState.Modified;
+                                       
+                    Book b = BookRelase.EditBook(model);
+                
+                    db.Entry(b).State = EntityState.Modified;
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
