@@ -50,9 +50,64 @@ namespace BookStore.Entities.Service
                 CountryPublishedId = model.CountryPublishedId,
                 Picture = model.Picture,
                 Author = model.Author,
-                CountryPublished = model.CountryPublished            
+                CountryPublished = model.CountryPublished
             };
             return book;
+        }
+
+        public static Book EditBook(BookViewModel model)
+        {
+            Book book = new Book
+            {
+                Id = model.Id,
+                Title = model.Title,
+                PagesCount = model.PagesCount,
+                Description = model.Description,
+                Price = model.Price,
+                ImagePatchs = model.ImagePatchs.ToList(),
+                AuthorsId = model.AuthorsId,
+                CountryPublishedId = model.CountryPublishedId,
+                Picture = model.Picture,
+                Author = model.Author,
+                CountryPublished = model.CountryPublished
+            };
+            return book;
+        }
+        public static BookViewModel EditBook(Book item)
+        {
+            var model = new BookViewModel
+            {
+                Id = item.Id,
+                Title = item.Title,
+                PagesCount = Convert.ToInt32(item.PagesCount),
+                Description = item.Description,
+                Price = item.Price,
+                CountryPublishedId = item.CountryPublishedId,
+                AuthorsId = item.AuthorsId,
+                Author = item.Author,
+                CountryPublished = item.CountryPublished,
+                ImagePatchs = item.ImagePatchs.ToList()
+            };
+            return model;
+
+        }
+
+        public static BookViewModel DetailsBook(Book item)
+        {
+            var model = new BookViewModel
+            {
+                Id = item.Id,
+                Title = item.Title,
+                PagesCount = Convert.ToInt32(item.PagesCount),
+                Description = item.Description,
+                Price = item.Price,
+                CountryPublishedId = item.CountryPublishedId,
+                AuthorsId = item.AuthorsId,
+                Author = item.Author,
+                CountryPublished = item.CountryPublished,
+                ImagePatchs = item.ImagePatchs.ToList()
+            };
+            return model;
         }
 
     }

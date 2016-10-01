@@ -20,16 +20,7 @@
         }
     }
 
-    function getUrlVars() {
-        var vars = [], hash;
-        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        for (var i = 0; i < hashes.length; i++) {
-            hash = hashes[i].split('=');
-            vars.push(hash[0]);
-            vars[hash[0]] = hash[1];
-        }
-        return vars;
-    }
+   
 
     function search() {
         $.ajax({
@@ -63,6 +54,17 @@
             }
         });
 
+        //function getUrlVars() {
+        //    var vars = [], hash;
+        //    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        //    for (var i = 0; i < hashes.length; i++) {
+        //        hash = hashes[i].split('=');
+        //        vars.push(hash[0]);
+        //        vars[hash[0]] = hash[1];
+        //    }
+        //    return vars;
+        //}
+
         $('body').on('click', '#ProductList .pagination a', function (event) {
             event.preventDefault();
             //console.log('page');
@@ -76,6 +78,7 @@
             //console.log(url);
             $.ajax({
                 url: url,
+                type:'get',
                 success: function (result) {
                     ChangeUrl("Index", url);
                     $('#ProductList').html(result);

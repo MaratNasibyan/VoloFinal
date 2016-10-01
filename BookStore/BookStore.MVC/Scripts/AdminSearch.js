@@ -5,7 +5,7 @@
             $('#ProductList').html(result);
         }
     });
-    $('#SearchString').val() = "";
+    //$('#SearchString').val() = "";
 });
 
 function ChangeUrl(page, url) {
@@ -31,14 +31,8 @@ function search() {
 
 $(function () {
     $("#btnSearch").click(function () {
-        var v = $("#SearchString").val();
-        //if (v != null) {
-            search();
-        //}
-        //else {
-        //    alert("error");
-        //}
-
+        var v = $("#SearchString").val();       
+            search();       
     });
 
     $("#SearchString").keypress(function (e) {
@@ -66,18 +60,10 @@ $(function () {
         } else {
             searchString = '&searchString=' + searchString;
         }
-        //var sort = $('#ProductList  #table  a').text();
-        //var sortUrl = '&sortOption=' + sort;
-        var currentSortOption;
-        //if (currentSortOption == "") {
-        //    currentSortOption = "Price_ASC";
-        //}
-        //else
-        //{
-             currentSortOption = getUrlVars()['sortOption'];
 
-        //}
-
+        var currentSortOption;      
+        currentSortOption = getUrlVars()['sortOption'];
+               
         var sort;
         switch (currentSortOption) {
             case "Price_ASC": sort = "sortOption=Price_ASC"; break;

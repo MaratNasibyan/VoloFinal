@@ -30,7 +30,6 @@ namespace BookStore.MVC.Controllers
             try
             {
                 int pageSize = 5;
-
                 var books = db.Books.ToList();
                 if (!string.IsNullOrEmpty(searchString))
                 {
@@ -40,7 +39,6 @@ namespace BookStore.MVC.Controllers
                         //return Content("This book is not found <a href='~Admin/Index'>Go</a> ");
                         return PartialView("BookNot", searchString);
                     }
-
                 }
                 BooksListModel model = new BooksListModel
                 {
@@ -73,15 +71,15 @@ namespace BookStore.MVC.Controllers
             catch
             {
                 return RedirectToAction("Index");
-            }
-            
+            }            
         }
         
         // GET: Admin/Details/5
         [Authorize]
         public async Task<ActionResult> Details(int? id)
         {
-            Book book = await db.Books.FindAsync(id);
+            Book book;
+            BookViewModel model;
             try
             {
                 if (id == null)
@@ -89,6 +87,8 @@ namespace BookStore.MVC.Controllers
                     //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     return PartialView("IndexNotFound", id.ToString());
                 }
+                book = await db.Books.FindAsync(id);
+                 model = BookRelase.DetailsBook(book);
                 if (book == null)
                 {
                     //return HttpNotFound();
@@ -99,7 +99,7 @@ namespace BookStore.MVC.Controllers
             {
                 return Content("Error");
             }
-            return View(book);
+            return View(model);
         }
 
         // GET: Admin/Create
@@ -114,19 +114,12 @@ namespace BookStore.MVC.Controllers
         // POST: Admin/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-      
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+
         [Authorize]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,CountryPublishedId,AuthorsId")] Book book,HttpPostedFileBase upload)
+        [ValidateAntiForgeryToken]
+        [HttpPost]      
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,CountryPublishedId,AuthorsId")] BookViewModel model,HttpPostedFileBase upload)
         {
-            //WebImage img = new WebImage(upload.InputStream);
-            //if (img.Width > 400)
-            //{ img.Resize(100, 150); }
-
-            //img.Save(path);
-            //book.ImagePath = fileName;
-
             try
             {
                 if (ModelState.IsValid)
@@ -144,27 +137,31 @@ namespace BookStore.MVC.Controllers
                         }
                         string filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
                         string patch = Path.Combine(Server.MapPath("~/Images"), filename);
+                        //upload.SaveAs(patch);
+                        WebImage img = new WebImage(upload.InputStream);
+                        if (img.Width > 270)
+                            img.Resize(260, 400);
+                        img.Save(patch);
 
-                        upload.SaveAs(patch);
 
-                        book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = filename } };
+
+                        model.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = filename } };
                     }
                     else
                     {
-                        //string filenamenoimage = Path.Combine(Server.MapPath("~/Images/No.jpg"));
-                        //System.IO.File.Copy()
-                        book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = "No.jpg" } };
+
+                        model.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = "No.jpg" } };
                     }
-                    //Book v = BookRelase.CreateBook(book);
-                    db.Books.Add(book);
+                    var v = BookRelase.CreateBook(model);
+                    db.Books.Add(v);
                     await db.SaveChangesAsync();
 
                     return RedirectToAction("Index");
                 }
 
-                ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName", book.AuthorsId);
-                ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName", book.CountryPublishedId);
-                return View(book);
+                ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName", model.AuthorsId);
+                ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName", model.CountryPublishedId);
+                return View(model);
             }
             catch
             {
@@ -185,8 +182,10 @@ namespace BookStore.MVC.Controllers
                     return PartialView("IndexNotFound", id.ToString());
                 }
                 Book book = await db.Books.FindAsync(id);
+                //var model = BookRelase.EditBook(book);
                 if (book == null)
                 {
+                    
                     //return HttpNotFound();
                     return PartialView("IndexNotFound", id.ToString());
                 }
@@ -200,20 +199,18 @@ namespace BookStore.MVC.Controllers
             }
         }
 
-        // POST: Admin/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        // POST: Admin/Edit/5      
         [Authorize]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,CountryPublishedId,AuthorsId")] Book book,HttpPostedFileBase upload)
+        [ValidateAntiForgeryToken]
+        [HttpPost]       
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,CountryPublishedId,AuthorsId")] Book model,HttpPostedFileBase upload)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     //book = await db.Books.FindAsync(book.Id); 
-                    ImagePatch oldpatch = db.ImagePatchs.Where(n => n.BooksId == book.Id).FirstOrDefault();
+                    ImagePatch oldpatch = db.ImagePatchs.Where(n => n.BooksId == model.Id).FirstOrDefault();
                     string pat = oldpatch.ImageUrl;
                     if (upload != null)
                     {
@@ -228,8 +225,12 @@ namespace BookStore.MVC.Controllers
 
                         string filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
                         string patch = Path.Combine(Server.MapPath("~/Images"), filename);
-                        upload.SaveAs(patch);
-                        ImagePatch patchimg = db.ImagePatchs.Where(n => n.BooksId == book.Id).SingleOrDefault();
+                        //upload.SaveAs(patch);
+                        WebImage img = new WebImage(upload.InputStream);
+                        if (img.Width > 270)
+                            img.Resize(260, 400);
+                        img.Save(patch);
+                        ImagePatch patchimg = db.ImagePatchs.Where(n => n.BooksId == model.Id).SingleOrDefault();
                         if (patchimg != null)
                         {
                             patchimg.ImageUrl = filename;
@@ -240,18 +241,17 @@ namespace BookStore.MVC.Controllers
                             {
                                 System.IO.File.Delete(patch1);
                             }
-                        }
-
-                        //book.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = upload.FileName } };
+                        }              
 
                     }
-                    db.Entry(book).State = EntityState.Modified;
+                    //var book = BookRelase.EditBook(model);
+                    db.Entry(model).State = EntityState.Modified;
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
-                ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName", book.AuthorsId);
-                ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName", book.CountryPublishedId);
-                return View(book);
+                ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName", model.AuthorsId);
+                ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName", model.CountryPublishedId);
+                return View(model);
             }
             catch
             {

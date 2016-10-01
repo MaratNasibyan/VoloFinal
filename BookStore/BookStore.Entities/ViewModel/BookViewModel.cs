@@ -23,5 +23,6 @@ namespace BookStore.Entities.ViewModel
         public CountryPublished  CountryPublished { get; set; }
         public Author Author  { get; set; }
         public List<ImagePatch> ImagePatchs { get; set; }
-    }
+    }      
+      
 }

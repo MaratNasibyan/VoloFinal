@@ -1,6 +1,8 @@
-﻿@model BookStore.Entities.Book
+﻿@*@model BookStore.Entities.Book*@
 
-@*@model BookStore.Entities.ViewModel.BookViewModel;*@
+@model BookStore.Entities.ViewModel.BookViewModel
+
+
 @{
     ViewBag.Title = "Create";
 }
@@ -85,6 +87,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/imageJs.js"></script>
 }
 <style>
     #Description{

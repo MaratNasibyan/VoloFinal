@@ -58,15 +58,20 @@ namespace BookStore.MVC.Controllers
         // GET: Books/Details/5
         public async Task<ActionResult> Details(int? id)
         {
+            Book book;
+            //BookViewModel model;
             try
             {
+
                 if (id == null)
                 {
                     //return View(new HttpStatusCodeResult(HttpStatusCode.BadRequest));
                     return PartialView("ViewPartial", id.ToString());
                 }
 
-                Book book = await db.Books.FindAsync(id);
+                book = await db.Books.FindAsync(id);
+                //model = BookRelase.DetailsBook(book);
+
                 if (book == null)
                 {
                     //return HttpNotFound();
