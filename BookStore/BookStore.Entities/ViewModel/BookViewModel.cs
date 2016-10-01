@@ -10,7 +10,9 @@ namespace BookStore.Entities.ViewModel
 {
     public class BookViewModel
     {
+
         public int Id { get; set; }
+        public decimal totalPrice { get; set; }   
         [Required(ErrorMessage = "The field Title must be filled")]
         [StringLength(50)]
         [DisplayName("Title")]
@@ -19,7 +21,7 @@ namespace BookStore.Entities.ViewModel
         [Required(ErrorMessage = "The price Title must be filled")]
         [DisplayName("Price")]
         public decimal Price { get; set; }
-
+       
         public string Description { get; set; }
         [DisplayName("Pages")]
         public int PagesCount { get; set; }
@@ -38,6 +40,7 @@ namespace BookStore.Entities.ViewModel
         public Author Author  { get; set; }
         public List<ImagePatch> ImagePatchs { get; set; }
         public List<AttributeBook> AttributeBook { get; set; }
+        
     }      
       
 }

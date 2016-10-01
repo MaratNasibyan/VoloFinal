@@ -49,8 +49,8 @@ namespace BookStore.MVC.Controllers
                 {
                     case "Title_ASC": model.BooksList = model.BooksList.OrderBy(n => n.Title).ToList(); break;
                     case "Title_DESC": model.BooksList = model.BooksList.OrderByDescending(n => n.Title).ToList(); break;
-                    case "Price_ASC": model.BooksList = model.BooksList.OrderBy(n => n.Price).ToList(); break;
-                    case "Price_DESC": model.BooksList = model.BooksList.OrderByDescending(n => n.Price).ToList(); break;
+                    case "Price_ASC": model.BooksList = model.BooksList.OrderBy(n => n.totalPrice).ToList(); break;
+                    case "Price_DESC": model.BooksList = model.BooksList.OrderByDescending(n => n.totalPrice).ToList(); break;
                     case "Author_ASC": model.BooksList = model.BooksList.OrderBy(n => n.Author.FullName).ToList(); break;
                     case "Author_DESC": model.BooksList = model.BooksList.OrderByDescending(n => n.Author.FullName).ToList(); break;
                     case "PageCount_ASC": model.BooksList = model.BooksList.OrderBy(n => n.PagesCount).ToList(); break;

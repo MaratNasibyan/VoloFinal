@@ -28,7 +28,8 @@ namespace BookStore.Entities.Service
                     AuthorsId = item.AuthorsId,
                     Author = item.Author,
                     CountryPublished = item.CountryPublished,
-                    ImagePatchs = item.ImagePatchs.ToList()                   
+                    ImagePatchs = item.ImagePatchs.ToList(),
+                    totalPrice = item.CountryPublished.PhoneCode+item.Price                   
                                                         
                 });
             }
