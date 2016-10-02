@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BookStore.Entities;
+using BookStore.Entities.AuthorViewModel;
 
 namespace BookStore.MVC.Controllers
 {
@@ -16,11 +17,17 @@ namespace BookStore.MVC.Controllers
         private BookDatabaseEntities db = new BookDatabaseEntities();
 
         // GET: Authors
-        public async Task<ActionResult> Index()
+        public  ActionResult Index()
         {
             try
             {
-                return View(await db.Authors.ToListAsync());
+                var authors = db.Authors.ToList();
+                AuthorListModel model = new AuthorListModel
+                {
+                    AuthorsList =  AuthorRelase.GetAuthorsResult(authors)
+                };
+           
+                return View(model.AuthorsList);
             }
             catch
             {
@@ -31,6 +38,9 @@ namespace BookStore.MVC.Controllers
         // GET: Authors/Details/5
         public async Task<ActionResult> Details(int? id)
         {
+            Author author;
+            AuthorViewModel model;
+               
             try
             {
                 if (id == null)
@@ -38,14 +48,14 @@ namespace BookStore.MVC.Controllers
                     //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     return PartialView("PartialNotFoundView", id.ToString());
                 }
-                Author author = await db.Authors.FindAsync(id);
+                author = await db.Authors.FindAsync(id);
+                model = AuthorRelase.DetailsAuthor(author);
                 if (author == null)
                 {
                     //return HttpNotFound();
                     return PartialView("PartialNotFoundView", id.ToString());
-
                 }
-                return View(author);
+                return View(model);
             }
             catch
             {
@@ -64,18 +74,19 @@ namespace BookStore.MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,FullName,DateBirth")] Author author)
+        public async Task<ActionResult> Create([Bind(Include = "Id,FullName,DateBirth")] AuthorViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    var author = AuthorRelase.CreateAuthor(model);
                     db.Authors.Add(author);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
 
-                return View(author);
+                return View(model);
             }
             catch
             {
@@ -94,13 +105,14 @@ namespace BookStore.MVC.Controllers
                     return PartialView("PartialNotFoundView", id.ToString());
                 }
                 Author author = await db.Authors.FindAsync(id);
+                var model = AuthorRelase.EditAuthor(author);
                 if (author == null)
                 {
                     //return HttpNotFound();
                     return PartialView("PartialNotFoundView", id.ToString());
 
                 }
-                return View(author);
+                return View(model);
             }
             catch
             {
@@ -113,17 +125,18 @@ namespace BookStore.MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,FullName,DateBirth")] Author author)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,FullName,DateBirth")] AuthorViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    var author = AuthorRelase.EditAuthor(model);
                     db.Entry(author).State = EntityState.Modified;
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
-                return View(author);
+                return View(model);
             }
             catch
             {

@@ -8,7 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BookStore.Entities;
-
+using BookStore.Entities.CountryViewModel;
 namespace BookStore.MVC.Controllers
 {
     public class CountryPublishedsController : Controller
@@ -16,11 +16,17 @@ namespace BookStore.MVC.Controllers
         private BookDatabaseEntities db = new BookDatabaseEntities();
 
         // GET: CountryPublisheds
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
             try
             {
-                return View(await db.CountryPublisheds.ToListAsync());
+                var countries = db.CountryPublisheds.ToList();
+                CauntryListModel model = new CauntryListModel
+                {
+                    CountryList = CauntryRelase.GetCountryResult(countries)
+                };
+                return View(model.CountryList);
+                //return View(await db.CountryPublisheds.ToListAsync());
             }
             catch
             {
@@ -31,6 +37,7 @@ namespace BookStore.MVC.Controllers
         // GET: CountryPublisheds/Details/5
         public async Task<ActionResult> Details(int? id)
         {
+            CountryViewModel model;
             try
             {
                 if (id == null)
@@ -39,13 +46,14 @@ namespace BookStore.MVC.Controllers
                     return PartialView("PartialNotFound", id.ToString());
                 }
                 CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
+                model = CauntryRelase.DetailsCountry(countryPublished);
                 if (countryPublished == null)
                 {
                     //return HttpNotFound();
                     return PartialView("PartialNotFound", id.ToString());
 
                 }
-                return View(countryPublished);
+                return View(model);
             }
             catch
             {
@@ -64,18 +72,19 @@ namespace BookStore.MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,CountryName,IsoCode,PhoneCode")] CountryPublished countryPublished)
+        public async Task<ActionResult> Create([Bind(Include = "Id,CountryName,IsoCode,PhoneCode")] CountryViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    db.CountryPublisheds.Add(countryPublished);
+                    var country = CauntryRelase.CreateCountry(model);
+                    db.CountryPublisheds.Add(country);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
 
-                return View(countryPublished);
+                return View(model);
             }
             catch
             {
@@ -92,16 +101,16 @@ namespace BookStore.MVC.Controllers
                 {
                     //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     return PartialView("PartialNotFound", id.ToString());
-
                 }
                 CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
+                var model = CauntryRelase.EditCountry(countryPublished);
                 if (countryPublished == null)
                 {
                     //return HttpNotFound();
                     return PartialView("PartialNotFound", id.ToString());
 
                 }
-                return View(countryPublished);
+                return View(model);
             }
             catch
             {
@@ -114,17 +123,18 @@ namespace BookStore.MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,CountryName,IsoCode,PhoneCode")] CountryPublished countryPublished)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,CountryName,IsoCode,PhoneCode")] CountryViewModel mod)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    db.Entry(countryPublished).State = EntityState.Modified;
+                    var country = CauntryRelase.EditCountry(mod);
+                    db.Entry(country).State = EntityState.Modified;
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
-                return View(countryPublished);
+                return View(mod);
             }
             catch
             {

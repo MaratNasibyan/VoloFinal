@@ -58,7 +58,7 @@ namespace BookStore.MVC.Controllers
         // GET: Books/Details/5
         public async Task<ActionResult> Details(int? id)
         {
-            Book book;
+            BookViewModel model;
             //BookViewModel model;
             try
             {
@@ -69,8 +69,8 @@ namespace BookStore.MVC.Controllers
                     return PartialView("ViewPartial", id.ToString());
                 }
 
-                book = await db.Books.FindAsync(id);
-                //model = BookRelase.DetailsBook(book);
+                Book  book = await db.Books.FindAsync(id);
+                model = BookRelase.DetailsBook(book);
 
                 if (book == null)
                 {
@@ -78,7 +78,7 @@ namespace BookStore.MVC.Controllers
                     return PartialView("ViewPartial", id.ToString());
 
                 }
-                return View(book);
+                return View(model);
             }
             catch
             {
