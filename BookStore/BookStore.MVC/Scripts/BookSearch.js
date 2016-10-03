@@ -69,9 +69,9 @@
             if (searchString == undefined || searchString == '') {
                 searchString = '';
             } else {
-                searchString = '&searchString=' + searchString;
+                searchString = 'searchString=' + searchString;
             }
-            var url = $(this).attr('href');
+            var url = $(this).attr('href')+'&'+searchString;
             //console.log(url);
             $.ajax({
                 url: url,               

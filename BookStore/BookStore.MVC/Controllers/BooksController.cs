@@ -62,22 +62,20 @@ namespace BookStore.MVC.Controllers
             //BookViewModel model;
             try
             {
-
+                Book book = await db.Books.FindAsync(id);
                 if (id == null)
                 {
                     //return View(new HttpStatusCodeResult(HttpStatusCode.BadRequest));
                     return PartialView("ViewPartial", id.ToString());
                 }
-
-                Book  book = await db.Books.FindAsync(id);
-                model = BookRelase.DetailsBook(book);
-
                 if (book == null)
                 {
                     //return HttpNotFound();
                     return PartialView("ViewPartial", id.ToString());
 
                 }
+                model = BookRelase.DetailsBook(book);
+
                 return View(model);
             }
             catch

@@ -50,12 +50,12 @@ namespace BookStore.MVC.Controllers
                     return PartialView("PartialNotFoundView", id.ToString());
                 }
                 author = await db.Authors.FindAsync(id);
-                model = AuthorRelase.DetailsAuthor(author);
                 if (author == null)
                 {
                     //return HttpNotFound();
                     return PartialView("PartialNotFoundView", id.ToString());
                 }
+                model = AuthorRelase.DetailsAuthor(author);
                 return View(model);
             }
             catch
@@ -108,13 +108,13 @@ namespace BookStore.MVC.Controllers
                     return PartialView("PartialNotFoundView", id.ToString());
                 }
                 Author author = await db.Authors.FindAsync(id);
-                var model = AuthorRelase.EditAuthor(author);
                 if (author == null)
                 {
                     //return HttpNotFound();
                     return PartialView("PartialNotFoundView", id.ToString());
 
                 }
+                var model = AuthorRelase.EditAuthor(author);
                 return View(model);
             }
             catch

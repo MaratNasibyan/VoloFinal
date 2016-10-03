@@ -67,9 +67,11 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Picture, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ImagePatchs, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="file" id="upload" name="upload" accept="image/*" />
+                @Html.ValidationMessageFor(model => model.ImagePatchs, "", new { @class = "text-danger" })
+
             </div>
         </div>
      
@@ -92,5 +94,6 @@
 <style>
     #Description{
         width:100%;
+        height:100px;
     }
 </style>

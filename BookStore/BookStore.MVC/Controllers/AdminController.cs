@@ -87,12 +87,13 @@ namespace BookStore.MVC.Controllers
                     return PartialView("IndexNotFound", id.ToString());
                 }
                  book = await db.Books.FindAsync(id);
-                 model = BookRelase.DetailsBook(book);
                 if (book == null)
                 {
                     //return HttpNotFound();
                     return PartialView("IndexNotFound", id.ToString());
                 }
+                model = BookRelase.DetailsBook(book);
+
             }
             catch
             {
@@ -117,7 +118,7 @@ namespace BookStore.MVC.Controllers
         [Authorize]
         [ValidateAntiForgeryToken]
         [HttpPost]      
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,CountryPublishedId,AuthorsId")] BookViewModel model,HttpPostedFileBase upload)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,ImagePatchs,CountryPublishedId,AuthorsId")] BookViewModel model,HttpPostedFileBase upload)
         {
             try
             {
@@ -130,8 +131,9 @@ namespace BookStore.MVC.Controllers
 
                         if (!supportedTypes.Contains(fileExt))
                         {
-                            return RedirectToAction("Index");
-                            // ModelState.AddModelError("photo", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");
+                            //return RedirectToAction("Index");
+                            ModelState.AddModelError("ImagePatchs", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");
+                         
 
                         }
                         string filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
@@ -179,13 +181,14 @@ namespace BookStore.MVC.Controllers
                     return PartialView("IndexNotFound", id.ToString());
                 }
                 Book book = await db.Books.FindAsync(id);
-                var modelBook = BookRelase.EditBook(book);
                 if (book == null)
                 {
                     
                     //return HttpNotFound();
                     return PartialView("IndexNotFound", id.ToString());
                 }
+
+                var modelBook = BookRelase.EditBook(book);
                 ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName", book.AuthorsId);
                 ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName", book.CountryPublishedId);
                 return View(modelBook);

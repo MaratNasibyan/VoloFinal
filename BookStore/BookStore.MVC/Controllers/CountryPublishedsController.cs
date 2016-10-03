@@ -47,13 +47,14 @@ namespace BookStore.MVC.Controllers
                     return PartialView("PartialNotFound", id.ToString());
                 }
                 CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
-                model = CauntryRelase.DetailsCountry(countryPublished);
                 if (countryPublished == null)
                 {
                     //return HttpNotFound();
                     return PartialView("PartialNotFound", id.ToString());
 
                 }
+                model = CauntryRelase.DetailsCountry(countryPublished);
+
                 return View(model);
             }
             catch
@@ -106,13 +107,13 @@ namespace BookStore.MVC.Controllers
                     return PartialView("PartialNotFound", id.ToString());
                 }
                 CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
-                var model = CauntryRelase.EditCountry(countryPublished);
                 if (countryPublished == null)
                 {
                     //return HttpNotFound();
                     return PartialView("PartialNotFound", id.ToString());
 
                 }
+                var model = CauntryRelase.EditCountry(countryPublished);
                 return View(model);
             }
             catch
