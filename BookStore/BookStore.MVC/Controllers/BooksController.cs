@@ -25,11 +25,11 @@ namespace BookStore.MVC.Controllers
         {
             try
             {
-                var books = db.Books.ToList();
+                var books = db.Books.AsQueryable();
                 int pageSize = 10;
                 if (!string.IsNullOrEmpty(searchString))
                 {
-                    books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Title.Contains(searchString) || n.Author.FullName.Contains(searchString))).ToList();
+                    books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Title.Contains(searchString) || n.Author.FullName.Contains(searchString)));
                     if (!books.Any())
                     {
                         return PartialView("ViewPartial", searchString);

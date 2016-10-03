@@ -24,7 +24,8 @@
 }
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 
-<link href="~/Content/PagedList.css" rel="stylesheet" />
+@*<link href="~/Content/PagedList.css" rel="stylesheet" />*@
+@*<link href="~/Content/BooksStyle.css" rel="stylesheet" />*@
 
 <style>
       #Search {
@@ -47,12 +48,7 @@
         margin: 15px;
         text-align: center;
        }
-    /*#l
-    {
-        width:190px;
-        height:290px;
-    }*/
-        .p img {
+         .p img {
             margin-top: 7px;
         }
 
@@ -71,8 +67,8 @@
     }
 </style>
 
-@*@section scripts
+@section scripts
 {
 <script src="~/Scripts/BookSearch.js"></script>
 <link href="~/Content/PagedList.css" rel="stylesheet" />
- }*@
+ }

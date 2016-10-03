@@ -12,17 +12,13 @@
 </style>
 
 <div class="jumbotron">
-        @*<h1>ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
-
+      
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
             <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-            @*<li data-target="#myCarousel" data-slide-to="3"></li>*@
+            <li data-target="#myCarousel" data-slide-to="2"></li>         
         </ol>
 
         <!-- Wrapper for slides -->
@@ -51,36 +47,6 @@
 </div>
     
 </div>
-@*///////////////////////////////////////////////////////End Slider///////////////////////////////////*@
-    @*<div class="row">
-        <h3 class="text-center"> Top 3 best books of 2016 year</h3>
-        <div class="col-md-4 text-center">
-            <h4 class="text-center">Harry Potter and the Cursed Child</h4>
-            <img src="~/Images/ImgBest2016/29056083.jpg" />
-
-            <p>
-                Based on an original new story by J.K. Rowling, Jack Thorne and John Tiffany, a new play by Jack Thorne, Harry Potter and the Cursed Child is the eighth story in the Harry Potter series and the first official Harry Potter story to be presented on stage...
-            </p>
-            <p><a class="btn btn-default" href="https://en.wikipedia.org/wiki/Harry_Potter_and_the_Cursed_Child">Read more &raquo;</a></p>
-        </div>
-        <div class="col-md-4 text-center" >
-            <h4 class="text-center">Lady Midnight</h4>
-            <img src="~/Images/ImgBest2016/23174274.jpg" />
-
-            <p>In a secret world where half-angel warriors are sworn to fight demons, parabatai is a sacred word.
-             A parabatai is your partner in battle. A parabatai is your best friend. Parabatai can be everything to each other—but they can never fall in love...</p>
-            
-            <p><a class="btn btn-default" href="http://shadowhunters.wikia.com/wiki/Lady_Midnight">Read more &raquo;</a></p>
-        </div>
-        <div class="col-md-4 text-center">
-            <h4 class="text-center">Glass Sword</h4>
-            <img src="~/Images/ImgBest2016/25494343.jpg" />
-
-            <p>Mare Barrow’s blood is red—the color of common folk—but her Silver ability, the power to control lightning, has turned her into a weapon that the royal court tries to control.
-                The crown calls her an impossibility, a fake, but as she makes her escape from Maven, the prince—the friend—who betrayed her, Mare uncovers something startling: she is not the only one of her kind...</p>
-            <p><a class="btn btn-default" href="http://redqueen.wikia.com/wiki/Glass_Sword">Read more &raquo;</a></p>
-        </div>
-    </div>*@
 
 
 <h3 id="best" class="text-center">The best books of bookstore</h3>
@@ -103,12 +69,12 @@
                     <p class="Title" style="color:sandybrown;">@item.Title</p> <br />
                 </div>
             </a>
-        </div>
-   
-        }
+        </div>   
+}
+@*<link href="~/Content/HomeStyle.css" rel="stylesheet" />*@
+<br />
+<br />
 
-<br />
-<br />
 <style>
    #best
      {
@@ -123,7 +89,8 @@
 
     .carousel-inner img
     {
-        height:350px; width:700px;
+            height:350px; width:700px;
+            /*padding-left: 10px;*/
     }
     
       #Search {
@@ -148,11 +115,7 @@
         margin: 15px;
         text-align: center;
        }
-    /*#l
-    {
-        width:190px;
-        height:290px;
-    }*/
+
         .p img {
             margin-top: 7px;
         }
@@ -170,9 +133,6 @@
     .Price {
         margin-top: 7px;
     }
-
-
-
-
+       
 
 </style>

@@ -79,7 +79,8 @@ $(function () {
             default: sort = ""; break;
         }
 
-        var url = $(this).attr('href') + searchString + '&' + sort;
+        //+searchString + '&'
+        var url = $(this).attr('href') + searchString +'&'+sort;
              
         //console.log(url);
         $.ajax({

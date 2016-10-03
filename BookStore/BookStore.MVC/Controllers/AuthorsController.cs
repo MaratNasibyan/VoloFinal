@@ -17,6 +17,7 @@ namespace BookStore.MVC.Controllers
         private BookDatabaseEntities db = new BookDatabaseEntities();
 
         // GET: Authors
+        [Authorize]
         public  ActionResult Index()
         {
             try
@@ -96,6 +97,7 @@ namespace BookStore.MVC.Controllers
         }
 
         // GET: Authors/Edit/5
+        [Authorize]
         public async Task<ActionResult> Edit(int? id)
         {
             try

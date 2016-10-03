@@ -11,21 +11,18 @@
 
     function ChangeUrl(page, url) {
         if (typeof (history.pushState) != "undefined") {
-            var obj = { Page: page, Url: url };
-            
-            history.pushState(null, obj.Page, obj.Url);
-         
+            var obj = { Page: page, Url: url };            
+            history.pushState(null, obj.Page, obj.Url);         
         } else {
             alert("Browser does not support HTML5.");
         }
     }
-
    
 
     function search() {
         $.ajax({
             url: "/Books/Index?searchString=" + $('#SearchString').val(),
-            ////type:"get",
+            //method:'get',
             success: function (result) {
               
                 ChangeUrl("Index","/Books/Index?searchString=" + $('#SearchString').val());
@@ -74,16 +71,18 @@
             } else {
                 searchString = '&searchString=' + searchString;
             }
-            var url = $(this).attr('href') + searchString;
+            var url = $(this).attr('href');
             //console.log(url);
             $.ajax({
-                url: url,
-                type:'get',
+                url: url,               
+                //type:'get',
                 success: function (result) {
-                    ChangeUrl("Index", url);
+                    ChangeUrl('Index', url);
                     $('#ProductList').html(result);
                 }
             });
             
         });
+               
+        
     });
