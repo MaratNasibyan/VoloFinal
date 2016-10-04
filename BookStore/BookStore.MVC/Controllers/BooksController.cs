@@ -32,7 +32,7 @@ namespace BookStore.MVC.Controllers
                     books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Title.Contains(searchString) || n.Author.FullName.Contains(searchString)));
                     if (!books.Any())
                     {
-                        return PartialView("ViewPartial", searchString);
+                        return PartialView("SearchViewNotFound", searchString);
                     }
                 }
                 BooksListModel model = new BooksListModel

@@ -391,6 +391,7 @@
     <Content Include="Views\CountryPublisheds\PartialNotFound.cshtml" />
     <Content Include="Views\Shared\Error404.cshtml" />
     <Content Include="Views\Admin\BookNot.cshtml" />
+    <Content Include="Views\Books\SearchViewNotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BookStore.Entities\BookStore.Entities.csproj">

@@ -76,7 +76,7 @@
                 @Html.DisplayNameFor(model => model.Description)     
             </dt>
 
-            <dd>
+            <dd style="text-align:justify">
               @*@Html.DisplayFor(model => model.Description)*@
               @Html.DisplayFor(model => model.Description)  
             </dd>
@@ -84,3 +84,9 @@
         </dl>
     </div>
 
+<style>
+    #Description
+    {
+        text-align:justify;
+    }
+</style>
