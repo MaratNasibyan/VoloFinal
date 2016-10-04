@@ -42,8 +42,8 @@ namespace BookStore.MVC.Controllers
 
                 if (page > model.BooksList.ToPagedList(page, pageSize).PageCount)
                 {
-                    page = 1;
-                }                
+                    return RedirectToAction("Index");
+                }
                 return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial", model.BooksList.ToPagedList(page, pageSize)) :
                     View(model.BooksList.ToPagedList(page, pageSize));
             }

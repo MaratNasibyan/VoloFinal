@@ -22,7 +22,10 @@
     @*<input type="submit" value="Search" id="btnSearch" placeholder="Search title or author" />*@   
 </div>
 
-
+@if(Model.Count()==0)
+{
+    <h1>dsadasdasd</h1>
+}
 
 <br />
 <div id="ProductList" class="table-responsive">
