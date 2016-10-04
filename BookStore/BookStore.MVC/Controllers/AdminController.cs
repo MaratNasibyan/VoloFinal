@@ -132,10 +132,9 @@ namespace BookStore.MVC.Controllers
 
                         if (!supportedTypes.Contains(fileExt))
                         {
-                            //return RedirectToAction("Index");
-                            ModelState.AddModelError("ImagePatchs", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");
+                            return RedirectToAction("Index");
+                          //ModelState.AddModelError("ImagePatchs", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");
                          
-
                         }
                         string filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
                         string patch = Path.Combine(Server.MapPath("~/Images"), filename);
@@ -204,7 +203,7 @@ namespace BookStore.MVC.Controllers
         [Authorize]
         [ValidateAntiForgeryToken]
         [HttpPost]       
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,CountryPublishedId,AuthorsId")] BookViewModel model,HttpPostedFileBase upload)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,ImagePatchs,CountryPublishedId,AuthorsId")] BookViewModel model,HttpPostedFileBase upload)
         {
             try
             {
@@ -226,12 +225,12 @@ namespace BookStore.MVC.Controllers
 
                         string filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
                         string patch = Path.Combine(Server.MapPath("~/Images"), filename);
-                        //upload.SaveAs(patch);
-                        WebImage img = new WebImage(upload.InputStream);
-                        if (img.Width > 270)
-                            img.Resize(260, 400);
-                        img.Save(patch);
-                        ImagePatch patchimg = db.ImagePatchs.Where(n => n.BooksId == model.Id).SingleOrDefault();
+                        upload.SaveAs(patch);
+                        //WebImage img = new WebImage(upload.InputStream);
+                        //if (img.Width > 270)
+                        //    img.Resize(260, 400);
+                        //img.Save(patch);
+                        ImagePatch patchimg = db.ImagePatchs.Where(n => n.BooksId == model.Id).FirstOrDefault();
                         if (patchimg != null)
                         {
                             patchimg.ImageUrl = filename;

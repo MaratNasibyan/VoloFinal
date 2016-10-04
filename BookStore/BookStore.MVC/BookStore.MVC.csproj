@@ -303,7 +303,6 @@
     <Content Include="Images\ImgSlide\1.jpg" />
     <Content Include="Images\ImgSlide\2.jpg" />
     <Content Include="Images\ImgSlide\3.jpg" />
-    <Content Include="Images\No.jpg" />
     <Content Include="Scripts\AdminSearch.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />

@@ -66,7 +66,10 @@ namespace BookStore.Entities.Service
                 Price = model.Price,   
                 AuthorsId = model.AuthorsId,
                 CountryPublishedId = model.CountryPublishedId,
-                Picture = model.Picture,           
+                Picture = model.Picture, 
+                ImagePatchs = model.ImagePatchs
+                
+
             };
             return book;
         }
