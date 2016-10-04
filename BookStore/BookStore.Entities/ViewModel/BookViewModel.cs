@@ -12,6 +12,8 @@ namespace BookStore.Entities.ViewModel
     {
 
         public int Id { get; set; }
+        [Display(Name ="Image")]
+        public string Image { get; set; }
         public decimal totalPrice { get; set; }   
         [Required(ErrorMessage = "The field Title must be filled")]
         [StringLength(50)]
@@ -28,6 +30,7 @@ namespace BookStore.Entities.ViewModel
         public DateTime DateCreated { get; set; }
         public byte[] Picture { get; set; }
 
+
         [DisplayName("Country")]
         [Required(ErrorMessage = "The field Country must be filled")]
         public int CountryPublishedId { get; set; }
@@ -36,7 +39,11 @@ namespace BookStore.Entities.ViewModel
         [DisplayName("Author")]
         public int AuthorsId { get; set; }
 
+
+      
         public CountryPublished  CountryPublished { get; set; }
+
+        
         public Author Author  { get; set; }
         public List<ImagePatch> ImagePatchs { get; set; }
         public List<AttributeBook> AttributeBook { get; set; }
