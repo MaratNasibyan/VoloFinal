@@ -45,6 +45,7 @@ namespace BookStore.Entities.ViewModel
 
         
         public Author Author  { get; set; }
+        [DisplayName("Picture")]  
         public List<ImagePatch> ImagePatchs { get; set; }
         public List<AttributeBook> AttributeBook { get; set; }
         

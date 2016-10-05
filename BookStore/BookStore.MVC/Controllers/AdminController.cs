@@ -134,6 +134,7 @@ namespace BookStore.MVC.Controllers
                         {
                             return RedirectToAction("Index");
                           //ModelState.AddModelError("ImagePatchs", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");
+                     
                          
                         }
                         string filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
