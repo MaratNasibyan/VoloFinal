@@ -7,11 +7,6 @@
  <h2 style="color:#867fb1">BooksList</h2>
 <link href="~/Content/Site.css" rel="stylesheet" />
 
-  
-@*<div class="text-center">   
-    <input id="SearchString" name="SearchString"  type="text"  value="" placeholder="Search title or author" /> 
-    <input type="submit"  value="Search" id="btnSearch" class="btn btn-default"  /> 
-</div>*@
 <div class="text-center">
     <img src="~/Images/Imgsearch/search.png" />
 </div>
@@ -20,7 +15,6 @@
     <button type="button" class="btn btn-info" value="Search" id="btnSearch">
         <span class="glyphicon glyphicon-search"></span> Search
     </button>
-    @*<input type="submit" value="Search" id="btnSearch" placeholder="Search title or author" />*@
 </div>
 <br />
 <div id="ProductList">
@@ -28,10 +22,9 @@
 </div>       
 
 
-@section scripts
- {
-    <link href="~/Content/PagedList.css" rel="stylesheet" />      
-    <script src="~/Scripts/BookSearch.js"></script>     
+ @section scripts
+ {   
+    <script src="~/Scripts/BookSearch.js"></script>    
  }
 <style>
   input[type=text] {
@@ -48,7 +41,3 @@
       margin-left:-10px;
   }
 </style>
-@*<customErrors mode="On">
-    <error statusCode="404" redirect="404.html" />
-
-</customErrors>*@

@@ -23,9 +23,8 @@
     </div>
 }
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 
-@*<link href="~/Content/PagedList.css" rel="stylesheet" />*@
-@*<link href="~/Content/BooksStyle.css" rel="stylesheet" />*@
 
 <style>
       #Search {
@@ -67,8 +66,4 @@
     }
 </style>
 
-@section scripts
-{
-<script src="~/Scripts/BookSearch.js"></script>
-<link href="~/Content/PagedList.css" rel="stylesheet" />
- }
+

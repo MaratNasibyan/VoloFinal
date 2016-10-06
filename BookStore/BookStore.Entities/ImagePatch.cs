@@ -15,7 +15,6 @@ namespace BookStore.Entities
     public partial class ImagePatch
     {
         public int Id { get; set; }
-
         public string ImageUrl { get; set; }
         public Nullable<int> BooksId { get; set; }
     

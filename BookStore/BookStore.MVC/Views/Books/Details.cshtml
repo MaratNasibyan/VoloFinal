@@ -1,14 +1,10 @@
 ﻿@model BookStore.Entities.ViewModel.BookViewModel
 
-
 @{
     ViewBag.Title = "Details";
 }
 
-@*<h2>Details</h2>*@
-
-<div>
-    @*<h4>Book</h4>*@
+<div> 
     <hr />    
     <p>      
         @Html.ActionLink("Back to List", "Index")
@@ -43,11 +39,10 @@
             </dt>
             <dd>
                  @Html.DisplayFor(model => p)  
-            </dd>
-                     
+            </dd>                     
 
             <dt>
-             Pages  @*@Html.DisplayNameFor(model => model.PagesCount)*@
+             Pages  
             </dt>
 
             <dd>
@@ -56,29 +51,27 @@
 
 
             <dt>
-                Author @*@Html.DisplayNameFor(model => model.Author.FullName)*@
+                Author 
             </dt>
 
             <dd>
                 @Html.DisplayFor(model => model.Author.FullName)
             </dd>
 
-            <dt>
-                @*@Html.DisplayNameFor(model => model.CountryPublished.CountryName)*@
+            <dt>               
                 Country
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.CountryPublished.CountryName)
+                @Html.DisplayFor(model => model.CountryPublished.CountryName)             
             </dd>
 
             <dt>
                 @Html.DisplayNameFor(model => model.Description)     
             </dt>
 
-            <dd style="text-align:justify">
-              @*@Html.DisplayFor(model => model.Description)*@
-              @Html.DisplayFor(model => model.Description)  
+            <dd style="text-align:justify">           
+                @Html.DisplayFor(model => model.Description)  
             </dd>
 
         </dl>

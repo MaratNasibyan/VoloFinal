@@ -19,13 +19,8 @@
     <button type="button" class="btn btn-info" value="Search" id="btnSearch"  >
         <span class="glyphicon glyphicon-search"></span> 
     </button>
-    @*<input type="submit" value="Search" id="btnSearch" placeholder="Search title or author" />*@   
 </div>
 
-@if(Model.Count()==0)
-{
-    <h1>dsadasdasd</h1>
-}
 
 <br />
 <div id="ProductList" class="table-responsive">
@@ -36,7 +31,8 @@
 @section scripts
 {
     <link href="~/Content/PagedList.css" rel="stylesheet" />
-    <script src="~/Scripts/AdminSearch.js"></script>              
+    <script src="~/Scripts/AdminSearch.js"></script>        
+  
 }
 
 
@@ -44,25 +40,17 @@
     input[type=text] {
         width: 100%;
         padding: 4px 20px;
-        margin: 8px 0;
-        /*box-sizing: border-box;*/
-        border-radius:25px;
- 
+        margin: 8px 0;      
+        border-radius:25px; 
     }
    #btnSearch
    {
        border-radius:25px;
        margin-left:-26px;
        padding: 7px 11px;
-
    }
-    /*border-radius: 6px;*/    
 </style>
 
-
-@*<customErrors mode="On">
-    <error statusCode="404" redirect="404.html" />
-</customErrors>*@
 
 
 

@@ -1,7 +1,6 @@
 ﻿@using PagedList.Mvc
 @model PagedList.IPagedList<BookStore.Entities.ViewModel.BookViewModel>
 
-
 <table>
     <thead>
         <tr>
@@ -35,8 +34,7 @@
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    @{
-                        //decimal totalPrice = item.totalPrice.ToString("C2");
+                    @{                      
                         var price = item.totalPrice.ToString("C2");
                     }
                     @Html.DisplayFor(modelItem => price)
@@ -76,8 +74,6 @@
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
-
-@*<link href="~/Content/AdminStyle.css" rel="stylesheet" />*@
 
 <style>
     thead {

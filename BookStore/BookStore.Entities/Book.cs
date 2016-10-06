@@ -29,7 +29,7 @@ namespace BookStore.Entities
         public byte[] Picture { get; set; }
         public int CountryPublishedId { get; set; }
         public int AuthorsId { get; set; }
-        
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AttributeBook> AttributeBooks { get; set; }
         public virtual Author Author { get; set; }

@@ -63,8 +63,7 @@ namespace BookStore.MVC.Controllers
                 {
                     return RedirectToAction("Index");
 
-                }
-               
+                }               
                 return Request.IsAjaxRequest() ? (ActionResult)PartialView("IndexPartial", model.BooksList.ToPagedList(page, pageSize)) :
                 View(model.BooksList.ToPagedList(page, pageSize));
             }
@@ -94,7 +93,6 @@ namespace BookStore.MVC.Controllers
                     return PartialView("IndexNotFound", id.ToString());
                 }
                 model = BookRelase.DetailsBook(book);
-
             }
             catch
             {
@@ -113,9 +111,7 @@ namespace BookStore.MVC.Controllers
         }
 
         // POST: Admin/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-
+    
         [Authorize]
         [ValidateAntiForgeryToken]
         [HttpPost]      
@@ -133,9 +129,7 @@ namespace BookStore.MVC.Controllers
                         if (!supportedTypes.Contains(fileExt))
                         {
                             return RedirectToAction("Index");
-                          //ModelState.AddModelError("ImagePatchs", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");
-                     
-                         
+                          //ModelState.AddModelError("ImagePatchs", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");                                              
                         }
                         string filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
                         string patch = Path.Combine(Server.MapPath("~/Images"), filename);
@@ -149,13 +143,11 @@ namespace BookStore.MVC.Controllers
                     }
                     else
                     {
-
                         model.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = "No.jpg" } };
                     }
                     var v = BookRelase.CreateBook(model);
                     db.Books.Add(v);
                     await db.SaveChangesAsync();
-
                     return RedirectToAction("Index");
                 }
 
@@ -183,8 +175,7 @@ namespace BookStore.MVC.Controllers
                 }
                 Book book = await db.Books.FindAsync(id);
                 if (book == null)
-                {
-                    
+                {                    
                     //return HttpNotFound();
                     return PartialView("IndexNotFound", id.ToString());
                 }
@@ -227,10 +218,7 @@ namespace BookStore.MVC.Controllers
                         string filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
                         string patch = Path.Combine(Server.MapPath("~/Images"), filename);
                         upload.SaveAs(patch);
-                        //WebImage img = new WebImage(upload.InputStream);
-                        //if (img.Width > 270)
-                        //    img.Resize(260, 400);
-                        //img.Save(patch);
+               
                         ImagePatch patchimg = db.ImagePatchs.Where(n => n.BooksId == model.Id).FirstOrDefault();
                         if (patchimg != null)
                         {
@@ -246,8 +234,7 @@ namespace BookStore.MVC.Controllers
 
                     }
                                        
-                    Book b = BookRelase.EditBook(model);
-                
+                    Book b = BookRelase.EditBook(model);                
                     db.Entry(b).State = EntityState.Modified;
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
@@ -272,11 +259,9 @@ namespace BookStore.MVC.Controllers
                 {
                     //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     return PartialView("IndexNotFound", id.ToString());
-
                 }
                 Book book = await db.Books.FindAsync(id);
-
-
+                
                 if (book == null)
                 {
                     //return HttpNotFound();

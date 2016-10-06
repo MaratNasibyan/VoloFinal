@@ -38,12 +38,9 @@ namespace BookStore.Entities.ViewModel
         [Required(ErrorMessage = "The field Author must be filled")]
         [DisplayName("Author")]
         public int AuthorsId { get; set; }
-
-
-      
+                      
         public CountryPublished  CountryPublished { get; set; }
-
-        
+                
         public Author Author  { get; set; }
         [DisplayName("Picture")]  
         public List<ImagePatch> ImagePatchs { get; set; }

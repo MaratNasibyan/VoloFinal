@@ -1,6 +1,4 @@
-﻿@*@model BookStore.Entities.Book*@
-@model BookStore.Entities.ViewModel.BookViewModel
-
+﻿@model BookStore.Entities.ViewModel.BookViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -23,7 +21,6 @@
                     <img src="~/Images/@v.ImageUrl" style="height:150px;width:120px;" />
                 }
             }
-
         </dd>
 
         <dt>
@@ -44,8 +41,7 @@
         </dd>
 
         <dt>
-            @*@Html.DisplayNameFor(model => model.PagesCount)*@
-            Pages
+            @Html.DisplayNameFor(model => model.PagesCount)     
         </dt>
 
         <dd>
@@ -53,8 +49,7 @@
         </dd>
         
         <dt>
-         @*   @Html.DisplayNameFor(model => model.Author.FullName)*@
-            Author
+            @Html.DisplayNameFor(model => model.Author.FullName)        
         </dt>
 
         <dd>

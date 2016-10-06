@@ -58,8 +58,7 @@ namespace BookStore.MVC.Controllers
         // GET: Books/Details/5
         public async Task<ActionResult> Details(int? id)
         {
-            BookViewModel model;
-            //BookViewModel model;
+            BookViewModel model;      
             try
             {
                 Book book = await db.Books.FindAsync(id);
@@ -72,10 +71,8 @@ namespace BookStore.MVC.Controllers
                 {
                     //return HttpNotFound();
                     return PartialView("ViewPartial", id.ToString());
-
                 }
                 model = BookRelase.DetailsBook(book);
-
                 return View(model);
             }
             catch
@@ -83,8 +80,7 @@ namespace BookStore.MVC.Controllers
                 return RedirectToAction("Index");
             }
         }        
-              
-              
+                            
         protected override void Dispose(bool disposing)
         {
             if (disposing)
