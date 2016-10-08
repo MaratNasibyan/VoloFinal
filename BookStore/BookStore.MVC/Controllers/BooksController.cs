@@ -54,7 +54,6 @@ namespace BookStore.MVC.Controllers
         }
     
 
-
         // GET: Books/Details/5
         public async Task<ActionResult> Details(int? id)
         {

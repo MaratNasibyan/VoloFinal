@@ -29,10 +29,8 @@
                 @*@Html.TextBoxFor(model => model.DateBirth, "{0:MM/dd/yyyy}", new { @class = "form-control default-date-picker" })*@
                 @Html.ValidationMessageFor(model => model.DateBirth, "", new { @class = "text-danger" })
             </div>
-        </div>
-                                       
-
-
+        </div>                                      
+        
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -46,5 +44,6 @@
 </div>
 @section scripts
 {
+
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
 }

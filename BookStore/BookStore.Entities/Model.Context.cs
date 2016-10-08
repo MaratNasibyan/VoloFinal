@@ -33,7 +33,6 @@ namespace BookStore.Entities
         public virtual DbSet<AttributeBook> AttributeBooks { get; set; }
         public virtual DbSet<Attribute> Attributes { get; set; }
         public virtual DbSet<AttributeType> AttributeTypes { get; set; }
-        public virtual DbSet<AttributeValue> AttributeValues { get; set; }
         public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<Book> Books { get; set; }
         public virtual DbSet<CountryPublished> CountryPublisheds { get; set; }

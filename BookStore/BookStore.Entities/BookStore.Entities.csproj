@@ -67,64 +67,64 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspNetRole.cs">
-      <DependentUpon>BookModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUser.cs">
-      <DependentUpon>BookModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUserClaim.cs">
-      <DependentUpon>BookModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUserLogin.cs">
-      <DependentUpon>BookModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Attribute.cs">
-      <DependentUpon>BookModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="AttributeBook.cs">
-      <DependentUpon>BookModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="AttributeType.cs">
-      <DependentUpon>BookModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AttributeValue.cs">
-      <DependentUpon>BookModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Author.cs">
-      <DependentUpon>BookModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="AuthorViewModel\AuthorListModel.cs" />
     <Compile Include="AuthorViewModel\AuthorRelase.cs" />
+    <Compile Include="Repositories\AuthorRepository.cs" />
     <Compile Include="AuthorViewModel\AuthorViewModel.cs" />
+    <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Book.cs">
-      <DependentUpon>BookModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BookModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BookModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BookModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BookModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BookModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BookModel.edmx</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="CountryPublished.cs">
-      <DependentUpon>BookModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="CountryViewModel\CauntryListModel.cs" />
     <Compile Include="CountryViewModel\CauntryRelase.cs" />
+    <Compile Include="Repositories\CauntryRepository.cs" />
     <Compile Include="CountryViewModel\CountryViewModel.cs" />
     <Compile Include="C__MigrationHistory.cs">
-      <DependentUpon>BookModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="ImagePatch.cs">
-      <DependentUpon>BookModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\BookRelase.cs" />
@@ -132,27 +132,15 @@
     <Compile Include="ViewModel\BookViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BookModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BookModel.edmx</DependentUpon>
-      <LastGenOutput>BookModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="BookModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BookModel.edmx</DependentUpon>
-      <LastGenOutput>BookModel.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="BookModel.edmx">
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>BookModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
-    <None Include="BookModel.edmx.diagram">
-      <DependentUpon>BookModel.edmx</DependentUpon>
+    <None Include="Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -170,6 +158,18 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

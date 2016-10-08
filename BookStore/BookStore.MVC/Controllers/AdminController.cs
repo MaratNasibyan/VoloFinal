@@ -27,6 +27,7 @@ namespace BookStore.MVC.Controllers
        // GET: Admin
         public ActionResult Index(string searchString, string sortOption, int page=1)
         {
+
             try
             {
                 int pageSize = 5;
@@ -38,7 +39,8 @@ namespace BookStore.MVC.Controllers
                     {
                         //return Content("This book is not found <a href='~Admin/Index'>Go</a> ");
                         return PartialView("BookNot", searchString);
-                    }
+                    }            
+
                 }
                 BooksListModel model = new BooksListModel
                 {
@@ -107,6 +109,7 @@ namespace BookStore.MVC.Controllers
         {
             ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName");
             ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName");
+            ViewBag.Attributes = new SelectList(db.Attributes, "Id", "Name");
             return View();
         }
 

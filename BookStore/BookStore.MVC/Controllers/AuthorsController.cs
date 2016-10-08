@@ -14,15 +14,22 @@ namespace BookStore.MVC.Controllers
 {
     public class AuthorsController : Controller
     {
-        private BookDatabaseEntities db = new BookDatabaseEntities();
+        //private BookDatabaseEntities db = new BookDatabaseEntities();
+        IRepository<Author> db;
+        
+        public AuthorsController()
+        {
+            db = new AuthorRepository();
+        }
 
-        // GET: Authors
+          // GET: Authors
         [Authorize]
         public  ActionResult Index()
         {
             try
             {
-                var authors = db.Authors.ToList();
+                //var authors = db.Authors.ToList();
+                var authors = db.GetList();
                 AuthorListModel model = new AuthorListModel
                 {
                     AuthorsList =  AuthorRelase.GetAuthorsResult(authors)
@@ -37,7 +44,7 @@ namespace BookStore.MVC.Controllers
         }
 
         // GET: Authors/Details/5
-        public async Task<ActionResult> Details(int? id)
+        public async  Task<ActionResult> Details(int? id)
         {
             Author author;
             AuthorViewModel model;
@@ -49,7 +56,8 @@ namespace BookStore.MVC.Controllers
                     //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     return PartialView("PartialNotFoundView", id.ToString());
                 }
-                author = await db.Authors.FindAsync(id);
+                //author = await db.Authors.FindAsync(id);
+                author =  await db.GetData(id);
                 if (author == null)
                 {
                     //return HttpNotFound();
@@ -76,15 +84,17 @@ namespace BookStore.MVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,FullName,DateBirth")] AuthorViewModel model)
+        public ActionResult Create([Bind(Include = "Id,FullName,DateBirth")] AuthorViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     var author = AuthorRelase.CreateAuthor(model);
-                    db.Authors.Add(author);
-                    await db.SaveChangesAsync();
+                    db.Create(author);
+                    db.Save();
+                    //db.Authors.Add(author);
+                    //await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
 
@@ -107,12 +117,12 @@ namespace BookStore.MVC.Controllers
                     //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     return PartialView("PartialNotFoundView", id.ToString());
                 }
-                Author author = await db.Authors.FindAsync(id);
+                //Author author = await db.Authors.FindAsync(id);
+                Author author = await db.GetData(id);
                 if (author == null)
                 {
                     //return HttpNotFound();
                     return PartialView("PartialNotFoundView", id.ToString());
-
                 }
                 var model = AuthorRelase.EditAuthor(author);
                 return View(model);
@@ -129,15 +139,17 @@ namespace BookStore.MVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,FullName,DateBirth")] AuthorViewModel model)
+        public ActionResult Edit([Bind(Include = "Id,FullName,DateBirth")] AuthorViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     var author = AuthorRelase.EditAuthor(model);
-                    db.Entry(author).State = EntityState.Modified;
-                    await db.SaveChangesAsync();
+                    db.Update(author);
+                    db.Save();
+                    //db.Entry(author).State = EntityState.Modified;
+                    //await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
                 return View(model);
@@ -160,7 +172,8 @@ namespace BookStore.MVC.Controllers
                     return PartialView("PartialNotFoundView", id.ToString());
 
                 }
-                Author author = await db.Authors.FindAsync(id);
+                //Author author = await db.Authors.FindAsync(id);
+                Author author = await db.GetData(id);
                 if (author == null)
                 {
                     //return HttpNotFound();
@@ -182,9 +195,12 @@ namespace BookStore.MVC.Controllers
         {
             try
             {
-                Author author = await db.Authors.FindAsync(id);
-                db.Authors.Remove(author);
-                await db.SaveChangesAsync();
+                Author author = await db.GetData(id);
+                db.Delete(id);
+                db.Save();
+                //Author author = await db.Authors.FindAsync(id);
+                //db.Authors.Remove(author);
+                //await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             catch

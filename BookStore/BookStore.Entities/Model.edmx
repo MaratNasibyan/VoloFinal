@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BookDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BookDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -73,6 +73,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BooksId" Type="int" Nullable="false" />
           <Property Name="AttributesId" Type="int" Nullable="false" />
+          <Property Name="ValueTypeText" Type="nvarchar(max)" />
+          <Property Name="ValueTypeDate" Type="date" />
         </EntityType>
         <EntityType Name="Attributes">
           <Key>
@@ -80,6 +82,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AttributeTypeId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="AttributeType">
           <Key>
@@ -87,14 +90,6 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AttributeValue">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="value" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="AttributeId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Authors">
           <Key>
@@ -116,6 +111,7 @@
           <Property Name="Picture" Type="varbinary(max)" />
           <Property Name="CountryPublishedId" Type="int" Nullable="false" />
           <Property Name="AuthorsId" Type="int" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" />
         </EntityType>
         <EntityType Name="CountryPublished">
           <Key>
@@ -134,6 +130,18 @@
           <Property Name="ImageUrl" Type="nvarchar(max)" />
           <Property Name="BooksId" Type="int" />
         </EntityType>
+        <Association Name="FK_Attribute_AttrinuteType">
+          <End Role="AttributeType" Type="Self.AttributeType" Multiplicity="1" />
+          <End Role="Attributes" Type="Self.Attributes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttributeType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Attributes">
+              <PropertyRef Name="AttributeTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AttributesBooks">
           <End Role="Attributes" Type="Self.Attributes" Multiplicity="1" />
           <End Role="AttributeBooks" Type="Self.AttributeBooks" Multiplicity="*" />
@@ -143,30 +151,6 @@
             </Principal>
             <Dependent Role="AttributeBooks">
               <PropertyRef Name="AttributesId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AttributesType_Attributes">
-          <End Role="Attributes" Type="Self.Attributes" Multiplicity="1" />
-          <End Role="AttributeType" Type="Self.AttributeType" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Attributes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AttributeType">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AttributeValue_Attributes">
-          <End Role="Attributes" Type="Self.Attributes" Multiplicity="1" />
-          <End Role="AttributeValue" Type="Self.AttributeValue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Attributes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AttributeValue">
-              <PropertyRef Name="AttributeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -284,22 +268,17 @@
           <EntitySet Name="AttributeBooks" EntityType="Self.AttributeBooks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Attributes" EntityType="Self.Attributes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AttributeType" EntityType="Self.AttributeType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AttributeValue" EntityType="Self.AttributeValue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Authors" EntityType="Self.Authors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Books" EntityType="Self.Books" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CountryPublished" EntityType="Self.CountryPublished" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImagePatchs" EntityType="Self.ImagePatchs" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Attribute_AttrinuteType" Association="Self.FK_Attribute_AttrinuteType">
+            <End Role="AttributeType" EntitySet="AttributeType" />
+            <End Role="Attributes" EntitySet="Attributes" />
+          </AssociationSet>
           <AssociationSet Name="FK_AttributesBooks" Association="Self.FK_AttributesBooks">
             <End Role="Attributes" EntitySet="Attributes" />
             <End Role="AttributeBooks" EntitySet="AttributeBooks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AttributesType_Attributes" Association="Self.FK_AttributesType_Attributes">
-            <End Role="Attributes" EntitySet="Attributes" />
-            <End Role="AttributeType" EntitySet="AttributeType" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AttributeValue_Attributes" Association="Self.FK_AttributeValue_Attributes">
-            <End Role="Attributes" EntitySet="Attributes" />
-            <End Role="AttributeValue" EntitySet="AttributeValue" />
           </AssociationSet>
           <AssociationSet Name="FK_Books_Authors" Association="Self.FK_Books_Authors">
             <End Role="Authors" EntitySet="Authors" />
@@ -334,7 +313,8 @@
             <End Role="ImagePatchs" EntitySet="ImagePatchs" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BookDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -404,6 +384,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="BooksId" Type="Int32" Nullable="false" />
           <Property Name="AttributesId" Type="Int32" Nullable="false" />
+          <Property Name="ValueTypeText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ValueTypeDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Attribute" Relationship="Self.FK_AttributesBooks" FromRole="AttributeBooks" ToRole="Attributes" />
           <NavigationProperty Name="Book" Relationship="Self.FK_BooksAttributes" FromRole="AttributeBooks" ToRole="Books" />
         </EntityType>
@@ -413,9 +395,9 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AttributeTypeId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AttributeBooks" Relationship="Self.FK_AttributesBooks" FromRole="Attributes" ToRole="AttributeBooks" />
-          <NavigationProperty Name="AttributeType" Relationship="Self.FK_AttributesType_Attributes" FromRole="Attributes" ToRole="AttributeType" />
-          <NavigationProperty Name="AttributeValues" Relationship="Self.FK_AttributeValue_Attributes" FromRole="Attributes" ToRole="AttributeValue" />
+          <NavigationProperty Name="AttributeType" Relationship="Self.FK_Attribute_AttrinuteType" FromRole="Attributes" ToRole="AttributeType" />
         </EntityType>
         <EntityType Name="AttributeType">
           <Key>
@@ -423,16 +405,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Attribute" Relationship="Self.FK_AttributesType_Attributes" FromRole="AttributeType" ToRole="Attributes" />
-        </EntityType>
-        <EntityType Name="AttributeValue">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="AttributeId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Attribute" Relationship="Self.FK_AttributeValue_Attributes" FromRole="AttributeValue" ToRole="Attributes" />
+          <NavigationProperty Name="Attributes" Relationship="Self.FK_Attribute_AttrinuteType" FromRole="AttributeType" ToRole="Attributes" />
         </EntityType>
         <EntityType Name="Author">
           <Key>
@@ -455,6 +428,7 @@
           <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="CountryPublishedId" Type="Int32" Nullable="false" />
           <Property Name="AuthorsId" Type="Int32" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <NavigationProperty Name="AttributeBooks" Relationship="Self.FK_BooksAttributes" FromRole="Books" ToRole="AttributeBooks" />
           <NavigationProperty Name="Author" Relationship="Self.FK_Books_Authors" FromRole="Books" ToRole="Authors" />
           <NavigationProperty Name="CountryPublished" Relationship="Self.FK_Books_PublishedCountry" FromRole="Books" ToRole="CountryPublished" />
@@ -531,27 +505,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AttributesType_Attributes">
-          <End Role="Attributes" Type="Self.Attribute" Multiplicity="1" />
-          <End Role="AttributeType" Type="Self.AttributeType" Multiplicity="0..1" />
+        <Association Name="FK_Attribute_AttrinuteType">
+          <End Role="AttributeType" Type="Self.AttributeType" Multiplicity="1" />
+          <End Role="Attributes" Type="Self.Attribute" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Attributes">
+            <Principal Role="AttributeType">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AttributeType">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AttributeValue_Attributes">
-          <End Role="Attributes" Type="Self.Attribute" Multiplicity="1" />
-          <End Role="AttributeValue" Type="Self.AttributeValue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Attributes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AttributeValue">
-              <PropertyRef Name="AttributeId" />
+            <Dependent Role="Attributes">
+              <PropertyRef Name="AttributeTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -604,7 +566,6 @@
           <EntitySet Name="AttributeBooks" EntityType="Self.AttributeBook" />
           <EntitySet Name="Attributes" EntityType="Self.Attribute" />
           <EntitySet Name="AttributeTypes" EntityType="Self.AttributeType" />
-          <EntitySet Name="AttributeValues" EntityType="Self.AttributeValue" />
           <EntitySet Name="Authors" EntityType="Self.Author" />
           <EntitySet Name="Books" EntityType="Self.Book" />
           <EntitySet Name="CountryPublisheds" EntityType="Self.CountryPublished" />
@@ -625,13 +586,9 @@
             <End Role="Books" EntitySet="Books" />
             <End Role="AttributeBooks" EntitySet="AttributeBooks" />
           </AssociationSet>
-          <AssociationSet Name="FK_AttributesType_Attributes" Association="Self.FK_AttributesType_Attributes">
-            <End Role="Attributes" EntitySet="Attributes" />
+          <AssociationSet Name="FK_Attribute_AttrinuteType" Association="Self.FK_Attribute_AttrinuteType">
             <End Role="AttributeType" EntitySet="AttributeTypes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AttributeValue_Attributes" Association="Self.FK_AttributeValue_Attributes">
             <End Role="Attributes" EntitySet="Attributes" />
-            <End Role="AttributeValue" EntitySet="AttributeValues" />
           </AssociationSet>
           <AssociationSet Name="FK_Books_Authors" Association="Self.FK_Books_Authors">
             <End Role="Authors" EntitySet="Authors" />
@@ -717,6 +674,8 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="BooksId" ColumnName="BooksId" />
                 <ScalarProperty Name="AttributesId" ColumnName="AttributesId" />
+                <ScalarProperty Name="ValueTypeText" ColumnName="ValueTypeText" />
+                <ScalarProperty Name="ValueTypeDate" ColumnName="ValueTypeDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -725,6 +684,7 @@
               <MappingFragment StoreEntitySet="Attributes">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AttributeTypeId" ColumnName="AttributeTypeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -733,15 +693,6 @@
               <MappingFragment StoreEntitySet="AttributeType">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AttributeValues">
-            <EntityTypeMapping TypeName="BookDatabaseModel.AttributeValue">
-              <MappingFragment StoreEntitySet="AttributeValue">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="value" ColumnName="value" />
-                <ScalarProperty Name="AttributeId" ColumnName="AttributeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -765,6 +716,7 @@
                 <ScalarProperty Name="Picture" ColumnName="Picture" />
                 <ScalarProperty Name="CountryPublishedId" ColumnName="CountryPublishedId" />
                 <ScalarProperty Name="AuthorsId" ColumnName="AuthorsId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
