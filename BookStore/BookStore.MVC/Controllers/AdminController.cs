@@ -285,7 +285,8 @@ namespace BookStore.MVC.Controllers
                             
                 db.Books.Delete(id);
                 db.Images.Delete(k);
-                db.Books.Save();             
+                db.Books.Save();
+                db.Images.Save();             
                 return RedirectToAction("Index");
             }
             catch
