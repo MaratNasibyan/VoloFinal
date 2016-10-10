@@ -15,33 +15,46 @@ using BookStore.MVC.Models;
 using BookStore.Entities.ViewModel;
 using BookStore.Entities.Service;
 using System.Web.Helpers;
-
+using BookStore.Entities.Repositories;
+using BookStore.Entities.Unit_of_Work;
 namespace BookStore.MVC.Controllers
 {
   
     [Authorize]
     public class AdminController : Controller
     {
-        private BookDatabaseEntities db = new BookDatabaseEntities();
+        //private BookDatabaseEntities db = new BookDatabaseEntities();
+        UnitofWork db;
 
-       // GET: Admin
+        public AdminController()
+        {
+            db = new UnitofWork();
+        }
+        
+        // GET: Admin
         public ActionResult Index(string searchString, string sortOption, int page=1)
         {
-
             try
             {
                 int pageSize = 5;
-                var books = db.Books.ToList();
-                if (!string.IsNullOrEmpty(searchString))
-                {
-                    books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Title.Contains(searchString) || n.Author.FullName.Contains(searchString))).ToList();
-                    if (!books.Any())
-                    {
-                        //return Content("This book is not found <a href='~Admin/Index'>Go</a> ");
-                        return PartialView("BookNot", searchString);
-                    }            
 
+                //var books = db.Books.ToList();
+                //if (!string.IsNullOrEmpty(searchString))
+                //{
+                //    books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Title.Contains(searchString) || n.Author.FullName.Contains(searchString))).ToList();
+                //    if (!books.Any())
+                //    {
+                //        //return Content("This book is not found <a href='~Admin/Index'>Go</a> ");
+                //        return PartialView("BookNot", searchString);
+                //    }
+                //}
+                var books = db.Books.Find(searchString);
+                if(!books.Any())
+                {
+                    return PartialView("BookNot", searchString);
                 }
+
+
                 BooksListModel model = new BooksListModel
                 {
                     BooksList = BookRelase.GetBookResult(books)
@@ -88,7 +101,8 @@ namespace BookStore.MVC.Controllers
                     //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     return PartialView("IndexNotFound", id.ToString());
                 }
-                 book = await db.Books.FindAsync(id);
+                book = await db.Books.GetData(id);
+               
                 if (book == null)
                 {
                     //return HttpNotFound();
@@ -107,9 +121,10 @@ namespace BookStore.MVC.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName");
-            ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName");
-            ViewBag.Attributes = new SelectList(db.Attributes, "Id", "Name");
+            ViewBag.AuthorsId = new SelectList(db.Authors.GetList(), "Id", "FullName");
+            ViewBag.CountryPublishedId = new SelectList(db.Countries.GetList(), "Id", "CountryName");  
+            //ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName");
+
             return View();
         }
 
@@ -118,7 +133,7 @@ namespace BookStore.MVC.Controllers
         [Authorize]
         [ValidateAntiForgeryToken]
         [HttpPost]      
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,ImagePatchs,CountryPublishedId,AuthorsId")] BookViewModel model,HttpPostedFileBase upload)
+        public  ActionResult Create([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,ImagePatchs,CountryPublishedId,AuthorsId")] BookViewModel model,HttpPostedFileBase upload)
         {
             try
             {
@@ -149,13 +164,16 @@ namespace BookStore.MVC.Controllers
                         model.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = "No.jpg" } };
                     }
                     var v = BookRelase.CreateBook(model);
-                    db.Books.Add(v);
-                    await db.SaveChangesAsync();
+                    //db.Books.Add(v);
+                    //await db.SaveChangesAsync();
+                    db.Books.Create(v);
+                    db.Books.Save();
+                    db.Images.Save();
                     return RedirectToAction("Index");
                 }
 
-                ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName", model.AuthorsId);
-                ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName", model.CountryPublishedId);
+                ViewBag.AuthorsId = new SelectList(db.Authors.GetList(), "Id", "FullName", model.AuthorsId);
+                ViewBag.CountryPublishedId = new SelectList(db.Countries.GetList(), "Id", "CountryName", model.CountryPublishedId);
                 return View(model);
             }
             catch
@@ -176,7 +194,7 @@ namespace BookStore.MVC.Controllers
                     //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     return PartialView("IndexNotFound", id.ToString());
                 }
-                Book book = await db.Books.FindAsync(id);
+                Book book = await db.Books.GetData(id);
                 if (book == null)
                 {                    
                     //return HttpNotFound();
@@ -184,8 +202,8 @@ namespace BookStore.MVC.Controllers
                 }
 
                 var modelBook = BookRelase.EditBook(book);
-                ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName", book.AuthorsId);
-                ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName", book.CountryPublishedId);
+                ViewBag.AuthorsId = new SelectList(db.Authors.GetList(), "Id", "FullName", book.AuthorsId);
+                ViewBag.CountryPublishedId = new SelectList(db.Countries.GetList(), "Id", "CountryName", book.CountryPublishedId);
                 return View(modelBook);
             }
             catch
@@ -198,14 +216,16 @@ namespace BookStore.MVC.Controllers
         [Authorize]
         [ValidateAntiForgeryToken]
         [HttpPost]       
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,ImagePatchs,CountryPublishedId,AuthorsId")] BookViewModel model,HttpPostedFileBase upload)
+        public ActionResult Edit([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,ImagePatchs,CountryPublishedId,AuthorsId")] BookViewModel model,HttpPostedFileBase upload)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     //book = await db.Books.FindAsync(book.Id); 
-                    ImagePatch oldpatch = db.ImagePatchs.Where(n => n.BooksId == model.Id).FirstOrDefault();
+                    //ImagePatch oldpatch = db.ImagePatchs.Where(n => n.BooksId == model.Id).FirstOrDefault();
+                    ImagePatch oldpatch = db.Images.GetList().Where(n => n.BooksId == model.Id).FirstOrDefault();
+
                     string pat = oldpatch.ImageUrl;
                     if (upload != null)
                     {
@@ -222,7 +242,7 @@ namespace BookStore.MVC.Controllers
                         string patch = Path.Combine(Server.MapPath("~/Images"), filename);
                         upload.SaveAs(patch);
                
-                        ImagePatch patchimg = db.ImagePatchs.Where(n => n.BooksId == model.Id).FirstOrDefault();
+                        ImagePatch patchimg = db.Images.GetList().Where(n => n.BooksId == model.Id).FirstOrDefault();
                         if (patchimg != null)
                         {
                             patchimg.ImageUrl = filename;
@@ -237,13 +257,15 @@ namespace BookStore.MVC.Controllers
 
                     }
                                        
-                    Book b = BookRelase.EditBook(model);                
-                    db.Entry(b).State = EntityState.Modified;
-                    await db.SaveChangesAsync();
+                    Book b = BookRelase.EditBook(model);
+                    //db.Entry(b).State = EntityState.Modified;
+                    //await db.SaveChangesAsync();
+                    db.Books.Update(b);
+                    db.Books.Save();
                     return RedirectToAction("Index");
                 }
-                ViewBag.AuthorsId = new SelectList(db.Authors, "Id", "FullName", model.AuthorsId);
-                ViewBag.CountryPublishedId = new SelectList(db.CountryPublisheds, "Id", "CountryName", model.CountryPublishedId);
+                ViewBag.AuthorsId = new SelectList(db.Authors.GetList(), "Id", "FullName", model.AuthorsId);
+                ViewBag.CountryPublishedId = new SelectList(db.Countries.GetList(), "Id", "CountryName", model.CountryPublishedId);
                 return View(model);
             }
             catch
@@ -263,7 +285,8 @@ namespace BookStore.MVC.Controllers
                     //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     return PartialView("IndexNotFound", id.ToString());
                 }
-                Book book = await db.Books.FindAsync(id);
+                //Book book = await db.Books.FindAsync(id);
+                Book book = await db.Books.GetData(id);
                 
                 if (book == null)
                 {
@@ -286,8 +309,10 @@ namespace BookStore.MVC.Controllers
         {
             try
             {
-                Book book = await db.Books.FindAsync(id);
-                ImagePatch patch = db.ImagePatchs.Where(n => n.BooksId == id).FirstOrDefault();
+                //Book book = await db.Books.FindAsync(id);
+                //ImagePatch patch = db.ImagePatchs.Where(n => n.BooksId == id).FirstOrDefault();
+                Book book = await db.Books.GetData(id);
+                ImagePatch patch = db.Images.GetList().Where(n => n.BooksId == id).FirstOrDefault();
                 string patch1 = Path.Combine(Server.MapPath("~/Images"), patch.ImageUrl);
 
                 if (patch1 != null && patch.ImageUrl != "No.jpg")
@@ -297,9 +322,16 @@ namespace BookStore.MVC.Controllers
                         System.IO.File.Delete(patch1);
                     }
                 }
-                db.Books.Remove(book);
-                db.ImagePatchs.Remove(patch);
-                await db.SaveChangesAsync();
+
+                //db.Books.Remove(book);
+                //db.ImagePatchs.Remove(patch);
+                //await db.SaveChangesAsync();
+                int k = Convert.ToInt32(patch.BooksId);
+                            
+                db.Books.Delete(id);
+                db.Images.Delete(k);
+                db.Books.Save();
+                //db.Images.Save();
                 return RedirectToAction("Index");
             }
             catch
@@ -312,7 +344,7 @@ namespace BookStore.MVC.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                db.Books.Dispose();
             }
             base.Dispose(disposing);
         }

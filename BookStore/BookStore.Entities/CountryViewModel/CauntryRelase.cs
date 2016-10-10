@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Entities.CountryViewModel
 {
+    //Country ViewModeli Implimenty
     public class CauntryRelase
     {
         public static List<CountryViewModel> GetCountryResult(IEnumerable<CountryPublished> Countryies)

@@ -6,15 +6,20 @@ using System.Web.Mvc;
 using BookStore.Entities.ViewModel;
 using BookStore.Entities.Service;
 using BookStore.Entities;
-
+using BookStore.Entities.Unit_of_Work;
 namespace BookStore.MVC.Controllers
 {
     public class HomeController : Controller
     {
-        private BookDatabaseEntities db = new BookDatabaseEntities();
+        //private BookDatabaseEntities db = new BookDatabaseEntities();
+        UnitofWork db;
+        public HomeController()
+        {
+            db = new UnitofWork();
+        }
         public ActionResult Index()
         {            
-                var books = db.Books.ToList();
+                var books = db.Books.GetList();
                 BooksListModel model = new BooksListModel
                 {
                     BooksList = BookRelase.GetBookResult(books)

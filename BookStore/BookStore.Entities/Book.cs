@@ -18,6 +18,7 @@ namespace BookStore.Entities
         public Book()
         {
             this.AttributeBooks = new HashSet<AttributeBook>();
+            this.BookValues = new HashSet<BookValue>();
             this.ImagePatchs = new HashSet<ImagePatch>();
         }
     
@@ -35,6 +36,8 @@ namespace BookStore.Entities
         public virtual ICollection<AttributeBook> AttributeBooks { get; set; }
         public virtual Author Author { get; set; }
         public virtual CountryPublished CountryPublished { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BookValue> BookValues { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImagePatch> ImagePatchs { get; set; }
     }

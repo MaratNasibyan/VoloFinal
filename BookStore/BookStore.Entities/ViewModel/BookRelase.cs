@@ -11,7 +11,7 @@ namespace BookStore.Entities.Service
 {
     public class BookRelase 
     {
-        
+        //Book ViewModeli Impliment-y
         public static List<BookViewModel> GetBookResult(IEnumerable<Book> books)
         {    
             var result = new List<BookViewModel>();

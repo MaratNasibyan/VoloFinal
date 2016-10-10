@@ -17,8 +17,6 @@ namespace BookStore.Entities
         public int Id { get; set; }
         public int BooksId { get; set; }
         public int AttributesId { get; set; }
-        public string ValueTypeText { get; set; }
-        public Nullable<System.DateTime> ValueTypeDate { get; set; }
     
         public virtual Attribute Attribute { get; set; }
         public virtual Book Book { get; set; }

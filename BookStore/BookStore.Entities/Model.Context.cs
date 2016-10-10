@@ -35,7 +35,9 @@ namespace BookStore.Entities
         public virtual DbSet<AttributeType> AttributeTypes { get; set; }
         public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<BookValue> BookValues { get; set; }
         public virtual DbSet<CountryPublished> CountryPublisheds { get; set; }
         public virtual DbSet<ImagePatch> ImagePatchs { get; set; }
+        public virtual DbSet<ValueAtt> ValueAtts { get; set; }
     }
 }

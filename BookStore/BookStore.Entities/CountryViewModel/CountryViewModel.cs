@@ -8,6 +8,7 @@ using System.ComponentModel;
 
 namespace BookStore.Entities.CountryViewModel
 {
+    //Country ViewModel
     public class CountryViewModel
     {
         public int Id { get; set; }

@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 namespace BookStore.Entities.AuthorViewModel
 {
+    //Authori ViewModel-y
     public class AuthorViewModel
     {
         public int Id { get; set; }

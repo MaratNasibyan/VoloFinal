@@ -9,17 +9,18 @@ using System.Web;
 using System.Web.Mvc;
 using BookStore.Entities;
 using BookStore.Entities.AuthorViewModel;
-
+using BookStore.Entities.Unit_of_Work;
 namespace BookStore.MVC.Controllers
 {
     public class AuthorsController : Controller
     {
         //private BookDatabaseEntities db = new BookDatabaseEntities();
-        IRepository<Author> db;
-        
+        //IRepository<Author> db;
+        UnitofWork db;
         public AuthorsController()
         {
-            db = new AuthorRepository();
+            //db = new AuthorRepository();
+            db = new UnitofWork();
         }
 
           // GET: Authors
@@ -29,7 +30,7 @@ namespace BookStore.MVC.Controllers
             try
             {
                 //var authors = db.Authors.ToList();
-                var authors = db.GetList();
+                var authors = db.Authors.GetList();
                 AuthorListModel model = new AuthorListModel
                 {
                     AuthorsList =  AuthorRelase.GetAuthorsResult(authors)
@@ -57,7 +58,7 @@ namespace BookStore.MVC.Controllers
                     return PartialView("PartialNotFoundView", id.ToString());
                 }
                 //author = await db.Authors.FindAsync(id);
-                author =  await db.GetData(id);
+                author =  await db.Authors.GetData(id);
                 if (author == null)
                 {
                     //return HttpNotFound();
@@ -91,8 +92,8 @@ namespace BookStore.MVC.Controllers
                 if (ModelState.IsValid)
                 {
                     var author = AuthorRelase.CreateAuthor(model);
-                    db.Create(author);
-                    db.Save();
+                    db.Authors.Create(author);
+                    db.Authors.Save();
                     //db.Authors.Add(author);
                     //await db.SaveChangesAsync();
                     return RedirectToAction("Index");
@@ -118,7 +119,7 @@ namespace BookStore.MVC.Controllers
                     return PartialView("PartialNotFoundView", id.ToString());
                 }
                 //Author author = await db.Authors.FindAsync(id);
-                Author author = await db.GetData(id);
+                Author author = await db.Authors.GetData(id);
                 if (author == null)
                 {
                     //return HttpNotFound();
@@ -146,8 +147,8 @@ namespace BookStore.MVC.Controllers
                 if (ModelState.IsValid)
                 {
                     var author = AuthorRelase.EditAuthor(model);
-                    db.Update(author);
-                    db.Save();
+                    db.Authors.Update(author);
+                    db.Authors.Save();
                     //db.Entry(author).State = EntityState.Modified;
                     //await db.SaveChangesAsync();
                     return RedirectToAction("Index");
@@ -173,7 +174,7 @@ namespace BookStore.MVC.Controllers
 
                 }
                 //Author author = await db.Authors.FindAsync(id);
-                Author author = await db.GetData(id);
+                Author author = await db.Authors.GetData(id);
                 if (author == null)
                 {
                     //return HttpNotFound();
@@ -195,9 +196,9 @@ namespace BookStore.MVC.Controllers
         {
             try
             {
-                Author author = await db.GetData(id);
-                db.Delete(id);
-                db.Save();
+                Author author = await db.Authors.GetData(id);
+                db.Authors.Delete(id);
+                db.Authors.Save();
                 //Author author = await db.Authors.FindAsync(id);
                 //db.Authors.Remove(author);
                 //await db.SaveChangesAsync();
@@ -213,7 +214,7 @@ namespace BookStore.MVC.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                db.Authors.Dispose();
             }
             base.Dispose(disposing);
         }

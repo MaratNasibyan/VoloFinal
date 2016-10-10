@@ -1,0 +1,57 @@
+﻿@model IEnumerable<BookStore.Entities.ValueAtt>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Cheked)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ValueText)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ValueDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ValueInt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Attribute.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cheked)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ValueText)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ValueDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ValueInt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Attribute.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

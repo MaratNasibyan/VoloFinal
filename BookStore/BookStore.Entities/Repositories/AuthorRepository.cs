@@ -7,13 +7,14 @@ using BookStore.Entities;
 
 namespace BookStore.Entities.AuthorViewModel
 {
+    //Author Repository nkaragrutyun
     public  class AuthorRepository:IRepository<Author>
     {
         private BookDatabaseEntities db;
 
-        public AuthorRepository()
+        public AuthorRepository(BookDatabaseEntities context)
         {
-            db = new BookDatabaseEntities();
+            this.db = context;
         }
 
         public IEnumerable<Author> GetList()

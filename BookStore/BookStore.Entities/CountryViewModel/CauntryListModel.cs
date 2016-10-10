@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Entities.CountryViewModel
 {
+    //Country-neri list em stanum
     public class CauntryListModel
     {
         public List<CountryViewModel> CountryList { get; set; }

@@ -92,25 +92,22 @@
     </Compile>
     <Compile Include="AuthorViewModel\AuthorListModel.cs" />
     <Compile Include="AuthorViewModel\AuthorRelase.cs" />
-    <Compile Include="Repositories\AuthorRepository.cs" />
-    <Compile Include="AuthorViewModel\AuthorViewModel.cs" />
-    <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Book.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BookValue.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="CountryPublished.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="CountryViewModel\CauntryListModel.cs" />
-    <Compile Include="CountryViewModel\CauntryRelase.cs" />
-    <Compile Include="Repositories\CauntryRepository.cs" />
-    <Compile Include="CountryViewModel\CountryViewModel.cs" />
     <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="ImagePatch.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Interface\ISearch.cs" />
     <Compile Include="Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -126,7 +123,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\AuthorRepository.cs" />
+    <Compile Include="AuthorViewModel\AuthorViewModel.cs" />
+    <Compile Include="Interface\IRepository.cs" />
+    <Compile Include="CountryViewModel\CauntryListModel.cs" />
+    <Compile Include="CountryViewModel\CauntryRelase.cs" />
+    <Compile Include="Repositories\BookRepository.cs" />
+    <Compile Include="Repositories\CauntryRepository.cs" />
+    <Compile Include="CountryViewModel\CountryViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ImagePathRepository.cs" />
+    <Compile Include="Unit of Work\UnitofWork.cs" />
+    <Compile Include="ValueAtt.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\BookRelase.cs" />
     <Compile Include="ViewModel\BooksListModel.cs" />
     <Compile Include="ViewModel\BookViewModel.cs" />

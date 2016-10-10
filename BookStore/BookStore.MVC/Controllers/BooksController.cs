@@ -11,30 +11,46 @@ using BookStore.Entities;
 using PagedList;
 using BookStore.Entities.ViewModel;
 using BookStore.Entities.Service;
-
+using BookStore.Entities.Repositories;
+using BookStore.Entities.AuthorViewModel;
+using BookStore.Entities.Unit_of_Work;
 namespace BookStore.MVC.Controllers
 {
     public class BooksController : Controller
     {
-        private BookDatabaseEntities db = new BookDatabaseEntities();
+        //private BookDatabaseEntities db = new BookDatabaseEntities();
 
         // GET: Books
-      
-              
+        //BookRepository<Book> db = new BookRepository();
+        //private BookRepository db = new BookRepository();
+        private UnitofWork db;
+        public BooksController()
+        {
+            db = new UnitofWork();
+        }
+
+     
+
         public ActionResult Index(string searchString,  int page = 1)
         {
             try
             {
-                var books = db.Books.AsQueryable();
+              var books = db.Books.Find(searchString);
+                //var books = db.Books.AsQueryable();
+                ////var books = db.GetList();
                 int pageSize = 10;
-                if (!string.IsNullOrEmpty(searchString))
+
+
+                //if (!string.IsNullOrEmpty(searchString))
+                //{
+                //    books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Title.Contains(searchString) || n.Author.FullName.Contains(searchString)));
+
+                if (!books.Any())
                 {
-                    books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Title.Contains(searchString) || n.Author.FullName.Contains(searchString)));
-                    if (!books.Any())
-                    {
-                        return PartialView("SearchViewNotFound", searchString);
-                    }
+                    return PartialView("SearchViewNotFound", searchString);
                 }
+                //}
+
                 BooksListModel model = new BooksListModel
                 {
                     BooksList = BookRelase.GetBookResult(books)
@@ -60,7 +76,8 @@ namespace BookStore.MVC.Controllers
             BookViewModel model;      
             try
             {
-                Book book = await db.Books.FindAsync(id);
+                //Book book = await db.Books.FindAsync(id);
+                Book book = await db.Books.GetData(id);
                 if (id == null)
                 {
                     //return View(new HttpStatusCodeResult(HttpStatusCode.BadRequest));
@@ -84,7 +101,7 @@ namespace BookStore.MVC.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                db.Books.Dispose();
             }
             base.Dispose(disposing);
         }

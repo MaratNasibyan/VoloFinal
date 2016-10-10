@@ -10,16 +10,17 @@ using System.Web.Mvc;
 using BookStore.Entities;
 using BookStore.Entities.CountryViewModel;
 using BookStore.Entities.AuthorViewModel;
+using BookStore.Entities.Unit_of_Work;
 namespace BookStore.MVC.Controllers
 {
     public class CountryPublishedsController : Controller
     {
         //private BookDatabaseEntities db = new BookDatabaseEntities();
-        IRepository<CountryPublished> db;
-           
+        //IRepository<CountryPublished> db;
+        UnitofWork db;
         public CountryPublishedsController()
         {
-            db = new CauntryRepository();
+            db = new UnitofWork();
         }
         // GET: CountryPublisheds
         [Authorize]
@@ -28,7 +29,7 @@ namespace BookStore.MVC.Controllers
             try
             {
                 //var countries = db.CountryPublisheds.ToList();
-                var countries = db.GetList();
+                var countries = db.Countries.GetList();
                 CauntryListModel model = new CauntryListModel
                 {
                     CountryList = CauntryRelase.GetCountryResult(countries)
@@ -54,7 +55,7 @@ namespace BookStore.MVC.Controllers
                     return PartialView("PartialNotFound", id.ToString());
                 }
                 //CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
-                CountryPublished countryPublished = await db.GetData(id);
+                CountryPublished countryPublished = await db.Countries.GetData(id);
                 if (countryPublished == null)
                 {
                     //return HttpNotFound();
@@ -83,15 +84,15 @@ namespace BookStore.MVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,CountryName,IsoCode,PhoneCode")] CountryViewModel model)
+        public ActionResult Create([Bind(Include = "Id,CountryName,IsoCode,PhoneCode")] CountryViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     var country = CauntryRelase.CreateCountry(model);
-                    db.Create(country);
-                    db.Save();
+                    db.Countries.Create(country);
+                     db.Countries.Save();
                     //db.CountryPublisheds.Add(country);
                     //await db.SaveChangesAsync();
                     return RedirectToAction("Index");
@@ -117,7 +118,7 @@ namespace BookStore.MVC.Controllers
                     return PartialView("PartialNotFound", id.ToString());
                 }
                 //CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
-                CountryPublished countryPublished = await db.GetData(id);
+                CountryPublished countryPublished = await db.Countries.GetData(id);
                 if (countryPublished == null)
                 {
                     //return HttpNotFound();
@@ -146,8 +147,8 @@ namespace BookStore.MVC.Controllers
                 if (ModelState.IsValid)
                 {
                     var country = CauntryRelase.EditCountry(mod);
-                    db.Update(country);
-                    db.Save();
+                    db.Countries.Update(country);
+                    db.Countries.Save();
                     //db.Entry(country).State = EntityState.Modified;
                     //await db.SaveChangesAsync();
                     return RedirectToAction("Index");
@@ -173,7 +174,7 @@ namespace BookStore.MVC.Controllers
 
                 }
                 //CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
-                CountryPublished countryPublished = await db.GetData(id);
+                CountryPublished countryPublished = await db.Countries.GetData(id);
                 if (countryPublished == null)
                 {
                     //return HttpNotFound();
@@ -199,9 +200,9 @@ namespace BookStore.MVC.Controllers
                 //CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
                 //db.CountryPublisheds.Remove(countryPublished);
                 //await db.SaveChangesAsync();
-                CountryPublished countryPublished = await db.GetData(id);
-                db.Delete(id);
-                db.Save();
+                CountryPublished countryPublished = await db.Countries.GetData(id);
+                db.Countries.Delete(id);
+                db.Countries.Save();
                 return RedirectToAction("Index");
             }
             catch
@@ -214,7 +215,7 @@ namespace BookStore.MVC.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                db.Countries.Dispose();
             }
             base.Dispose(disposing);
         }

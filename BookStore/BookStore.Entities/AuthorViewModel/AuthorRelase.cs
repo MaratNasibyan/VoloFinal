@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Entities.AuthorViewModel
 {
+    //Author ViewModeli Implimenty
     public  class AuthorRelase
     {
         public static List<AuthorViewModel> GetAuthorsResult(IEnumerable<Author> Authors)

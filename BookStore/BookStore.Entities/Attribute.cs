@@ -18,6 +18,7 @@ namespace BookStore.Entities
         public Attribute()
         {
             this.AttributeBooks = new HashSet<AttributeBook>();
+            this.ValueAtts = new HashSet<ValueAtt>();
         }
     
         public int Id { get; set; }
@@ -27,5 +28,7 @@ namespace BookStore.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AttributeBook> AttributeBooks { get; set; }
         public virtual AttributeType AttributeType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ValueAtt> ValueAtts { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Entities.AuthorViewModel
 {
+    //Authorneri list em stanum
     public  class AuthorListModel
     {
         public List<AuthorViewModel> AuthorsList { get; set; }

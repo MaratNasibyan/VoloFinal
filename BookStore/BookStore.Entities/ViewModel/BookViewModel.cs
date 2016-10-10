@@ -10,7 +10,7 @@ namespace BookStore.Entities.ViewModel
 {
     public class BookViewModel
     {
-
+        //Book View Model
         public int Id { get; set; }
         [Display(Name ="Image")]
         public string Image { get; set; }
@@ -45,6 +45,8 @@ namespace BookStore.Entities.ViewModel
         [DisplayName("Picture")]  
         public List<ImagePatch> ImagePatchs { get; set; }
         public List<AttributeBook> AttributeBook { get; set; }
+        //CheckBoxViewModel
+    
         
     }      
       

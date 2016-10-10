@@ -8,10 +8,12 @@ namespace BookStore.Entities.CountryViewModel
 {
     public class CauntryRepository : IRepository<CountryPublished>
     {
+        //Country Repositoryi nkaragrutyun
         private BookDatabaseEntities db;
-        public CauntryRepository()
+
+        public CauntryRepository(BookDatabaseEntities context)
         {
-            db = new BookDatabaseEntities();
+            this.db = context;
         }
         
         public void Create(CountryPublished cauntry)
@@ -28,7 +30,6 @@ namespace BookStore.Entities.CountryViewModel
             }
         }
             
-
         public IEnumerable<CountryPublished> GetList()
         {
             return db.CountryPublisheds;
