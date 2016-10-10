@@ -269,7 +269,6 @@
     <Compile Include="Controllers\CountryPublishedsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ValueAttsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -328,11 +327,8 @@
     <Content Include="App_Data\BookDatabase_log.ldf">
       <DependentUpon>BookDatabase.mdf</DependentUpon>
     </Content>
-    <Content Include="Content\AdminStyle.css" />
-    <Content Include="Content\BooksStyle.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\HomeStyle.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="ErrorPage\error-404.png" />
     <Content Include="Images\backimg.jpg" />
@@ -438,11 +434,6 @@
     <Content Include="Views\Attributes\Details.cshtml" />
     <Content Include="Views\Attributes\Edit.cshtml" />
     <Content Include="Views\Attributes\Index.cshtml" />
-    <Content Include="Views\ValueAtts\Create.cshtml" />
-    <Content Include="Views\ValueAtts\Delete.cshtml" />
-    <Content Include="Views\ValueAtts\Details.cshtml" />
-    <Content Include="Views\ValueAtts\Edit.cshtml" />
-    <Content Include="Views\ValueAtts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BookStore.Entities\BookStore.Entities.csproj">

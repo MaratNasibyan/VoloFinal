@@ -10,8 +10,7 @@ using BookStore.Entities.Unit_of_Work;
 namespace BookStore.MVC.Controllers
 {
     public class HomeController : Controller
-    {
-        //private BookDatabaseEntities db = new BookDatabaseEntities();
+    {        
         UnitofWork db;
         public HomeController()
         {

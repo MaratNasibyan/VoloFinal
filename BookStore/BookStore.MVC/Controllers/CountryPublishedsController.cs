@@ -14,28 +14,25 @@ using BookStore.Entities.Unit_of_Work;
 namespace BookStore.MVC.Controllers
 {
     public class CountryPublishedsController : Controller
-    {
-        //private BookDatabaseEntities db = new BookDatabaseEntities();
-        //IRepository<CountryPublished> db;
+    { 
         UnitofWork db;
         public CountryPublishedsController()
         {
             db = new UnitofWork();
         }
+
         // GET: CountryPublisheds
         [Authorize]
         public ActionResult Index()
         {
             try
-            {
-                //var countries = db.CountryPublisheds.ToList();
+            {              
                 var countries = db.Countries.GetList();
                 CauntryListModel model = new CauntryListModel
                 {
                     CountryList = CauntryRelase.GetCountryResult(countries)
                 };
-                return View(model.CountryList);
-                //return View(await db.CountryPublisheds.ToListAsync());
+                return View(model.CountryList);               
             }
             catch
             {
@@ -50,11 +47,10 @@ namespace BookStore.MVC.Controllers
             try
             {
                 if (id == null)
-                {
-                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                {                 
                     return PartialView("PartialNotFound", id.ToString());
                 }
-                //CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
+               
                 CountryPublished countryPublished = await db.Countries.GetData(id);
                 if (countryPublished == null)
                 {
@@ -63,7 +59,6 @@ namespace BookStore.MVC.Controllers
 
                 }
                 model = CauntryRelase.DetailsCountry(countryPublished);
-
                 return View(model);
             }
             catch
@@ -92,12 +87,9 @@ namespace BookStore.MVC.Controllers
                 {
                     var country = CauntryRelase.CreateCountry(model);
                     db.Countries.Create(country);
-                     db.Countries.Save();
-                    //db.CountryPublisheds.Add(country);
-                    //await db.SaveChangesAsync();
+                    db.Countries.Save();              
                     return RedirectToAction("Index");
                 }
-
                 return View(model);
             }
             catch
@@ -113,15 +105,12 @@ namespace BookStore.MVC.Controllers
             try
             {
                 if (id == null)
-                {
-                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                {                   
                     return PartialView("PartialNotFound", id.ToString());
-                }
-                //CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
+                }                
                 CountryPublished countryPublished = await db.Countries.GetData(id);
                 if (countryPublished == null)
-                {
-                    //return HttpNotFound();
+                {                   
                     return PartialView("PartialNotFound", id.ToString());
 
                 }
@@ -148,9 +137,7 @@ namespace BookStore.MVC.Controllers
                 {
                     var country = CauntryRelase.EditCountry(mod);
                     db.Countries.Update(country);
-                    db.Countries.Save();
-                    //db.Entry(country).State = EntityState.Modified;
-                    //await db.SaveChangesAsync();
+                    db.Countries.Save();                 
                     return RedirectToAction("Index");
                 }
                 return View(mod);
@@ -168,18 +155,13 @@ namespace BookStore.MVC.Controllers
             try
             {
                 if (id == null)
-                {
-                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                {                  
                     return PartialView("PartialNotFound", id.ToString());
-
-                }
-                //CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
+                }             
                 CountryPublished countryPublished = await db.Countries.GetData(id);
                 if (countryPublished == null)
-                {
-                    //return HttpNotFound();
+                {                  
                     return PartialView("PartialNotFound", id.ToString());
-
                 }
                 return View(countryPublished);
             }
@@ -196,10 +178,7 @@ namespace BookStore.MVC.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             try
-            {
-                //CountryPublished countryPublished = await db.CountryPublisheds.FindAsync(id);
-                //db.CountryPublisheds.Remove(countryPublished);
-                //await db.SaveChangesAsync();
+            {               
                 CountryPublished countryPublished = await db.Countries.GetData(id);
                 db.Countries.Delete(id);
                 db.Countries.Save();
