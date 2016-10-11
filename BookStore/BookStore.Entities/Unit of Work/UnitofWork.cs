@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BookStore.Entities.Repositories;
 using BookStore.Entities.AuthorViewModel;
 using BookStore.Entities.CountryViewModel;
+
 namespace BookStore.Entities.Unit_of_Work
 {
     //Unit Of Work
@@ -17,6 +18,8 @@ namespace BookStore.Entities.Unit_of_Work
         private AuthorRepository authorRepository;
         private CauntryRepository countryRepository;
         private ImagePathRepository imagePathRepository;
+        private AttrRepository attrRepository;
+        private AttrValueRepository attrValueRepository;
 
         public AuthorRepository Authors
         {
@@ -58,6 +61,26 @@ namespace BookStore.Entities.Unit_of_Work
                 return bookRepository;
             }
         }
+
+        public AttrRepository Attributes
+        {
+            get
+            {
+                if (attrRepository == null)
+                    attrRepository = new AttrRepository(db);
+                 return attrRepository;
+            }
+        }
+
+        public AttrValueRepository Values
+        {
+            get
+            {
+                if(attrValueRepository==null)                
+                    attrValueRepository = new AttrValueRepository(db);
+                return attrValueRepository;                
+            }
+        } 
 
     }
 }

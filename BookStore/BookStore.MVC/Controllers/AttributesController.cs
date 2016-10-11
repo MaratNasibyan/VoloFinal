@@ -21,15 +21,25 @@ namespace BookStore.MVC.Controllers
             return View(attributes.ToList());
         }
 
-        public ActionResult Get(int? id)
+        [HttpGet]
+        public ActionResult Get()
         {
-            var v = db.Attributes.Where(n => n.Id == id).FirstOrDefault();
-            var v1 = db.ValueAtts.Where(n => n.AttributesId == id).FirstOrDefault();
-            if (v.AttributeType.Type == "Text")
-            {
-                return Content("IndexValueAtts");
-            }
+            return View();
+        }
 
+        [HttpPost]
+        public ActionResult Get(int? id,string ValueText)
+        {
+            
+            if (ValueText != "")
+            {
+                var v1 = db.ValueAtts.Where(n => n.AttributesId == id).FirstOrDefault();
+
+                v1.ValueText = ValueText;
+                db.ValueAtts.Add(v1);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Attributes");
+            }
             return View();
         }
 

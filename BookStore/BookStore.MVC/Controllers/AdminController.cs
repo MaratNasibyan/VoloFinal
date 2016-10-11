@@ -105,10 +105,24 @@ namespace BookStore.MVC.Controllers
         [Authorize]
         public ActionResult Create()
         {
+            int selectedIndex = 1;
+            SelectList attribute = new SelectList(db.Attributes.GetList(), "Id", "Name", selectedIndex);
+            ViewBag.Attributes = attribute;
+
+            SelectList values = new SelectList(db.Values.GetList().Where(n => n.AttributesId == selectedIndex), "Id", "ValueText");
+            //SelectList values = new MultiSelectList(db.Values.GetList().Where(n=>n.AttributesId==selectedIndex),)
+
+            ViewBag.Values = values;
             ViewBag.AuthorsId = new SelectList(db.Authors.GetList(), "Id", "FullName");
-            ViewBag.CountryPublishedId = new SelectList(db.Countries.GetList(), "Id", "CountryName");          
+            ViewBag.CountryPublishedId = new SelectList(db.Countries.GetList(), "Id", "CountryName"); 
+                     
             return View();
         }
+        public ActionResult GetItems(int id)
+        {
+            return PartialView(db.Values.GetList().Where(n => n.AttributesId == id).ToList());
+        }
+
 
         // POST: Admin/Create
     
@@ -152,6 +166,7 @@ namespace BookStore.MVC.Controllers
 
                 ViewBag.AuthorsId = new SelectList(db.Authors.GetList(), "Id", "FullName", model.AuthorsId);
                 ViewBag.CountryPublishedId = new SelectList(db.Countries.GetList(), "Id", "CountryName", model.CountryPublishedId);
+
                 return View(model);
             }
             catch

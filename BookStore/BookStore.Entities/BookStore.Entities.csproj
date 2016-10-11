@@ -123,6 +123,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\AttrRepository.cs" />
+    <Compile Include="Repositories\AttrValue.cs" />
     <Compile Include="Repositories\AuthorRepository.cs" />
     <Compile Include="AuthorViewModel\AuthorViewModel.cs" />
     <Compile Include="Interface\IRepository.cs" />

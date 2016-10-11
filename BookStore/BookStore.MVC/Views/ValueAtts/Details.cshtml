@@ -1,0 +1,58 @@
+﻿@model BookStore.Entities.ValueAtt
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ValueAtt</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Cheked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cheked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValueText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValueText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValueDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValueDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValueInt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValueInt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Attribute.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Attribute.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
