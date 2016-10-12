@@ -16,6 +16,7 @@ namespace BookStore.MVC.Controllers
         {
             db = new UnitofWork();
         }
+        //Randomov patahakan 5 girq e berum
         public ActionResult Index()
         {            
                 var books = db.Books.GetList();

@@ -13,7 +13,7 @@ namespace BookStore.Entities.Service
     {
         //Book ViewModeli Impliment-y
         public static List<BookViewModel> GetBookResult(IEnumerable<Book> books)
-        {    
+        {   
             var result = new List<BookViewModel>();
             foreach (var item in books)
             {
@@ -29,10 +29,11 @@ namespace BookStore.Entities.Service
                     Author = item.Author,
                     CountryPublished = item.CountryPublished,
                     ImagePatchs = item.ImagePatchs.ToList(),
-                    totalPrice = item.CountryPublished.PhoneCode+item.Price                   
-                                                        
-                });
-            }
+                    totalPrice = item.CountryPublished.PhoneCode + item.Price,
+                    AttributeBook = item.AttributeBooks.ToList()                                                         
+
+            });
+           }
            return result;
         }
 
@@ -50,7 +51,10 @@ namespace BookStore.Entities.Service
                 CountryPublishedId = model.CountryPublishedId,
                 Picture = model.Picture,
                 Author = model.Author,
-                CountryPublished = model.CountryPublished
+                CountryPublished = model.CountryPublished,/////
+                AttributeBooks = model.AttributeBook
+               
+                                           
             };
             return book;
         }
@@ -67,8 +71,7 @@ namespace BookStore.Entities.Service
                 AuthorsId = model.AuthorsId,
                 CountryPublishedId = model.CountryPublishedId,
                 Picture = model.Picture, 
-                ImagePatchs = model.ImagePatchs
-                
+                ImagePatchs = model.ImagePatchs                
 
             };
             return book;

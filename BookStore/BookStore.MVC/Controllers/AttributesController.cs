@@ -27,10 +27,10 @@ namespace BookStore.MVC.Controllers
             return View();
         }
 
+       // sa atributi arjeq avelacnelu hamara
         [HttpPost]
-        public ActionResult Get(int? id,string ValueText)
+        public ActionResult Get(int? id, string ValueText)
         {
-            
             if (ValueText != "")
             {
                 var v1 = db.ValueAtts.Where(n => n.AttributesId == id).FirstOrDefault();
