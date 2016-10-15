@@ -38,15 +38,9 @@ namespace BookStore.Entities.Service
            return result;
         }
 
-        public static Book CreateBook(BookViewModel model,int attrId,int valueId)
-        {
-            //BookDatabaseEntities db = new BookDatabaseEntities();
-            //var v = db.Books.Include(n => n.AttributeBooks.Where(b => b.AttributesId == 1 && b.BooksId == 2));
-            //var v = db.AttributeBooks.Include(n => n.Book).Include(n => n.Attribute);
-            //foreach(var f in v)
-            //{
-            //    f.
-            //}
+        //Coment arac parametrery naxatesvac eyin atributy create anelu hamar
+        public static Book CreateBook(BookViewModel model/*,int attrId,int valueId*/)
+        {        
             Book book = new Book
             {
                 Id = model.Id,
@@ -59,10 +53,10 @@ namespace BookStore.Entities.Service
                 CountryPublishedId = model.CountryPublishedId,
                 Picture = model.Picture,
                 Author = model.Author,
-                CountryPublished = model.CountryPublished,/////
-                AttributeBooks = new List<AttributeBook> { new AttributeBook { BooksId=model.Id,AttributesId=attrId} },
-            
-                BookValues = new List<BookValue> { new BookValue { BooksId = model.Id, ValueId = valueId } }
+                CountryPublished = model.CountryPublished,
+                //Attributi ev Value-i tablner
+                //AttributeBooks = new List<AttributeBook> { new AttributeBook { BooksId=model.Id,AttributesId=attrId} },            
+                //BookValues = new List<BookValue> { new BookValue { BooksId = model.Id, ValueId = valueId } }
                                           
             };
             return book;
