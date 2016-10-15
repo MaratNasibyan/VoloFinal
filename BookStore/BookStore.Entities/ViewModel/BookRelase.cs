@@ -13,7 +13,8 @@ namespace BookStore.Entities.Service
     {
         //Book ViewModeli Impliment-y
         public static List<BookViewModel> GetBookResult(IEnumerable<Book> books)
-        {   
+        {
+            
             var result = new List<BookViewModel>();
             foreach (var item in books)
             {
@@ -30,15 +31,22 @@ namespace BookStore.Entities.Service
                     CountryPublished = item.CountryPublished,
                     ImagePatchs = item.ImagePatchs.ToList(),
                     totalPrice = item.CountryPublished.PhoneCode + item.Price,
-                    AttributeBook = item.AttributeBooks.ToList()                                                         
+                    //AttributeBook = item.AttributeBooks.ToList()                                                         
 
             });
            }
            return result;
         }
 
-        public static Book CreateBook(BookViewModel model)
+        public static Book CreateBook(BookViewModel model,int attrId,int valueId)
         {
+            //BookDatabaseEntities db = new BookDatabaseEntities();
+            //var v = db.Books.Include(n => n.AttributeBooks.Where(b => b.AttributesId == 1 && b.BooksId == 2));
+            //var v = db.AttributeBooks.Include(n => n.Book).Include(n => n.Attribute);
+            //foreach(var f in v)
+            //{
+            //    f.
+            //}
             Book book = new Book
             {
                 Id = model.Id,
@@ -52,13 +60,14 @@ namespace BookStore.Entities.Service
                 Picture = model.Picture,
                 Author = model.Author,
                 CountryPublished = model.CountryPublished,/////
-                AttributeBooks = model.AttributeBook
-               
-                                           
+                AttributeBooks = new List<AttributeBook> { new AttributeBook { BooksId=model.Id,AttributesId=attrId} },
+            
+                BookValues = new List<BookValue> { new BookValue { BooksId = model.Id, ValueId = valueId } }
+                                          
             };
             return book;
         }
-
+        //Post-i hamar
         public static Book EditBook(BookViewModel model)
         {
             Book book = new Book
@@ -71,12 +80,13 @@ namespace BookStore.Entities.Service
                 AuthorsId = model.AuthorsId,
                 CountryPublishedId = model.CountryPublishedId,
                 Picture = model.Picture, 
-                ImagePatchs = model.ImagePatchs                
+                ImagePatchs = model.ImagePatchs              
 
             };
             return book;
         }
 
+        //Get-i hamar
         public static BookViewModel EditBook(Book item)
         {
             var model = new BookViewModel
@@ -90,7 +100,7 @@ namespace BookStore.Entities.Service
                 AuthorsId = item.AuthorsId,
                 Author = item.Author,
                 CountryPublished = item.CountryPublished,
-                ImagePatchs = item.ImagePatchs.ToList()
+                ImagePatchs = item.ImagePatchs.ToList()               
             };
             return model;
         }

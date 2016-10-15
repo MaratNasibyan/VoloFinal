@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<BookStore.Entities.ValueAtt>
 
-        <select id="values" name="values" class="form-control">
+        <select  id="values" name="values" class="form-control" >
             @foreach (var item in Model)
             {
                 <option value="@item.Id">@item.ValueText</option>

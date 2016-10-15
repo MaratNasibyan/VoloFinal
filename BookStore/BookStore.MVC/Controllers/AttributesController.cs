@@ -33,13 +33,13 @@ namespace BookStore.MVC.Controllers
         {
             if (ValueText != "")
             {
-                var v1 = db.ValueAtts.Where(n => n.AttributesId == id).FirstOrDefault();
-
-                v1.ValueText = ValueText;
+                //var v1 = db.ValueAtts.Where(n => n.AttributesId == id).FirstOrDefault();
+                ValueAtt v1 = new ValueAtt { AttributesId = id, ValueText = ValueText };
                 db.ValueAtts.Add(v1);
                 db.SaveChanges();
                 return RedirectToAction("Index", "Attributes");
             }
+            
             return View();
         }
 

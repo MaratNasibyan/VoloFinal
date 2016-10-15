@@ -38,17 +38,20 @@ namespace BookStore.Entities.ViewModel
         [Required(ErrorMessage = "The field Author must be filled")]
         [DisplayName("Author")]
         public int AuthorsId { get; set; }
-        
+
         //Atributneri hamar eyi naxatesel bayc chkaraca many to many kapi mijocov et konkret book-i arjeq tam , kam stanam!
-        //public int Attribute { get; set; }
-        //public int AttributeValue { get; set; }
-                    
+        public int Attribute { get; set; }
+        public int AttributeValue { get; set; }
+
         public CountryPublished  CountryPublished { get; set; }
                 
         public Author Author  { get; set; }
         [DisplayName("Picture")]  
         public List<ImagePatch> ImagePatchs { get; set; }
-        public List<AttributeBook> AttributeBook { get; set; }     
+        public List<AttributeBook> AttributeBook { get; set; } 
+        
+        public List<BookValue> BookValue { get; set; }    
+        //public List<BookStore.Entities.Attribute> Attributes { get; set; } 
             
     }      
       

@@ -107,12 +107,10 @@ namespace BookStore.MVC.Controllers
         {
             //Atributi hamar naxatesvac vor yntri atribut ev hamapatasxan arjeqy atributi,vor beruma GetItems partialviewn
 
-            //int selectedIndex = 1;
-            //SelectList attribute = new SelectList(db.Attributes.GetList(), "Id", "Name", selectedIndex);
-            //ViewBag.Attributes = attribute;
-
-            //SelectList values = new SelectList(db.Values.GetList().Where(n => n.AttributesId == selectedIndex), "Id", "ValueText");           
-            //ViewBag.Values = values;
+            int selectedIndex = 1;
+            ViewBag.Attributes = new SelectList(db.Attributes.GetList(), "Id", "Name", selectedIndex);
+            ViewBag.Values = new SelectList(db.Values.GetList().Where(n => n.AttributesId == selectedIndex), "Id", "ValueText");
+            
 
             ViewBag.AuthorsId = new SelectList(db.Authors.GetList(), "Id", "FullName");
             ViewBag.CountryPublishedId = new SelectList(db.Countries.GetList(), "Id", "CountryName"); 
@@ -129,7 +127,7 @@ namespace BookStore.MVC.Controllers
         [Authorize]
         [ValidateAntiForgeryToken]
         [HttpPost]      
-        public  ActionResult Create([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,ImagePatchs,CountryPublishedId,AuthorsId")] BookViewModel model,HttpPostedFileBase upload)
+        public  ActionResult Create([Bind(Include = "Id,Title,Price,Description,PagesCount,Picture,ImagePatchs,CountryPublishedId,AuthorsId")] BookViewModel model,HttpPostedFileBase upload,int Attributes, int Values)
         {
             try
             {
@@ -157,16 +155,21 @@ namespace BookStore.MVC.Controllers
                     {
                         model.ImagePatchs = new List<ImagePatch>() { new ImagePatch { ImageUrl = "No.jpg" } };
                     }
-                    var v = BookRelase.CreateBook(model);
+                    var v = BookRelase.CreateBook(model,Attributes,Values);
                 
                     db.Books.Create(v);
                     db.Books.Save();                  
                     return RedirectToAction("Index");
                 }
+                int selectedIndex = 1;
+                SelectList attribute = new SelectList(db.Attributes.GetList(), "Id", "Name", selectedIndex);
+                ViewBag.Attributes = attribute;
 
+                SelectList values = new SelectList(db.Values.GetList().Where(n => n.AttributesId == selectedIndex), "Id", "ValueText");
+                ViewBag.Values = values;
                 ViewBag.AuthorsId = new SelectList(db.Authors.GetList(), "Id", "FullName", model.AuthorsId);
                 ViewBag.CountryPublishedId = new SelectList(db.Countries.GetList(), "Id", "CountryName", model.CountryPublishedId);
-                
+              
                 return View(model);
             }
             catch
@@ -192,7 +195,8 @@ namespace BookStore.MVC.Controllers
                 }
                 var modelBook = BookRelase.EditBook(book);
                 ViewBag.AuthorsId = new SelectList(db.Authors.GetList(), "Id", "FullName", book.AuthorsId);
-                ViewBag.CountryPublishedId = new SelectList(db.Countries.GetList(), "Id", "CountryName", book.CountryPublishedId);
+                ViewBag.CountryPublishedId = new SelectList(db.Countries.GetList(), "Id", "CountryName", book.CountryPublishedId);             
+
                 return View(modelBook);
             }
             catch
@@ -247,6 +251,14 @@ namespace BookStore.MVC.Controllers
                 }
                 ViewBag.AuthorsId = new SelectList(db.Authors.GetList(), "Id", "FullName", model.AuthorsId);
                 ViewBag.CountryPublishedId = new SelectList(db.Countries.GetList(), "Id", "CountryName", model.CountryPublishedId);
+
+                int selectedIndex = 1;
+                SelectList attribute = new SelectList(db.Attributes.GetList(), "Id", "Name", selectedIndex);
+                ViewBag.Attributes = attribute;
+
+                SelectList values = new SelectList(db.Values.GetList().Where(n => n.AttributesId == selectedIndex), "Id", "ValueText");
+                ViewBag.Values = values;
+
                 return View(model);
             }
             catch
@@ -283,7 +295,7 @@ namespace BookStore.MVC.Controllers
         [ValidateAntiForgeryToken]
         [Authorize]
         public async Task<ActionResult> DeleteConfirmed(int id)
-        {
+        {           
             try
             {             
                 Book book = await db.Books.GetData(id);
@@ -296,10 +308,11 @@ namespace BookStore.MVC.Controllers
                         System.IO.File.Delete(patch1);
                     }
                 }
-                int k = Convert.ToInt32(patch.BooksId);
-                            
+                int k = Convert.ToInt32(patch.BooksId);      
+                                                                      
                 db.Books.Delete(id);
                 db.Images.Delete(k);
+               
                 db.Books.Save();
                 db.Images.Save();             
                 return RedirectToAction("Index");

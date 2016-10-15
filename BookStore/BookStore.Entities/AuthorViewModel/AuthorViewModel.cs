@@ -15,8 +15,7 @@ namespace BookStore.Entities.AuthorViewModel
         [Required(ErrorMessage = "Please Author name")]
         //[DisplayName("Author")]
         public string FullName { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> DateBirth { get; set; }
     }
 }

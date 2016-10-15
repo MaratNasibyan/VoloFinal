@@ -69,7 +69,7 @@ $(function () {
             case "Price_ASC": sort = "sortOption=Price_ASC"; break;
             case "Price_DESC": sort = "sortOption=Price_DESC"; break;
             case "Title_ASC": sort = "sortOption=Title_ASC"; break;
-            case "Title_DESC": sort = "sortOption=Title_DESCSC"; break;
+            case "Title_DESC": sort = "sortOption=Title_DESC"; break;
             case "Author_ASC": sort = "sortOption=Author_ASC"; break;
             case "Author_DESC": sort = "sortOption=Author_DESC"; break;
             case "PageCount_ASC": sort = "sortOption=PageCount_ASC"; break;
