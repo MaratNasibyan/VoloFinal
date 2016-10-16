@@ -23,8 +23,8 @@ namespace BookStore.MVC.Controllers
         public BooksController()
         {
             db = new UnitofWork();
-        }            
-
+        }  
+                          
         public ActionResult Index(string searchString,  int page = 1)
         {
             try
