@@ -40,7 +40,7 @@ namespace BookStore.Entities.Service
 
         //Coment arac parametrery naxatesvac eyin atributy create anelu hamar
         public static Book CreateBook(BookViewModel model/*,int attrId,int valueId*/)
-        {        
+        {
             Book book = new Book
             {
                 Id = model.Id,
@@ -49,6 +49,7 @@ namespace BookStore.Entities.Service
                 Description = model.Description,
                 Price = model.Price,
                 ImagePatchs = model.ImagePatchs.ToList(),
+                //ImagePatchs = model.ImagePatchs.
                 AuthorsId = model.AuthorsId,
                 CountryPublishedId = model.CountryPublishedId,
                 Picture = model.Picture,

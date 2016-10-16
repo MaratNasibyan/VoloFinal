@@ -40,8 +40,8 @@ namespace BookStore.Entities.ViewModel
         public int AuthorsId { get; set; }
 
         //Atributneri hamar eyi naxatesel bayc chkaraca many to many kapi mijocov et konkret book-i arjeq tam , kam stanam!
-        public int Attribute { get; set; }
-        public int AttributeValue { get; set; }
+        //public int Attribute { get; set; }
+        //public int AttributeValue { get; set; }
 
         public CountryPublished  CountryPublished { get; set; }
                 
@@ -51,7 +51,7 @@ namespace BookStore.Entities.ViewModel
         public List<AttributeBook> AttributeBook { get; set; } 
         
         public List<BookValue> BookValue { get; set; }    
-        //public List<BookStore.Entities.Attribute> Attributes { get; set; } 
+        
             
     }      
       

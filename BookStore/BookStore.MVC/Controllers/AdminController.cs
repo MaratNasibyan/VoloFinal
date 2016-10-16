@@ -297,8 +297,7 @@ namespace BookStore.MVC.Controllers
         [ValidateAntiForgeryToken]
         [Authorize]
         public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            BookDatabaseEntities e = new BookDatabaseEntities(); 
+        {           
             try
             {             
                 Book book = await db.Books.GetData(id);
@@ -311,11 +310,12 @@ namespace BookStore.MVC.Controllers
                         System.IO.File.Delete(patch1);
                     }
                 }
-                int k = Convert.ToInt32(patch.BooksId);
-         
-                db.Books.Delete(id);
+                int k = Convert.ToInt32(patch.Id);
+
                 db.Images.Delete(k);
-                db.Books.Save();             
+                db.Books.Delete(id);
+                db.Books.Save();
+                db.Images.Save();            
                 return RedirectToAction("Index");
             }
             catch
