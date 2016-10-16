@@ -14,15 +14,11 @@ using BookStore.Entities.Service;
 using BookStore.Entities.Repositories;
 using BookStore.Entities.AuthorViewModel;
 using BookStore.Entities.Unit_of_Work;
+
 namespace BookStore.MVC.Controllers
 {
     public class BooksController : Controller
-    {
-        //private BookDatabaseEntities db = new BookDatabaseEntities();
-
-        // GET: Books
-        //BookRepository<Book> db = new BookRepository();
-        //private BookRepository db = new BookRepository();
+    {     
         private UnitofWork db;
         public BooksController()
         {
@@ -33,21 +29,13 @@ namespace BookStore.MVC.Controllers
         {
             try
             {
-              var books = db.Books.Find(searchString);
-                //var books = db.Books.AsQueryable();
-                ////var books = db.GetList();
-                int pageSize = 10;
-
-
-                //if (!string.IsNullOrEmpty(searchString))
-                //{
-                //    books = (db.Books.Include(b => b.Author).Include(b => b.CountryPublished).Where(n => n.Title.Contains(searchString) || n.Author.FullName.Contains(searchString)));
+                var books = db.Books.Find(searchString);           
+                int pageSize = 10;         
 
                 if (!books.Any())
                 {
                     return PartialView("SearchViewNotFound", searchString);
-                }
-                //}
+                }             
 
                 BooksListModel model = new BooksListModel
                 {
@@ -73,17 +61,14 @@ namespace BookStore.MVC.Controllers
         {
             BookViewModel model;      
             try
-            {
-                //Book book = await db.Books.FindAsync(id);
+            {                
                 Book book = await db.Books.GetData(id);
                 if (id == null)
-                {
-                    //return View(new HttpStatusCodeResult(HttpStatusCode.BadRequest));
+                {                  
                     return PartialView("ViewPartial", id.ToString());
                 }
                 if (book == null)
-                {
-                    //return HttpNotFound();
+                {               
                     return PartialView("ViewPartial", id.ToString());
                 }
                 model = BookRelase.DetailsBook(book);
