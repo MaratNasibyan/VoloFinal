@@ -18,8 +18,7 @@ namespace BookStore.MVC.Controllers
     {
         private BookDatabaseEntities db = new BookDatabaseEntities();
 
-        // GET: Books
-      
+        // GET: Books      
               
         public ActionResult Index(string searchString,  int page = 1)
         {
@@ -51,8 +50,7 @@ namespace BookStore.MVC.Controllers
             {
                return RedirectToAction("Index");
             }
-        }
-    
+        }    
 
 
         // GET: Books/Details/5
